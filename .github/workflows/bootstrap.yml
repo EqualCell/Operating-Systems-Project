@@ -27,6 +27,7 @@ jobs:
           git clone --depth 1 --branch riscv https://github.com/mit-pdos/xv6-riscv.git /tmp/xv6-upstream
           test "$(git -C /tmp/xv6-upstream rev-parse HEAD)" = "e93dabeb98431235c6e1a101cb96c73c923fdbc4"
           git -C /tmp/xv6-upstream archive HEAD | tar -x
+          rm -f .github/workflows/test.yml
           printf 'fs.img\n*.o\n*.d\n*.asm\n*.sym\nmkfs/mkfs\nkernel/kernel\nuser/_*\nuser/usys.S\n.gdbinit\n' > .gitignore
           git add -A
           git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: import pinned MIT xv6-riscv baseline'
