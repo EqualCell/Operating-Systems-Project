@@ -1,0 +1,45 @@
+name: Bootstrap xv6 and verify baseline
+
+on:
+  push:
+    paths:
+      - .github/workflows/bootstrap.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Import pinned official xv6 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -f Makefile; then
+            echo "xv6 already imported"
+            exit 0
+          fi
+          git clone --depth 1 --branch riscv https://github.com/mit-pdos/xv6-riscv.git /tmp/xv6-upstream
+          test "$(git -C /tmp/xv6-upstream rev-parse HEAD)" = "e93dabeb98431235c6e1a101cb96c73c923fdbc4"
+          git -C /tmp/xv6-upstream archive HEAD | tar -x
+          printf 'fs.img\n*.o\n*.d\n*.asm\n*.sym\nmkfs/mkfs\nkernel/kernel\nuser/_*\nuser/usys.S\n.gdbinit\n' > .gitignore
+          git add -A
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: import pinned MIT xv6-riscv baseline'
+          git push origin HEAD:main
+      - name: Install QEMU and RISC-V toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf qemu-system-misc bc
+      - name: Build kernel and file system
+        run: make kernel/kernel fs.img
+      - name: Boot xv6 in QEMU and run shell smoke test
+        shell: bash
+        run: |
+          set -o pipefail
+          (sleep 8; printf 'echo XV6_BOOT_OK\n'; sleep 3; printf '\001x') | timeout 60s make qemu | tee qemu-boot.log
+          grep -q XV6_BOOT_OK qemu-boot.log
