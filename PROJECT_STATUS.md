@@ -5,7 +5,7 @@
 - Chosen base: MIT xv6-riscv, pinned to commit `e93dabeb98431235c6e1a101cb96c73c923fdbc4` on its `riscv` branch.
 - Goal: add `effect(key, op, path, buf, n)` for APPEND and CREATE. Save the file change and completed key/result in one xv6 file-system log transaction.
 - Planned tests: replay after each injected crash point using the same `fs.img`; simultaneous requests with one key; mismatched retry; full key table.
-- Current state: repository bootstrap and baseline build; Project 4 implementation is pending.
+- Current state: official xv6 source imported. Baseline build and QEMU shell smoke test passed in [GitHub Actions run #2](https://github.com/EqualCell/Operating-Systems-Project/actions/runs/40663725643). Project 4 implementation is pending.
 
 ## Local setup (Ubuntu/Debian)
 
