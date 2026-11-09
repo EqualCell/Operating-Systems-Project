@@ -15,6 +15,7 @@
 #include "sleeplock.h"
 #include "file.h"
 #include "fcntl.h"
+#include "effect_store.h"
 
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
@@ -136,6 +137,7 @@ sys_link(void)
   }
 
   ilock(ip);
+
   if (ip->type == T_DIR) {
     iunlockput(ip);
     end_op();
@@ -227,6 +229,10 @@ sys_unlink(void)
 
   if (ip->nlink < 1)
     panic("unlink: nlink < 1");
+  if (effect_auth_can_mutate_inode(ip) < 0) {
+    iunlockput(ip);
+    goto bad;
+  }
   if (ip->type == T_DIR && !isdirempty(ip)) {
     iunlockput(ip);
     goto bad;
@@ -243,6 +249,7 @@ sys_unlink(void)
 
   ip->nlink--;
   iupdate(ip);
+  effect_test_double_bump_version(ip);
   iunlockput(ip);
 
   end_op();
@@ -325,6 +332,12 @@ fail:
   return 0;
 }
 
+struct inode *
+effect_create_file(char *path)
+{
+  return create(path, T_FILE, 0, 0);
+}
+
 uint64
 sys_open(void)
 {
@@ -341,6 +354,19 @@ sys_open(void)
   begin_op();
 
   if (omode & O_CREATE) {
+    struct inode *dp;
+    char name[DIRSIZ];
+    if ((dp = nameiparent(path, name)) == 0) {
+      end_op();
+      return EFFECT_ERR_NOENT;
+    }
+    ilock(dp);
+    if (effect_auth_can_create_in_dir(dp) < 0) {
+      iunlockput(dp);
+      end_op();
+      return EFFECT_ERR_PERM;
+    }
+    iunlockput(dp);
     ip = create(path, T_FILE, 0, 0);
     if (ip == 0) {
       end_op();
@@ -385,7 +411,13 @@ sys_open(void)
   f->writable = (omode & O_WRONLY) || (omode & O_RDWR);
 
   if ((omode & O_TRUNC) && ip->type == T_FILE) {
+    if (effect_auth_can_mutate_inode(ip) < 0) {
+      iunlockput(ip);
+      end_op();
+      return EFFECT_ERR_PERM;
+    }
     itrunc(ip);
+    effect_test_double_bump_version(ip);
   }
 
   iunlock(ip);

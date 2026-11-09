@@ -21,3 +21,10 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_sync   22
+#define SYS_effect 23
+#define SYS_effect_checked 24
+#define SYS_grant_create 25
+#define SYS_revoke 26
+#define SYS_effect_status 27
+#define SYS_crashat 28
+#define SYS_proc_role 29

@@ -6,6 +6,7 @@
 #include "sleeplock.h"
 #include "fs.h"
 #include "buf.h"
+#include "effect.h"
 
 // Simple logging that allows concurrent FS system calls.
 //
@@ -47,6 +48,9 @@ struct log {
   struct logheader lh;
 };
 struct log log;
+static uint64 log_completed_epoch = 0;
+static int crash_hook_mode = CRASH_HOOK_NONE;
+static int crash_counter = -1;
 
 static void recover_from_log(void);
 static void commit();
@@ -61,6 +65,24 @@ initlog(int dev, struct superblock *sb)
   log.start = sb->logstart;
   log.dev = dev;
   recover_from_log();
+}
+
+void
+log_set_crash(int mode, int count)
+{
+  acquire(&log.lock);
+  crash_hook_mode = mode;
+  crash_counter = count;
+  release(&log.lock);
+}
+
+void
+log_crash_if(int mode)
+{
+  acquire(&log.lock);
+  if (crash_hook_mode == mode)
+    panic("crash hook");
+  release(&log.lock);
 }
 
 // Copy committed blocks from log to their home location
@@ -169,6 +191,45 @@ end_op(void)
     // the amount of reserved space.
     wakeup(&log);
   }
+
+  void
+  log_end_op_and_wait(void)
+  {
+    uint64 target_epoch;
+    int do_commit = 0;
+
+    acquire(&log.lock);
+    target_epoch = log_completed_epoch + 1;
+    log.outstanding -= 1;
+    if (log.committing)
+      panic("log.committing");
+    if (log.outstanding == 0) {
+      do_commit = 1;
+      log.committing = 1;
+    } else {
+      wakeup(&log);
+    }
+    release(&log.lock);
+
+    if (do_commit) {
+      commit();
+      acquire(&log.lock);
+      log.committing = 0;
+      log.ncommit += 1;
+      log_completed_epoch++;
+      wakeup(&log);
+      release(&log.lock);
+    } else {
+      acquire(&log.lock);
+      while (log_completed_epoch < target_epoch) {
+        sleep_prepare(&log);
+        release(&log.lock);
+        sleep();
+        acquire(&log.lock);
+      }
+      release(&log.lock);
+    }
+  }
   release(&log.lock);
 
   if (do_commit) {
@@ -204,8 +265,14 @@ commit()
 {
   if (log.lh.n > 0) {
     write_log();      // Write modified blocks from cache to log
+    if (crash_hook_mode == CRASH_HOOK_BEFORE_COMMIT_HDR)
+      panic("crash before commit header");
     write_head();     // Write header to disk -- the real commit
+    if (crash_hook_mode == CRASH_HOOK_AFTER_COMMIT_HDR)
+      panic("crash after commit header");
     install_trans(0); // Now install writes to home locations
+    if (crash_hook_mode == CRASH_HOOK_AFTER_INSTALL)
+      panic("crash after install");
     log.lh.n = 0;
     write_head(); // Erase the transaction from the log
   }
@@ -226,6 +293,11 @@ log_write(struct buf *b)
   int i;
 
   acquire(&log.lock);
+  if (crash_hook_mode == CRASH_HOOK_LOG_WRITE_COUNT && crash_counter >= 0) {
+    if (crash_counter == 0)
+      panic("crash in log_write");
+    crash_counter--;
+  }
   if (log.lh.n >= LOGBLOCKS)
     panic("too big a transaction");
   if (log.outstanding < 1)

@@ -9,6 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+void            effect_init(void);
 
 // bio.c
 void            binit(void);
@@ -66,6 +67,9 @@ void            initlog(int, struct superblock*);
 void            log_write(struct buf*);
 void            begin_op(void);
 void            end_op(void);
+void            log_end_op_and_wait(void);
+void            log_set_crash(int, int);
+void            log_crash_if(int);
 
 // pipe.c
 int             pipealloc(struct file**, struct file**);
@@ -170,6 +174,7 @@ int             copyin(pagetable_t, uint64, char *, uint64, uint64);
 int             copyinstr(pagetable_t, uint64, char *, uint64, uint64);
 int             ismapped(pagetable_t, uint64);
 uint64          vmfault(pagetable_t, uint64, uint64, int);
+struct inode*   effect_create_file(char *);
 
 // plic.c
 void            plicinit(void);
