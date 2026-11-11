@@ -21,8 +21,6 @@ OBJS = \
   $K/bio.o \
   $K/fs.o \
   $K/log.o \
-  $K/effect.o \
-  $K/effect_store.o \
   $K/sleeplock.o \
   $K/file.o \
   $K/pipe.o \
@@ -153,7 +151,6 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 	$U/_sync\
-	$U/_test_effect_p1\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

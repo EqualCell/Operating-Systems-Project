@@ -5,7 +5,6 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "defs.h"
-#include "effect.h"
 
 struct cpu cpus[NCPU];
 
@@ -125,7 +124,6 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
-  p->effect_role = ROLE_NORMAL;
 
   // Allocate a trapframe page.
   if ((p->trapframe = (struct trapframe *)kalloc()) == 0) {
@@ -170,7 +168,6 @@ freeproc(struct proc *p)
   p->killed = 0;
   p->xstate = 0;
   p->state = UNUSED;
-  p->effect_role = ROLE_NORMAL;
 }
 
 // Create a user page table for a given process, with no user memory,
@@ -227,7 +224,6 @@ userinit(void)
   initproc = p;
 
   p->cwd = namei("/");
-  p->effect_role = ROLE_CONTROLLER;
 
   p->state = RUNNABLE;
 
@@ -278,7 +274,6 @@ kfork(void)
     return -1;
   }
   np->sz = p->sz;
-  np->effect_role = p->effect_role;
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);

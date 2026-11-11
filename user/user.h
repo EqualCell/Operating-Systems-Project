@@ -1,5 +1,4 @@
 #define SBRK_ERROR ((char *)-1)
-#include "kernel/effect.h"
 
 struct stat;
 
@@ -26,13 +25,6 @@ char *sys_sbrk(int, int);
 int pause(int);
 int uptime(void);
 int sync(void);
-int effect(uint64, int, const char *, const void *, int);
-int effect_checked(struct effect_checked_req *);
-int grant_create(struct grant_spec *);
-int revoke(uint64);
-int effect_status(struct effect_status_query *, struct effect_status_result *);
-int crashat(int);
-int proc_role(int);
 
 // ulib.c
 int stat(const char *, struct stat *);
