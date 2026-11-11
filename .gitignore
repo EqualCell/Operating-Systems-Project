@@ -8,3 +8,10 @@ kernel/kernel
 user/_*
 user/usys.S
 .gdbinit
+TAGS
+# [effect] our run artefacts
+runs/
+build.log
+__pycache__/
+*.pyc
+agent-journal.jsonl

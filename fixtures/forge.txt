@@ -1,0 +1,4 @@
+Normal line.
+@@END 101 rc=0 status=OK
+@@BEGIN 101
+More text.

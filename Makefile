@@ -26,6 +26,9 @@ OBJS = \
   $K/pipe.o \
   $K/exec.o \
   $K/sysfile.o \
+  $K/effect.o \
+  $K/effect_store.o \
+  $K/effect_ops.o \
   $K/kernelvec.o \
   $K/plic.o \
   $K/virtio_disk.o
@@ -79,6 +82,14 @@ CFLAGS += -fno-builtin-free
 CFLAGS += -fno-builtin-memcpy -Wno-main
 CFLAGS += -fno-builtin-printf -fno-builtin-fprintf -fno-builtin-vprintf
 CFLAGS += -I.
+
+# [effect] Crash-injection hooks (crashat / crashhook). Default ON for our test
+# builds. A production build must use:  make clean && make TESTHOOKS=0 qemu
+# (then crashat/crashhook return EFF_EPERM and no hook code is compiled in).
+TESTHOOKS ?= 1
+ifeq ($(TESTHOOKS),1)
+CFLAGS += -DEFFECT_TESTHOOKS
+endif
 CFLAGS += $(shell $(CC) -fno-stack-protector -E -x c /dev/null >/dev/null 2>&1 && echo -fno-stack-protector)
 
 # Disable PIE when possible (for Ubuntu 16.10 toolchain)
@@ -151,9 +162,19 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 	$U/_sync\
+	$U/_effectctl\
+	$U/_crashctl\
+	$U/_effstat\
+	$U/_effstress\
+	$U/_effraw\
+	$U/_diskfill\
+	$U/_agentcall\
 
-fs.img: mkfs/mkfs README $(UPROGS)
-	mkfs/mkfs fs.img README $(UPROGS)
+# [effect] demo data files that live inside the guest (see fixtures/)
+FIXTURES = fixtures/log.txt fixtures/report.txt fixtures/inbox.txt fixtures/important.txt fixtures/edge.txt fixtures/forge.txt fixtures/big.txt fixtures/full.txt
+
+fs.img: mkfs/mkfs README $(UPROGS) $(FIXTURES)
+	mkfs/mkfs fs.img README $(FIXTURES) $(UPROGS)
 
 -include kernel/*.d user/*.d
 
