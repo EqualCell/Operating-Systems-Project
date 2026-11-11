@@ -10,6 +10,7 @@
 #include "kernel/fs.h"
 #include "kernel/stat.h"
 #include "kernel/param.h"
+#include "kernel/effect.h" // [effect] EFF_TABLE_BLOCKS
 
 #ifndef static_assert
 #define static_assert(a, b)                                                    \
@@ -23,12 +24,13 @@
 #define NINODES 200
 
 // Disk layout:
-// [ boot block | sb block | log | inode blocks | free bit map | data blocks ]
+// [ boot | sb | log | inode blocks | free bit map | effect table | data ]
 
 int nbitmap = FSSIZE / BPB + 1;
 int ninodeblocks = NINODES / IPB + 1;
 int nlog = LOGBLOCKS + 1; // Header followed by LOGBLOCKS data blocks.
-int nmeta;   // Number of meta blocks (boot, sb, nlog, inode, bitmap)
+int neffect = EFF_TABLE_BLOCKS; // [effect] reserved effect-table blocks
+int nmeta;   // Number of meta blocks (boot, sb, nlog, inode, bitmap, effect)
 int nblocks; // Number of data blocks
 
 int fsfd;
@@ -93,7 +95,7 @@ main(int argc, char *argv[])
     die(argv[1]);
 
   // 1 fs block = 1 disk sector
-  nmeta = 2 + nlog + ninodeblocks + nbitmap;
+  nmeta = 2 + nlog + ninodeblocks + nbitmap + neffect;
   nblocks = FSSIZE - nmeta;
 
   sb.magic = FSMAGIC;
@@ -104,10 +106,12 @@ main(int argc, char *argv[])
   sb.logstart = xint(2);
   sb.inodestart = xint(2 + nlog);
   sb.bmapstart = xint(2 + nlog + ninodeblocks);
+  sb.effstart = xint(2 + nlog + ninodeblocks + nbitmap); // [effect]
+  sb.effblocks = xint(neffect);                          // [effect]
 
   printf(
-    "nmeta %d (boot, super, log blocks %u, inode blocks %u, bitmap blocks %u) blocks %d total %d\n",
-    nmeta, nlog, ninodeblocks, nbitmap, nblocks, FSSIZE);
+    "nmeta %d (boot, super, log blocks %u, inode blocks %u, bitmap blocks %u, effect blocks %u) blocks %d total %d\n",
+    nmeta, nlog, ninodeblocks, nbitmap, neffect, nblocks, FSSIZE);
 
   freeblock = nmeta; // the first free block that we can allocate
 
@@ -132,10 +136,12 @@ main(int argc, char *argv[])
   iappend(rootino, &de, sizeof(de));
 
   for (i = 2; i < argc; i++) {
-    // get rid of "user/"
+    // get rid of "user/" (and "fixtures/", [effect] our demo data files)
     char *shortname;
     if (strncmp(argv[i], "user/", 5) == 0)
       shortname = argv[i] + 5;
+    else if (strncmp(argv[i], "fixtures/", 9) == 0)
+      shortname = argv[i] + 9;
     else
       shortname = argv[i];
 

@@ -255,7 +255,7 @@ bad:
   return -1;
 }
 
-static struct inode *
+struct inode * // [effect] was static: effect_ops.c reuses it
 create(char *path, short type, short major, short minor)
 {
   struct inode *ip, *dp;

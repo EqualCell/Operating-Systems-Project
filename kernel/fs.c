@@ -46,6 +46,7 @@ fsinit(int dev)
     panic("invalid file system");
   initlog(dev, &sb);
   ireclaim(dev);
+  effectinit(); // [effect] init the effect-request lock
 }
 
 // Zero a block.

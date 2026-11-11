@@ -21,3 +21,7 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_sync   22
+#define SYS_effect    23 // [effect] exactly-once effect
+#define SYS_crashat   24 // [effect] test hook: crash at n-th log_write
+#define SYS_crashhook 25 // [effect] test hook: crash inside commit()
+#define SYS_effstat   26 // [effect] read effect statistics

@@ -6,6 +6,7 @@
 #include "sleeplock.h"
 #include "fs.h"
 #include "buf.h"
+#include "effect.h" // [effect] crash-injection stage ids
 
 // Simple logging that allows concurrent FS system calls.
 //
@@ -51,6 +52,42 @@ struct log log;
 static void recover_from_log(void);
 static void commit();
 
+// ---------------------------------------------------------------------------
+// [effect] Crash injection (TEST BUILDS ONLY: compile with -DEFFECT_TESTHOOKS)
+//
+// Two independent triggers, both armed from user space (see user/crashctl.c):
+//   crashat(n)         : panic on the n-th log_write() after arming.  This can
+//                        only land while blocks are being STAGED, i.e. always
+//                        BEFORE the commit point.
+//   crashhook(stage,n) : panic at a named point INSIDE commit(), which is the
+//                        only way to reach crashes AFTER the commit point.
+// A panic() freezes the kernel exactly like a power cut: nothing after the
+// panic point is written to disk.  The test harness then reboots QEMU on the
+// SAME fs.img and lets recovery run.
+// ---------------------------------------------------------------------------
+int crash_logwrite_n = 0;      // 0 = disarmed
+int crash_logwrite_count = 0;  // log_write() calls since arming
+int crash_stage = 0;           // 0 = disarmed
+int crash_stage_n = 0;
+int crash_stage_count = 0;
+uint64 stat_logwrites = 0;     // total log_write() calls since boot (always on)
+
+#ifdef EFFECT_TESTHOOKS
+static void
+crash_stage_check(int stage)
+{
+  if (crash_stage != stage)
+    return;
+  if (++crash_stage_count >= crash_stage_n) {
+    printk("crashhook: injected crash at stage %d (hit %d)\n", stage,
+           crash_stage_count);
+    panic("crashhook: injected crash");
+  }
+}
+#else
+#define crash_stage_check(stage) ((void)0)
+#endif
+
 void
 initlog(int dev, struct superblock *sb)
 {
@@ -81,6 +118,8 @@ install_trans(int recovering)
       bunpin(dbuf);
     brelse(lbuf);
     brelse(dbuf);
+    if (recovering == 0)                    // [effect] crash mid-install
+      crash_stage_check(CRASH_DURING_INSTALL);
   }
 }
 
@@ -204,8 +243,11 @@ commit()
 {
   if (log.lh.n > 0) {
     write_log();      // Write modified blocks from cache to log
+    crash_stage_check(CRASH_BEFORE_HEADER); // [effect] uncommitted
     write_head();     // Write header to disk -- the real commit
+    crash_stage_check(CRASH_AFTER_HEADER);  // [effect] committed, not installed
     install_trans(0); // Now install writes to home locations
+    crash_stage_check(CRASH_AFTER_INSTALL); // [effect] installed, log not cleared
     log.lh.n = 0;
     write_head(); // Erase the transaction from the log
   }
@@ -225,6 +267,14 @@ log_write(struct buf *b)
 {
   int i;
 
+  stat_logwrites++; // [effect] statistics (benign race on a counter)
+#ifdef EFFECT_TESTHOOKS
+  if (crash_logwrite_n && ++crash_logwrite_count >= crash_logwrite_n) {
+    printk("crashat: injected crash at log_write #%d\n", crash_logwrite_count);
+    panic("crashat: injected crash");
+  }
+#endif
+
   acquire(&log.lock);
   if (log.lh.n >= LOGBLOCKS)
     panic("too big a transaction");
@@ -241,6 +291,17 @@ log_write(struct buf *b)
     log.lh.n++;
   }
   release(&log.lock);
+}
+
+// [effect] number of distinct blocks staged in the current transaction.
+int
+log_nblocks(void)
+{
+  int n;
+  acquire(&log.lock);
+  n = log.lh.n;
+  release(&log.lock);
+  return n;
 }
 
 uint64

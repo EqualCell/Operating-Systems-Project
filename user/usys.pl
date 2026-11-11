@@ -43,3 +43,7 @@ entry("sbrk");
 entry("pause");
 entry("uptime");
 entry("sync");
+entry("effect");
+entry("crashat");
+entry("crashhook");
+entry("effstat");

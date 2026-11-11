@@ -1,6 +1,7 @@
 #define SBRK_ERROR ((char *)-1)
 
 struct stat;
+struct effstats; // [effect] defined in kernel/effect.h
 
 // system calls
 int fork(void);
@@ -25,6 +26,10 @@ char *sys_sbrk(int, int);
 int pause(int);
 int uptime(void);
 int sync(void);
+int effect(uint64, int, const char*, const void*, int); // [effect]
+int crashat(int);                                        // [effect] test only
+int crashhook(int, int);                                 // [effect] test only
+int effstat(struct effstats*);                           // [effect]
 
 // ulib.c
 int stat(const char *, struct stat *);

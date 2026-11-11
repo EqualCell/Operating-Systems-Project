@@ -102,12 +102,15 @@ bread(uint dev, uint blockno)
 }
 
 // Write b's contents to disk.  Must be locked.
+uint64 stat_diskwrites = 0; // [effect] total real disk writes since boot
+
 // Only the log calls bwrite.
 void
 bwrite(struct buf *b)
 {
   if (!holdingsleep(&b->lock))
     panic("bwrite");
+  stat_diskwrites++; // [effect] statistics only
   virtio_disk_rw(b, 1);
 }
 

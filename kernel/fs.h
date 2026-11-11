@@ -6,7 +6,11 @@
 
 // Disk layout:
 // [ boot block | super block | log | inode blocks |
-//                                          free bit map | data blocks]
+//        free bit map | effect table | data blocks]
+//
+// ("effect table" is our addition: blocks reserved by mkfs for the
+//  exactly-once effect table; they lie below the first data block, so the
+//  bitmap marks them in-use and ordinary file allocation can never take them.)
 //
 // mkfs computes the super block and builds an initial file system. The
 // super block describes the disk layout:
@@ -19,6 +23,8 @@ struct superblock {
   uint logstart;   // Block number of first log block
   uint inodestart; // Block number of first inode block
   uint bmapstart;  // Block number of first free map block
+  uint effstart;   // [effect] Block number of first effect-table block
+  uint effblocks;  // [effect] Number of effect-table blocks (reserved by mkfs)
 };
 
 #define FSMAGIC 0x10203040
