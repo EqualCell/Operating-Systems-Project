@@ -1,0 +1,111 @@
+{
+ "trace": [
+  {
+   "kind": "request",
+   "goal": "append crash-test to /log.txt"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "append_file",
+    "args": {
+     "path": "/log.txt",
+     "text": "crash-test"
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "append_file",
+    "args": {
+     "path": "/log.txt",
+     "text": "crash-test"
+    }
+   }
+  },
+  {
+   "kind": "journal-begin",
+   "op": "op-0002",
+   "key": "0xa22af2d3c4361aa3",
+   "tool": "append_file",
+   "args": {
+    "path": "/log.txt",
+    "text": "crash-test"
+   }
+  },
+  {
+   "kind": "guest",
+   "op": "op-0002",
+   "attempt": 1,
+   "key": "0xa22af2d3c4361aa3",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "guest panic (no prompt returned): outcome unknown",
+    "comm_id": 100,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "guest",
+   "op": "op-0002",
+   "attempt": 2,
+   "key": "0xa22af2d3c4361aa3",
+   "reply": {
+    "status": "OK",
+    "rc": 10,
+    "guest_status": "REPLAYED",
+    "body": [
+     "EFFECT op=APPEND key=0xA22AF2D3C4361AA3 rc=10 outcome=REPLAYED"
+    ],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": "REPLAYED"
+   }
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": "append_file REPLAYED rc=10 key=0xa22af2d3c4361aa3"
+  }
+ ],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 append a22af2d3c4361aa3 /log.txt 63726173682d74657374",
+   "raw": "@@BEGIN 100\ncrashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n",
+   "vm_status": "panic",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "guest panic (no prompt returned): outcome unknown",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.02
+  },
+  {
+   "comm_id": 101,
+   "sent": "agentcall 101 append a22af2d3c4361aa3 /log.txt 63726173682d74657374",
+   "raw": "@@BEGIN 101\n| EFFECT op=APPEND key=0xA22AF2D3C4361AA3 rc=10 outcome=REPLAYED\n@@END 101 rc=10 status=REPLAYED\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "OK",
+    "rc": 10,
+    "guest_status": "REPLAYED",
+    "body": [
+     "EFFECT op=APPEND key=0xA22AF2D3C4361AA3 rc=10 outcome=REPLAYED"
+    ],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": "REPLAYED"
+   },
+   "seconds": 0.072
+  }
+ ]
+}

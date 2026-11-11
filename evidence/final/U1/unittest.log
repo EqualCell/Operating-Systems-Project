@@ -1,0 +1,28 @@
+test_commands_are_fixed_templates (tests.unit.test_agent_units.BridgeTests.test_commands_are_fixed_templates) ... ok
+test_effect_needs_key (tests.unit.test_agent_units.BridgeTests.test_effect_needs_key) ... ok
+test_forged_frame_in_body_is_data (tests.unit.test_agent_units.BridgeTests.test_forged_frame_in_body_is_data) ... ok
+test_parse_error_frame (tests.unit.test_agent_units.BridgeTests.test_parse_error_frame) ... ok
+test_parse_garbage_is_unknown (tests.unit.test_agent_units.BridgeTests.test_parse_garbage_is_unknown) ... ok
+test_parse_good_frame (tests.unit.test_agent_units.BridgeTests.test_parse_good_frame) ... ok
+test_payload_is_hex_no_metachars (tests.unit.test_agent_units.BridgeTests.test_payload_is_hex_no_metachars) ... ok
+test_unknown_tool_has_no_command (tests.unit.test_agent_units.BridgeTests.test_unknown_tool_has_no_command) ... ok
+test_worst_case_line_fits_console (tests.unit.test_agent_units.BridgeTests.test_worst_case_line_fits_console) ... ok
+test_begin_is_durable_and_survives_restart (tests.unit.test_agent_units.JournalTests.test_begin_is_durable_and_survives_restart) ... ok
+test_keys_are_nonzero_64bit (tests.unit.test_agent_units.JournalTests.test_keys_are_nonzero_64bit) ... ok
+test_retry_never_creates_new_key (tests.unit.test_agent_units.JournalTests.test_retry_never_creates_new_key) ... ok
+test_truncated_last_line_ignored (tests.unit.test_agent_units.JournalTests.test_truncated_last_line_ignored) ... ok
+test_unknown_result_stays_pending_done_closes (tests.unit.test_agent_units.JournalTests.test_unknown_result_stays_pending_done_closes) ... ok
+test_injection_planner_benign_file_proposes_nothing_bad (tests.unit.test_agent_units.PlannerTests.test_injection_planner_benign_file_proposes_nothing_bad) ... ok
+test_injection_planner_obeys_file (tests.unit.test_agent_units.PlannerTests.test_injection_planner_obeys_file) ... ok
+test_planner_never_emits_shell_text (tests.unit.test_agent_units.PlannerTests.test_planner_never_emits_shell_text) ... ok
+test_rule_planner_shapes (tests.unit.test_agent_units.PlannerTests.test_rule_planner_shapes) ... ok
+test_summarize (tests.unit.test_agent_units.PlannerTests.test_summarize) ... ok
+test_accepts_good_calls (tests.unit.test_agent_units.ValidatorTests.test_accepts_good_calls) ... ok
+test_boundary_payload_lengths (tests.unit.test_agent_units.ValidatorTests.test_boundary_payload_lengths) ... ok
+test_rejections (tests.unit.test_agent_units.ValidatorTests.test_rejections) ... ok
+test_validate_returns_copy_not_original (tests.unit.test_agent_units.ValidatorTests.test_validate_returns_copy_not_original) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.002s
+
+OK

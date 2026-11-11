@@ -1,0 +1,71 @@
+{
+ "id": "D7",
+ "title": "HOST restart: pending request survives in the journal and is resumed with the same key",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.95,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "agent reports PENDING (not failure, not success)",
+   "expected": "'PENDING'",
+   "observed": "'PENDING'",
+   "pass_": true
+  },
+  {
+   "name": "journal says pending after 3 unknown attempts",
+   "expected": "('pending', 3)",
+   "observed": "('pending', 3)",
+   "pass_": true
+  },
+  {
+   "name": "reloaded journal still has the pending op with identical key",
+   "expected": "('0xbc86ed8aca0e82bd', 1)",
+   "observed": "('0xbc86ed8aca0e82bd', 1)",
+   "pass_": true
+  },
+  {
+   "name": "resume retried exactly that op",
+   "expected": "['op-0001']",
+   "observed": "['op-0001']",
+   "pass_": true
+  },
+  {
+   "name": "resume result OK",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "no new logical op was created (no fresh key)",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "journal final state",
+   "expected": "'done'",
+   "observed": "'done'",
+   "pass_": true
+  },
+  {
+   "name": "effect happened exactly once",
+   "expected": "b'boot-entry-0\\nrestart-test'",
+   "observed": "b'boot-entry-0\\nrestart-test'",
+   "pass_": true
+  },
+  {
+   "name": "key on disk equals the journaled key",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [
+  "First 3 attempts: the effect DID commit in the guest but every reply was dropped, so the agent could not know. The resume attempt was a replay."
+ ],
+ "tables": [],
+ "error": null
+}

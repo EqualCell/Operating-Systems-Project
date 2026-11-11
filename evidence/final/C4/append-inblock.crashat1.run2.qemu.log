@@ -1,0 +1,13 @@
+
+xv6 kernel is booting
+
+hart 2 starting
+hart 1 starting
+init: starting sh
+$ effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD
+EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED
+$ effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD
+EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED
+$ effstat
+EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=3 diskwrites=9 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ 

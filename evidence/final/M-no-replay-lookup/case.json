@@ -1,0 +1,42 @@
+{
+ "id": "M-no-replay-lookup",
+ "title": "MUTANT 'no-replay-lookup': known key is ignored: the effect is executed again -> the suite must FAIL",
+ "group": "mutation",
+ "result": "PASS",
+ "seconds": 1.53,
+ "params": {
+  "mutated_file": "kernel/effect.c",
+  "caught_by": "B2"
+ },
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "mutant kernel builds",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "test B2 detects the bug (result != PASS)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "the same test run against the BROKEN kernel",
+   "rows": [
+    {
+     "test": "B2",
+     "result": "FAIL",
+     "failed_checks": 6,
+     "first_failed": "replays all REPLAYED"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

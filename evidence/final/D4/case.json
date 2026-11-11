@@ -1,0 +1,42 @@
+{
+ "id": "D4",
+ "title": "append_file through the agent reaches the real syscall; journal records key",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.42,
+ "params": {
+  "key": "0x3bf986f9627abac5",
+  "text": "agent-wrote-this"
+ },
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "outcome OK",
+   "expected": "'OK'",
+   "observed": "'OK'",
+   "pass_": true
+  },
+  {
+   "name": "journal state done / outcome EXECUTED",
+   "expected": "('done', 'EXECUTED')",
+   "observed": "('done', 'EXECUTED')",
+   "pass_": true
+  },
+  {
+   "name": "file on disk has the text once",
+   "expected": "b'boot-entry-0\\nagent-wrote-this'",
+   "observed": "b'boot-entry-0\\nagent-wrote-this'",
+   "pass_": true
+  },
+  {
+   "name": "table on disk holds the journaled 64-bit key",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

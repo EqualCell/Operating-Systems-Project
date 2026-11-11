@@ -1,0 +1,27 @@
+{
+ "id": "D3",
+ "title": "summarize: host-side tool over guest data",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.4,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "summary = first two sentences",
+   "expected": "'The server handled 100 requests. Five requests failed.'",
+   "observed": "'The server handled 100 requests. Five requests failed.'",
+   "pass_": true
+  },
+  {
+   "name": "summarize never touched the guest after the read (1 guest call)",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

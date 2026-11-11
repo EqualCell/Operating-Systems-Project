@@ -1,0 +1,101 @@
+{
+ "id": "B12",
+ "title": "Concurrency: 8 processes, DISTINCT keys, 3 CPUs: no lost / duplicate append",
+ "group": "concurrency",
+ "result": "PASS",
+ "seconds": 0.79,
+ "params": {
+  "cpus": 3,
+  "procs": 8,
+  "trials": 3
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 3,
+   "boot_seconds": 0.285,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B12/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effstress many 8 0x5000 /log.txt T0",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=many n=8 ok=8 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress many 8 0x5100 /log.txt T1",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=many n=8 ok=8 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress many 8 0x5200 /log.txt T2",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=many n=8 ok=8 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=24 replayed=0 mismatched=0 table_full=0 errors=0 table_used=24 table_slots=64 logwrites=76 diskwrites=201 last_logged=3 last_logwrites=21 last_diskwrites=63\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "all calls succeeded",
+   "expected": "['8', '8', '8']",
+   "observed": "['8', '8', '8']",
+   "pass_": true
+  },
+  {
+   "name": "48 bytes appended (3 trials x 8 procs x 2-byte payload)",
+   "expected": "48",
+   "observed": "48",
+   "pass_": true
+  },
+  {
+   "name": "trial 0: payload 'T0' present exactly 8 times",
+   "expected": "8",
+   "observed": "8",
+   "pass_": true
+  },
+  {
+   "name": "trial 1: payload 'T1' present exactly 8 times",
+   "expected": "8",
+   "observed": "8",
+   "pass_": true
+  },
+  {
+   "name": "trial 2: payload 'T2' present exactly 8 times",
+   "expected": "8",
+   "observed": "8",
+   "pass_": true
+  },
+  {
+   "name": "24 distinct keys recorded",
+   "expected": "24",
+   "observed": "24",
+   "pass_": true
+  },
+  {
+   "name": "executed==24 replayed==0",
+   "expected": "(24, 0)",
+   "observed": "(24, 0)",
+   "pass_": true
+  },
+  {
+   "name": "image consistent",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

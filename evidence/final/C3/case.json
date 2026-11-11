@@ -1,0 +1,1305 @@
+{
+ "id": "C3",
+ "title": "Crash sweep: CREATE (inode + directory entry + data + table in one transaction)",
+ "group": "crash",
+ "result": "PASS",
+ "seconds": 18.46,
+ "params": {
+  "scenario": "create",
+  "op": "create",
+  "path": "/made.txt",
+  "payload": "fresh-file",
+  "key": "0xC0FFEE0000000001",
+  "cpus": 1,
+  "log_write_calls_K": 9,
+  "logged_blocks_L": 6,
+  "disk_writes_per_effect": 14
+ },
+ "boots": [
+  {
+   "label": "measure",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "measure.img",
+   "log": "measure.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/measure.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat1.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.crashat1.img",
+   "log": "create.crashat1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat1.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat1.img",
+   "log": "create.crashat1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat2.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.crashat2.img",
+   "log": "create.crashat2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat2.run2",
+   "cpus": 1,
+   "boot_seconds": 0.244,
+   "image": "create.crashat2.img",
+   "log": "create.crashat2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat3.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.crashat3.img",
+   "log": "create.crashat3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat3.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat3.img",
+   "log": "create.crashat3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat4.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.crashat4.img",
+   "log": "create.crashat4.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat4.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.crashat4.img",
+   "log": "create.crashat4.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat5.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.crashat5.img",
+   "log": "create.crashat5.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat5.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.crashat5.img",
+   "log": "create.crashat5.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat6.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.crashat6.img",
+   "log": "create.crashat6.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat6.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.crashat6.img",
+   "log": "create.crashat6.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat7.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.crashat7.img",
+   "log": "create.crashat7.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat7.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat7.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat7.img",
+   "log": "create.crashat7.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat7.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat8.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "create.crashat8.img",
+   "log": "create.crashat8.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat8.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat8.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat8.img",
+   "log": "create.crashat8.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat8.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat9.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.crashat9.img",
+   "log": "create.crashat9.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat9.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat9.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat9.img",
+   "log": "create.crashat9.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat9.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat10-control.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.crashat10-control.img",
+   "log": "create.crashat10-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat10-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.crashat10-control.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.crashat10-control.img",
+   "log": "create.crashat10-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.crashat10-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage1-before-header.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.stage1-before-header.img",
+   "log": "create.stage1-before-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage1-before-header.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.stage1-before-header.img",
+   "log": "create.stage1-before-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage2-after-header.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage2-after-header.img",
+   "log": "create.stage2-after-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage2-after-header.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "create.stage2-after-header.img",
+   "log": "create.stage2-after-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-1.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "create.stage3-install-1.img",
+   "log": "create.stage3-install-1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-1.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "create.stage3-install-1.img",
+   "log": "create.stage3-install-1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-2.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "create.stage3-install-2.img",
+   "log": "create.stage3-install-2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-2.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "create.stage3-install-2.img",
+   "log": "create.stage3-install-2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-3.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage3-install-3.img",
+   "log": "create.stage3-install-3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-3.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "create.stage3-install-3.img",
+   "log": "create.stage3-install-3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-4.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage3-install-4.img",
+   "log": "create.stage3-install-4.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-4.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.stage3-install-4.img",
+   "log": "create.stage3-install-4.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-5.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage3-install-5.img",
+   "log": "create.stage3-install-5.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-5.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.stage3-install-5.img",
+   "log": "create.stage3-install-5.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-6.run1",
+   "cpus": 1,
+   "boot_seconds": 0.277,
+   "image": "create.stage3-install-6.img",
+   "log": "create.stage3-install-6.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-6.run2",
+   "cpus": 1,
+   "boot_seconds": 0.266,
+   "image": "create.stage3-install-6.img",
+   "log": "create.stage3-install-6.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage4-after-install.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage4-after-install.img",
+   "log": "create.stage4-after-install.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage4-after-install.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "create.stage4-after-install.img",
+   "log": "create.stage4-after-install.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-7-control.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "create.stage3-install-7-control.img",
+   "log": "create.stage3-install-7-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-7-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "create.stage3-install-7-control.run2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "create.stage3-install-7-control.img",
+   "log": "create.stage3-install-7-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C3/create.stage3-install-7-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "measure.img",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "measure.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=13 diskwrites=23 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat1.run1",
+   "cmd": "effectctl -c 1 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #1\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat1.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat1.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat2.run1",
+   "cmd": "effectctl -c 2 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #2\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat2.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat2.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat3.run1",
+   "cmd": "effectctl -c 3 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #3\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat3.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat3.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat4.run1",
+   "cmd": "effectctl -c 4 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #4\npanic: crashat: injec"
+  },
+  {
+   "vm": "create.crashat4.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat4.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat4.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat5.run1",
+   "cmd": "effectctl -c 5 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #5\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat5.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat5.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat5.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat6.run1",
+   "cmd": "effectctl -c 6 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #6\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat6.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat6.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat6.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat7.run1",
+   "cmd": "effectctl -c 7 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #7\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat7.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat7.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat7.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat8.run1",
+   "cmd": "effectctl -c 8 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #8\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat8.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat8.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat8.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat9.run1",
+   "cmd": "effectctl -c 9 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #9\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "create.crashat9.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat9.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat9.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.crashat10-control.run1",
+   "cmd": "effectctl -c 10 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.crashat10-control.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat10-control.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.crashat10-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage1-before-header.run1",
+   "cmd": "effectctl -s 1:1 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 1 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage1-before-header.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.stage1-before-header.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage1-before-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=9 diskwrites=15 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "create.stage2-after-header.run1",
+   "cmd": "effectctl -s 2:1 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage2-after-header.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage2-after-header.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage2-after-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-1.run1",
+   "cmd": "effectctl -s 3:1 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-1.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-1.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-2.run1",
+   "cmd": "effectctl -s 3:2 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 2)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-2.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-2.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-3.run1",
+   "cmd": "effectctl -s 3:3 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 3)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-3.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-3.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-4.run1",
+   "cmd": "effectctl -s 3:4 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 4)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-4.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-4.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-4.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-5.run1",
+   "cmd": "effectctl -s 3:5 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 5)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-5.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-5.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-5.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-6.run1",
+   "cmd": "effectctl -s 3:6 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 6)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage3-install-6.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-6.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-6.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage4-after-install.run1",
+   "cmd": "effectctl -s 4:1 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 4 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "create.stage4-after-install.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage4-after-install.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage4-after-install.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=7 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "create.stage3-install-7-control.run1",
+   "cmd": "effectctl -s 3:7 create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "create.stage3-install-7-control.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-7-control.run2",
+   "cmd": "effectctl create 0xC0FFEE0000000001 /made.txt fresh-file",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "create.stage3-install-7-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "crashat1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat4: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat5: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat6: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat7: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat8: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat9: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat10-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage1-before-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage2-after-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-4: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-5: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-6: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage4-after-install: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-7-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "at least K+L+3 real crashes were exercised",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "uncommitted crashes (replay EXECUTED) and committed crashes (replay REPLAYED) both occurred",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "crash points for create (K=9 log_write calls, L=6 blocks, 14 disk writes)",
+   "rows": [
+    {
+     "trial": "create.crashat1",
+     "arm": "-c 1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat2",
+     "arm": "-c 2",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat3",
+     "arm": "-c 3",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat4",
+     "arm": "-c 4",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat5",
+     "arm": "-c 5",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat6",
+     "arm": "-c 6",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat7",
+     "arm": "-c 7",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat8",
+     "arm": "-c 8",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat9",
+     "arm": "-c 9",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.crashat10-control",
+     "arm": "-c 10",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage1-before-header",
+     "arm": "-s 1:1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage2-after-header",
+     "arm": "-s 2:1",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-1",
+     "arm": "-s 3:1",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-2",
+     "arm": "-s 3:2",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-3",
+     "arm": "-s 3:3",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-4",
+     "arm": "-s 3:4",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-5",
+     "arm": "-s 3:5",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-6",
+     "arm": "-s 3:6",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage4-after-install",
+     "arm": "-s 4:1",
+     "crashed": true,
+     "log_n": 6,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 6,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "create.stage3-install-7-control",
+     "arm": "-s 3:7",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

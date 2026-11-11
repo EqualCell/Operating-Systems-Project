@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -c 6 append 0xC0FFEE0000000001 /edge.txt 0123456789
+crashat: injected crash at log_write #6
+panic: crashat: injected crash

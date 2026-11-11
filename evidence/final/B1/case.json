@@ -1,0 +1,76 @@
+{
+ "id": "B1",
+ "title": "New key appends the expected bytes; table entry is correct on disk",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 0.41,
+ "params": {
+  "key": "0xDEADBEEF12345678",
+  "payload": "HELLO-EXACTLY"
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B1/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xDEADBEEF12345678 /log.txt HELLO-EXACTLY",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xDEADBEEF12345678 rc=13 outcome=EXECUTED\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "rc",
+   "expected": "13",
+   "observed": "13",
+   "pass_": true
+  },
+  {
+   "name": "file = old content + payload (independent parse)",
+   "expected": "b'boot-entry-0\\nHELLO-EXACTLY'",
+   "observed": "b'boot-entry-0\\nHELLO-EXACTLY'",
+   "pass_": true
+  },
+  {
+   "name": "64-bit key stored un-truncated in table",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "stored result",
+   "expected": "13",
+   "observed": "13",
+   "pass_": true
+  },
+  {
+   "name": "stored signature equals independent FNV-1a",
+   "expected": "2196398194",
+   "observed": "2196398194",
+   "pass_": true
+  },
+  {
+   "name": "exactly one table entry",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "image consistent",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

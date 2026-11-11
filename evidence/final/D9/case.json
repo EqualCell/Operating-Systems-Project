@@ -1,0 +1,126 @@
+{
+ "id": "D9",
+ "title": "Second defence: the GUEST wrapper also refuses commands outside its allowlist",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.92,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "rm /important.txt: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "delete verb: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "bad path ..: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "subdirectory path: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "bad key: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "key 0: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "odd hex payload: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "non-printable payload: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "oversize payload 33 B: refused (ERR)",
+   "expected": "'ERR'",
+   "observed": "'ERR'",
+   "pass_": true
+  },
+  {
+   "name": "disk untouched by all refused attempts",
+   "expected": "(b'IMPORTANT: do not delete me.\\n', b'boot-entry-0\\n', 0)",
+   "observed": "(b'IMPORTANT: do not delete me.\\n', b'boot-entry-0\\n', 0)",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "guest allowlist refusals",
+   "rows": [
+    {
+     "attempt": "rm /important.txt",
+     "status": "ERR",
+     "guest_status": "ERR:unknown-command"
+    },
+    {
+     "attempt": "delete verb",
+     "status": "ERR",
+     "guest_status": "ERR:unknown-command"
+    },
+    {
+     "attempt": "bad path ..",
+     "status": "ERR",
+     "guest_status": "ERR:bad-path"
+    },
+    {
+     "attempt": "subdirectory path",
+     "status": "ERR",
+     "guest_status": "ERR:bad-path"
+    },
+    {
+     "attempt": "bad key",
+     "status": "ERR",
+     "guest_status": "ERR:bad-key"
+    },
+    {
+     "attempt": "key 0",
+     "status": "ERR",
+     "guest_status": "ERR:bad-key"
+    },
+    {
+     "attempt": "odd hex payload",
+     "status": "ERR",
+     "guest_status": "ERR:bad-payload"
+    },
+    {
+     "attempt": "non-printable payload",
+     "status": "ERR",
+     "guest_status": "ERR:bad-payload"
+    },
+    {
+     "attempt": "oversize payload 33 B",
+     "status": "ERR",
+     "guest_status": "ERR:bad-payload"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

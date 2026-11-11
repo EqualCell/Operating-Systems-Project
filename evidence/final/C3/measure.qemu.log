@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl create 0xC0FFEE0000000001 /made.txt fresh-file
+EFFECT op=CREATE key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=13 diskwrites=23 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ 

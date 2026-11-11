@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -s 2:1 append 0x1 /log.txt rec
+crashhook: injected crash at stage 2 (hit 1)
+panic: crashhook: injected crash

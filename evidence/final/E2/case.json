@@ -1,0 +1,209 @@
+{
+ "id": "E2",
+ "title": "Recovery cost: boot time with a committed-but-uninstalled log vs a clean boot",
+ "group": "measure",
+ "result": "PASS",
+ "seconds": 5.02,
+ "params": {},
+ "boots": [
+  {
+   "label": "clean0",
+   "cpus": 1,
+   "boot_seconds": 0.273,
+   "image": "clean0.img",
+   "log": "clean0.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/clean0.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "clean1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "clean1.img",
+   "log": "clean1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/clean1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "clean2",
+   "cpus": 1,
+   "boot_seconds": 0.295,
+   "image": "clean2.img",
+   "log": "clean2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/clean2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "clean3",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "clean3.img",
+   "log": "clean3.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/clean3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "clean4",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "clean4.img",
+   "log": "clean4.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/clean4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "crash0",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "rec0.img",
+   "log": "crash0.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec0.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "recover0",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "rec0.img",
+   "log": "recover0.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec0.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "crash1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "rec1.img",
+   "log": "crash1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "recover1",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "rec1.img",
+   "log": "recover1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "crash2",
+   "cpus": 1,
+   "boot_seconds": 0.284,
+   "image": "rec2.img",
+   "log": "crash2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "recover2",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "rec2.img",
+   "log": "recover2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "crash3",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "rec3.img",
+   "log": "crash3.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "recover3",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "rec3.img",
+   "log": "recover3.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "crash4",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "rec4.img",
+   "log": "crash4.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "recover4",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "rec4.img",
+   "log": "recover4.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E2/rec4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "rec0.img",
+   "cmd": "effectctl -s 2:1 append 0x1 /log.txt rec",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "rec1.img",
+   "cmd": "effectctl -s 2:1 append 0x1 /log.txt rec",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "rec2.img",
+   "cmd": "effectctl -s 2:1 append 0x1 /log.txt rec",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "rec3.img",
+   "cmd": "effectctl -s 2:1 append 0x1 /log.txt rec",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "rec4.img",
+   "cmd": "effectctl -s 2:1 append 0x1 /log.txt rec",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "recovery installed 3 blocks every time",
+   "expected": "[3, 3, 3, 3, 3]",
+   "observed": "[3, 3, 3, 3, 3]",
+   "pass_": true
+  },
+  {
+   "name": "recovery boots complete (< 10 s each)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [
+  "Wall-clock on an emulated machine; indicative only. Recovery work is 3 block copies, negligible."
+ ],
+ "tables": [
+  {
+   "name": "boot wall-clock seconds (QEMU start -> shell prompt)",
+   "rows": [
+    {
+     "kind": "clean boot",
+     "samples": [
+      0.273,
+      0.275,
+      0.295,
+      0.274,
+      0.275
+     ],
+     "mean": 0.278
+    },
+    {
+     "kind": "boot with recovery of 3 logged blocks",
+     "samples": [
+      0.265,
+      0.256,
+      0.254,
+      0.254,
+      0.265
+     ],
+     "mean": 0.259
+    }
+   ]
+  }
+ ],
+ "error": null
+}

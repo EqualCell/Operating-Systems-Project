@@ -1,0 +1,39 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effraw plain 0x0 1 /log.txt
+RAW case=plain rc=-1
+$ effraw plain 0x5 9 /log.txt
+RAW case=plain rc=-1
+$ effraw plain 0x5 0 /log.txt
+RAW case=plain rc=-1
+$ effraw len 0x5 1 /log.txt 0
+RAW case=len rc=-1
+$ effraw len 0x5 1 /log.txt 257
+RAW case=len rc=-1
+$ effraw negn 0x5 1 /log.txt
+RAW case=negn rc=-1
+$ effraw endptr 0x5 1 /log.txt
+RAW case=endptr rc=-1
+$ effraw straddle 0x5 1 /log.txt
+RAW case=straddle rc=-1
+$ effraw badptr 0x5 1 /log.txt
+RAW case=badptr rc=-1
+$ effraw badpath 0x5 1 /log.txt
+RAW case=badpath rc=-1
+$ effraw plain 0x5 1 log.txt
+RAW case=plain rc=-1
+$ effraw plain 0x5 1 /
+RAW case=plain rc=-1
+$ effraw plain 0x6 1 /nosuch.txt
+RAW case=plain rc=-2
+$ effraw plain 0x7 1 /.
+RAW case=plain rc=-1
+$ effraw plain 0x8 1 /console
+RAW case=plain rc=-1
+$ effraw len 0x9 1 /log.txt 256
+RAW case=len rc=256
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=3 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ 

@@ -1,0 +1,85 @@
+{
+ "id": "R2",
+ "title": "Production build (TESTHOOKS=0): crash hooks compiled out and refused; effect() still works",
+ "group": "regress",
+ "result": "PASS",
+ "seconds": 1.34,
+ "params": {},
+ "boots": [
+  {
+   "label": "prod",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "prod.img",
+   "log": "prod.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /tmp/xv6-prod-28061/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/R2/prod.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "prod.img",
+   "cmd": "crashctl at 1",
+   "status": "ok",
+   "output": "CRASHCTL rc=-7\n"
+  },
+  {
+   "vm": "prod.img",
+   "cmd": "crashctl stage 2 1",
+   "status": "ok",
+   "output": "CRASHCTL rc=-7\n"
+  },
+  {
+   "vm": "prod.img",
+   "cmd": "effectctl append 0x1 /log.txt prod",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000001 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "prod.img",
+   "cmd": "effectctl append 0x1 /log.txt prod",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000001 rc=4 outcome=REPLAYED\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "production build succeeds",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "no crash-injection strings in the production kernel binary",
+   "expected": "False",
+   "observed": "False",
+   "pass_": true
+  },
+  {
+   "name": "crashat refused with EFF_EPERM (-7)",
+   "expected": "'CRASHCTL rc=-7'",
+   "observed": "'CRASHCTL rc=-7'",
+   "pass_": true
+  },
+  {
+   "name": "crashhook refused with EFF_EPERM (-7)",
+   "expected": "'CRASHCTL rc=-7'",
+   "observed": "'CRASHCTL rc=-7'",
+   "pass_": true
+  },
+  {
+   "name": "effect() works in the production kernel (EXECUTED then REPLAYED)",
+   "expected": "('EXECUTED', 'REPLAYED')",
+   "observed": "('EXECUTED', 'REPLAYED')",
+   "pass_": true
+  },
+  {
+   "name": "file has the text once",
+   "expected": "b'boot-entry-0\\nprod'",
+   "observed": "b'boot-entry-0\\nprod'",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

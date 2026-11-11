@@ -1,0 +1,259 @@
+{
+ "id": "B7",
+ "title": "Validation and hostile arguments: refused cleanly, kernel survives",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 1.33,
+ "params": {},
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B7/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x0 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x5 9 /log.txt",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x5 0 /log.txt",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw len 0x5 1 /log.txt 0",
+   "status": "ok",
+   "output": "RAW case=len rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw len 0x5 1 /log.txt 257",
+   "status": "ok",
+   "output": "RAW case=len rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw negn 0x5 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=negn rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw endptr 0x5 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=endptr rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw straddle 0x5 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=straddle rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw badptr 0x5 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=badptr rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw badpath 0x5 1 /log.txt",
+   "status": "ok",
+   "output": "RAW case=badpath rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x5 1 log.txt",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x5 1 /",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x6 1 /nosuch.txt",
+   "status": "ok",
+   "output": "RAW case=plain rc=-2\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x7 1 /.",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw plain 0x8 1 /console",
+   "status": "ok",
+   "output": "RAW case=plain rc=-1\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effraw len 0x9 1 /log.txt 256",
+   "status": "ok",
+   "output": "RAW case=len rc=256\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=3 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "key 0 is reserved: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "unknown op 9: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "op 0: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "APPEND of 0 bytes: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "payload 257 > limit: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "negative length: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "buffer pointer one past end of memory: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "buffer straddling end of memory: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "unmapped buffer pointer: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "unmapped path pointer: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "relative path: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "path '/' only: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "APPEND to missing file: rc",
+   "expected": "-2",
+   "observed": "-2",
+   "pass_": true
+  },
+  {
+   "name": "APPEND to a directory: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "APPEND to a device: rc",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "payload of exactly 256 bytes accepted (rc=256)",
+   "expected": "256",
+   "observed": "256",
+   "pass_": true
+  },
+  {
+   "name": "kernel still alive and answering",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "only the 256-byte call executed",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "table_used==1 (errors are never recorded)",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "kernel 'errors' counter == 3 (ENOENT, dir, device reach the op layer)",
+   "expected": "3",
+   "observed": "3",
+   "pass_": true
+  },
+  {
+   "name": "only change to disk: 256 'x' appended",
+   "expected": "b'boot-entry-0\\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+   "observed": "b'boot-entry-0\\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'",
+   "pass_": true
+  },
+  {
+   "name": "image consistent",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

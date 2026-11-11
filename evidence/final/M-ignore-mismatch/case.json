@@ -1,0 +1,42 @@
+{
+ "id": "M-ignore-mismatch",
+ "title": "MUTANT 'ignore-mismatch': same key with a different request silently replays the old result -> the suite must FAIL",
+ "group": "mutation",
+ "result": "PASS",
+ "seconds": 1.41,
+ "params": {
+  "mutated_file": "kernel/effect.c",
+  "caught_by": "B5"
+ },
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "mutant kernel builds",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "test B5 detects the bug (result != PASS)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "the same test run against the BROKEN kernel",
+   "rows": [
+    {
+     "test": "B5",
+     "result": "FAIL",
+     "failed_checks": 4,
+     "first_failed": "different payload -> -4"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

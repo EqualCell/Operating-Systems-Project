@@ -1,0 +1,12 @@
+
+xv6 kernel is booting
+
+recovering tail 0 dst 52
+recovering tail 1 dst 33
+recovering tail 2 dst 47
+init: starting sh
+$ agentcall 101 append a22af2d3c4361aa3 /log.txt 63726173682d74657374
+@@BEGIN 101
+| EFFECT op=APPEND key=0xA22AF2D3C4361AA3 rc=10 outcome=REPLAYED
+@@END 101 rc=10 status=REPLAYED
+$ 

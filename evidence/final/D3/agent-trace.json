@@ -1,0 +1,93 @@
+{
+ "trace": [
+  {
+   "kind": "request",
+   "goal": "summarize /report.txt"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/report.txt"
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/report.txt"
+    }
+   }
+  },
+  {
+   "kind": "guest",
+   "tool": "read_file",
+   "reply": {
+    "status": "OK",
+    "rc": 88,
+    "guest_status": "OK",
+    "body": [
+     "The server handled 100 requests.",
+     "Five requests failed.",
+     "Average response time was 20 ms."
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "summarize",
+    "args": {
+     "text": "The server handled 100 requests.\nFive requests failed.\nAverage response time was 20 ms."
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "summarize",
+    "args": {
+     "text": "The server handled 100 requests.\nFive requests failed.\nAverage response time was 20 ms."
+    }
+   }
+  },
+  {
+   "kind": "observation",
+   "tool": "summarize",
+   "text": "The server handled 100 requests. Five requests failed."
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": "The server handled 100 requests. Five requests failed."
+  }
+ ],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 read /report.txt",
+   "raw": "@@BEGIN 100\n| The server handled 100 requests.\n| Five requests failed.\n| Average response time was 20 ms.\n@@END 100 rc=88 status=OK\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "OK",
+    "rc": 88,
+    "guest_status": "OK",
+    "body": [
+     "The server handled 100 requests.",
+     "Five requests failed.",
+     "Average response time was 20 ms."
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.062
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "id": "A1",
+ "title": "Pristine image layout, reserved table blocks, clean boot",
+ "group": "baseline",
+ "result": "PASS",
+ "seconds": 0.52,
+ "params": {
+  "effstart": 47,
+  "effblocks": 1,
+  "bmapstart": 46,
+  "inodestart": 33,
+  "logstart": 2,
+  "fs_blocks": 2000,
+  "boot_seconds": 0.296
+ },
+ "boots": [
+  {
+   "label": "boot",
+   "cpus": 1,
+   "boot_seconds": 0.296,
+   "image": "disk.img",
+   "log": "boot.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/A1/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "ls",
+   "status": "ok",
+   "output": ".              1 1 1024\n..             1 1 1024\nREADME         2 2 2441\nlog.txt        2 3 13\nreport.txt     2 4 88\ninbox.txt      2 5 83\nimportant.txt  2 6 29\nedge.txt       2 7 1020\nforge.txt      2 8 61\nbig.txt        2 9 12280\nfull.txt       2 10 1024\ncat            2 11 36976\necho           2 12 35840\nforktest       2 13 18392\ngrep           2 14 44432\ninit           2 15 36232\nkill           2 16 35760\nln             2 17 35560\nls             2 18 43128\nmkdir          2 19 35816\nrm             2 20 35808\nsh             2 21 58528\nstressfs       2 22 36680\nusertests      2 23 213768\ngrind          2 24 52072\nwc             2 25 37984\nzombie         2 26 35096\nlogstress      2 27 37816\nforphan        2 28 36600\ndorphan        2 29 36048\nsync           2 30 35192\neffectctl      2 31 44488\ncrashctl       2 32 36352\neffstat        2 33 35696\neffstress      2 34 43960\neffraw         2 35 42904\ndiskfill       2 36 36424\nagentcall      2 37 50720\nconsole        3 38 0\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "superblock magic",
+   "expected": "270544960",
+   "observed": "270544960",
+   "pass_": true
+  },
+  {
+   "name": "effect table has 1 reserved block",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "table sits right after the bitmap",
+   "expected": "47",
+   "observed": "47",
+   "pass_": true
+  },
+  {
+   "name": "table starts empty",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  },
+  {
+   "name": "log starts empty",
+   "expected": "(0, [])",
+   "observed": "(0, [])",
+   "pass_": true
+  },
+  {
+   "name": "pristine image is consistent (bitmap marks table; no block owned twice)",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  },
+  {
+   "name": "fixture /log.txt present",
+   "expected": "b'boot-entry-0\\n'",
+   "observed": "b'boot-entry-0\\n'",
+   "pass_": true
+  },
+  {
+   "name": "shell works",
+   "expected": "'ok'",
+   "observed": "'ok'",
+   "pass_": true
+  },
+  {
+   "name": "ls shows effectctl",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows agentcall",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows crashctl",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows effstat",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows effstress",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows effraw",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows log.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "ls shows inbox.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

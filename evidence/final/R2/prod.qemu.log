@@ -1,0 +1,13 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ crashctl at 1
+CRASHCTL rc=-7
+$ crashctl stage 2 1
+CRASHCTL rc=-7
+$ effectctl append 0x1 /log.txt prod
+EFFECT op=APPEND key=0x0000000000000001 rc=4 outcome=EXECUTED
+$ effectctl append 0x1 /log.txt prod
+EFFECT op=APPEND key=0x0000000000000001 rc=4 outcome=REPLAYED
+$ 

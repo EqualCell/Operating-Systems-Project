@@ -1,0 +1,15 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effstress same 6 0x5000 /log.txt T0
+STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstress same 6 0x5100 /log.txt T1
+STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstress same 6 0x5200 /log.txt T2
+STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstress same 6 0x5300 /log.txt T3
+STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstat
+EFFSTAT executed=4 replayed=20 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=16 diskwrites=41 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ 

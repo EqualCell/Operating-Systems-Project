@@ -1,0 +1,65 @@
+{
+ "id": "D1",
+ "title": "list_files: real directory listing from xv6 through the bridge",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.47,
+ "params": {
+  "command_sent": "agentcall 100 list"
+ },
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "outcome OK",
+   "expected": "'OK'",
+   "observed": "'OK'",
+   "pass_": true
+  },
+  {
+   "name": "listing contains log.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "listing contains report.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "listing contains inbox.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "listing contains important.txt",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "listing contains README",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "no refusals",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  },
+  {
+   "name": "the guest was asked exactly one framed command",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

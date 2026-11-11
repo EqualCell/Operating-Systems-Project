@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -s 3:2 append 0xC0FFEE0000000001 /edge.txt 0123456789
+crashhook: injected crash at stage 3 (hit 2)
+panic: crashhook: injected crash

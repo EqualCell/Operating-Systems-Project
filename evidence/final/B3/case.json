@@ -1,0 +1,55 @@
+{
+ "id": "B3",
+ "title": "Different key = a second logical operation",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 0.47,
+ "params": {},
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B3/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x10 /log.txt AAA",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000010 rc=3 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x11 /log.txt AAA",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000011 rc=3 outcome=EXECUTED\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "both EXECUTED",
+   "expected": "['EXECUTED', 'EXECUTED']",
+   "observed": "['EXECUTED', 'EXECUTED']",
+   "pass_": true
+  },
+  {
+   "name": "file has AAA twice",
+   "expected": "b'boot-entry-0\\nAAAAAA'",
+   "observed": "b'boot-entry-0\\nAAAAAA'",
+   "pass_": true
+  },
+  {
+   "name": "two table entries",
+   "expected": "{16, 17}",
+   "observed": "{16, 17}",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

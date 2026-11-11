@@ -1,0 +1,75 @@
+{
+ "id": "B6",
+ "title": "Table entry survives power-off and reboot (persistence)",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 0.85,
+ "params": {},
+ "boots": [
+  {
+   "label": "boot1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "disk.img",
+   "log": "boot1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B6/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "boot2",
+   "cpus": 1,
+   "boot_seconds": 0.256,
+   "image": "disk.img",
+   "log": "boot2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B6/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xBEEF /log.txt PERSIST",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x000000000000BEEF rc=7 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xBEEF /log.txt PERSIST",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x000000000000BEEF rc=7 outcome=REPLAYED\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "entry is on disk after power-off",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "fresh boot sees the entry (table_used==1) with executed counter reset",
+   "expected": "(1, 0)",
+   "observed": "(1, 0)",
+   "pass_": true
+  },
+  {
+   "name": "retry after reboot REPLAYED",
+   "expected": "'REPLAYED'",
+   "observed": "'REPLAYED'",
+   "pass_": true
+  },
+  {
+   "name": "file has PERSIST once",
+   "expected": "b'boot-entry-0\\nPERSIST'",
+   "observed": "b'boot-entry-0\\nPERSIST'",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

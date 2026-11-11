@@ -1,0 +1,47 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effstat
+EFFSTAT executed=0 replayed=0 mismatched=0 table_full=0 errors=0 table_used=0 table_slots=64 logwrites=4 diskwrites=9 last_logged=0 last_logwrites=0 last_diskwrites=0
+$ effectctl append 0xE1 /log.txt hello
+EFFECT op=APPEND key=0x00000000000000E1 rc=5 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effectctl append 0xE1 /log.txt hello
+EFFECT op=APPEND key=0x00000000000000E1 rc=5 outcome=REPLAYED
+$ effstat
+EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effstat
+EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effectctl append 0xE2 /edge.txt 0123456789
+EFFECT op=APPEND key=0x00000000000000E2 rc=10 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=2 replayed=1 mismatched=0 table_full=0 errors=0 table_used=2 table_slots=64 logwrites=13 diskwrites=29 last_logged=5 last_logwrites=6 last_diskwrites=12
+$ effstat
+EFFSTAT executed=2 replayed=1 mismatched=0 table_full=0 errors=0 table_used=2 table_slots=64 logwrites=13 diskwrites=29 last_logged=5 last_logwrites=6 last_diskwrites=12
+$ effectctl append 0xE3 /big.txt 0123456789012345678901234567890123456789
+EFFECT op=APPEND key=0x00000000000000E3 rc=40 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=3 replayed=1 mismatched=0 table_full=0 errors=0 table_used=3 table_slots=64 logwrites=22 diskwrites=43 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effstat
+EFFSTAT executed=3 replayed=1 mismatched=0 table_full=0 errors=0 table_used=3 table_slots=64 logwrites=22 diskwrites=43 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effectctl create 0xE4 /m.txt body
+EFFECT op=CREATE key=0x00000000000000E4 rc=4 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=4 replayed=1 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effstat
+EFFSTAT executed=4 replayed=1 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effectctl append 0xE1 /log.txt other
+EFFECT op=APPEND key=0x00000000000000E1 rc=-4 outcome=ERROR
+$ effstat
+EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effstat
+EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ effectctl append 0xE5 /none.txt x
+EFFECT op=APPEND key=0x00000000000000E5 rc=-2 outcome=ERROR
+$ effstat
+EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=1 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ 

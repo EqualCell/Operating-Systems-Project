@@ -1,0 +1,5 @@
+{"args": {"path": "/log.txt", "text": "lost-reply-test"}, "ev": "begin", "key": "0x38a29a242ea833a4", "op": "op-0001", "tool": "append_file", "ts": 1794417301.375}
+{"comm_id": 100, "ev": "attempt", "op": "op-0001", "ts": 1794417301.449}
+{"ev": "result", "op": "op-0001", "outcome": null, "rc": null, "reason": "reply lost (injected fault): outcome unknown", "state": "unknown", "ts": 1794417301.451}
+{"comm_id": 101, "ev": "attempt", "op": "op-0001", "ts": 1794417301.516}
+{"ev": "result", "op": "op-0001", "outcome": "REPLAYED", "rc": 15, "reason": null, "state": "done", "ts": 1794417301.525}

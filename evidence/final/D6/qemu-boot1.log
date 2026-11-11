@@ -1,0 +1,10 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ crashctl stage 2
+CRASHCTL rc=0
+$ agentcall 100 append a22af2d3c4361aa3 /log.txt 63726173682d74657374
+@@BEGIN 100
+crashhook: injected crash at stage 2 (hit 1)
+panic: crashhook: injected crash

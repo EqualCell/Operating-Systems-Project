@@ -1,0 +1,111 @@
+{
+ "trace": [
+  {
+   "kind": "request",
+   "goal": "append lost-reply-test to /log.txt"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "append_file",
+    "args": {
+     "path": "/log.txt",
+     "text": "lost-reply-test"
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "append_file",
+    "args": {
+     "path": "/log.txt",
+     "text": "lost-reply-test"
+    }
+   }
+  },
+  {
+   "kind": "journal-begin",
+   "op": "op-0001",
+   "key": "0x38a29a242ea833a4",
+   "tool": "append_file",
+   "args": {
+    "path": "/log.txt",
+    "text": "lost-reply-test"
+   }
+  },
+  {
+   "kind": "guest",
+   "op": "op-0001",
+   "attempt": 1,
+   "key": "0x38a29a242ea833a4",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "reply lost (injected fault): outcome unknown",
+    "comm_id": 100,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "guest",
+   "op": "op-0001",
+   "attempt": 2,
+   "key": "0x38a29a242ea833a4",
+   "reply": {
+    "status": "OK",
+    "rc": 15,
+    "guest_status": "REPLAYED",
+    "body": [
+     "EFFECT op=APPEND key=0x38A29A242EA833A4 rc=15 outcome=REPLAYED"
+    ],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": "REPLAYED"
+   }
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": "append_file REPLAYED rc=15 key=0x38a29a242ea833a4"
+  }
+ ],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 append 38a29a242ea833a4 /log.txt 6c6f73742d7265706c792d74657374",
+   "raw": "@@BEGIN 100\n| EFFECT op=APPEND key=0x38A29A242EA833A4 rc=15 outcome=EXECUTED\n@@END 100 rc=15 status=EXECUTED\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "reply lost (injected fault): outcome unknown",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.072
+  },
+  {
+   "comm_id": 101,
+   "sent": "agentcall 101 append 38a29a242ea833a4 /log.txt 6c6f73742d7265706c792d74657374",
+   "raw": "@@BEGIN 101\n| EFFECT op=APPEND key=0x38A29A242EA833A4 rc=15 outcome=REPLAYED\n@@END 101 rc=15 status=REPLAYED\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "OK",
+    "rc": 15,
+    "guest_status": "REPLAYED",
+    "body": [
+     "EFFECT op=APPEND key=0x38A29A242EA833A4 rc=15 outcome=REPLAYED"
+    ],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": "REPLAYED"
+   },
+   "seconds": 0.063
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ diskfill
+balloc: out of blocks
+balloc: out of blocks
+DISKFILL blocks=689
+$ effectctl append 0xD1 /edge.txt 0123456789
+balloc: out of blocks
+EFFECT op=APPEND key=0x00000000000000D1 rc=4 outcome=EXECUTED
+$ effectctl append 0xD1 /edge.txt 0123456789
+EFFECT op=APPEND key=0x00000000000000D1 rc=4 outcome=REPLAYED
+$ effectctl append 0xD2 /full.txt xyz
+balloc: out of blocks
+EFFECT op=APPEND key=0x00000000000000D2 rc=-5 outcome=ERROR
+$ effectctl create 0xD3 /new.txt hello
+balloc: out of blocks
+EFFECT op=CREATE key=0x00000000000000D3 rc=0 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=2 replayed=1 mismatched=0 table_full=0 errors=1 table_used=2 table_slots=64 logwrites=3447 diskwrites=6889 last_logged=4 last_logwrites=6 last_diskwrites=10
+$ 

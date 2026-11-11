@@ -1,0 +1,47 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ agentcall 100 list
+@@BEGIN 100
+| . 1 1024
+| .. 1 1024
+| README 2 2441
+| log.txt 2 13
+| report.txt 2 88
+| inbox.txt 2 83
+| important.txt 2 29
+| edge.txt 2 1020
+| forge.txt 2 61
+| big.txt 2 12280
+| full.txt 2 1024
+| cat 2 36976
+| echo 2 35840
+| forktest 2 18392
+| grep 2 44432
+| init 2 36232
+| kill 2 35760
+| ln 2 35560
+| ls 2 43128
+| mkdir 2 35816
+| rm 2 35808
+| sh 2 58528
+| stressfs 2 36680
+| usertests 2 213768
+| grind 2 52072
+| wc 2 37984
+| zombie 2 35096
+| logstress 2 37816
+| forphan 2 36600
+| dorphan 2 36048
+| sync 2 35192
+| effectctl 2 44488
+| crashctl 2 36352
+| effstat 2 35696
+| effstress 2 43960
+| effraw 2 42904
+| diskfill 2 36424
+| agentcall 2 50720
+| console 3 0
+@@END 100 rc=0 status=OK
+$ 

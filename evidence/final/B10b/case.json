@@ -1,0 +1,71 @@
+{
+ "id": "B10b",
+ "title": "Concurrency: same key SAME payload, 1 CPU (debug configuration)",
+ "group": "concurrency",
+ "result": "PASS",
+ "seconds": 0.69,
+ "params": {
+  "cpus": 1,
+  "procs": 6,
+  "trials": 4
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B10b/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effstress same 6 0x5000 /log.txt T0",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress same 6 0x5100 /log.txt T1",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress same 6 0x5200 /log.txt T2",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress same 6 0x5300 /log.txt T3",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=same n=6 ok=6 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=20 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=16 diskwrites=41 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "file has each payload exactly once",
+   "expected": "b'boot-entry-0\\nT0T1T2T3'",
+   "observed": "b'boot-entry-0\\nT0T1T2T3'",
+   "pass_": true
+  },
+  {
+   "name": "executed == 4, replayed == 20",
+   "expected": "(4, 20)",
+   "observed": "(4, 20)",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

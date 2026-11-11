@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -s 2:1 create 0xC0FFEE0000000001 /made.txt fresh-file
+crashhook: injected crash at stage 2 (hit 1)
+panic: crashhook: injected crash

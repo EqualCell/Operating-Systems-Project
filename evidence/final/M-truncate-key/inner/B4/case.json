@@ -1,0 +1,102 @@
+{
+ "id": "B4",
+ "title": "Keys that differ only in the HIGH 32 bits never collide (no truncation)",
+ "group": "behaviour",
+ "result": "FAIL",
+ "seconds": 0.82,
+ "params": {
+  "keys": [
+   "0x1",
+   "0x100000001",
+   "0x200000001",
+   "0xffffffff00000001",
+   "0xffffffffffffffff",
+   "0x8000000000000000"
+  ]
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /tmp/xv6-truncate-key-28061/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/M-truncate-key/inner/B4/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x1 /log.txt a",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000001 rc=1 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x100000001 /log.txt b",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000100000001 rc=-4 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x200000001 /log.txt c",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000200000001 rc=-4 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xffffffff00000001 /log.txt d",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xFFFFFFFF00000001 rc=-4 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xffffffffffffffff /log.txt e",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xFFFFFFFFFFFFFFFF rc=1 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x8000000000000000 /log.txt f",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x8000000000000000 rc=-1 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x200000001 /log.txt c",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000200000001 rc=-4 outcome=ERROR\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "all 6 distinct keys EXECUTED",
+   "expected": "['EXECUTED', 'EXECUTED', 'EXECUTED', 'EXECUTED', 'EXECUTED', 'EXECUTED']",
+   "observed": "['EXECUTED', 'ERROR', 'ERROR', 'ERROR', 'EXECUTED', 'ERROR']",
+   "pass_": false
+  },
+  {
+   "name": "retry of 0x200000001 is REPLAYED",
+   "expected": "'REPLAYED'",
+   "observed": "'ERROR'",
+   "pass_": false
+  },
+  {
+   "name": "file has each letter exactly once",
+   "expected": "b'boot-entry-0\\nabcdef'",
+   "observed": "b'boot-entry-0\\nae'",
+   "pass_": false
+  },
+  {
+   "name": "table holds all six full 64-bit keys",
+   "expected": "{1, 4294967297, 8589934593, 9223372036854775808, 18446744073709551615, 18446744069414584321}",
+   "observed": "{1, 4294967295}",
+   "pass_": false
+  }
+ ],
+ "notes": [
+  "0x1, 0x100000001, 0x200000001 have identical low 32 bits: a 32-bit argint() key would have collided."
+ ],
+ "tables": [],
+ "error": null
+}

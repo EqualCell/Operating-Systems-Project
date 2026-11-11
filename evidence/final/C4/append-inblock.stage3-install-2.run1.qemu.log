@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+hart 1 starting
+hart 2 starting
+init: starting sh
+$ effectctl -s 3:2 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD
+crashhook: injected crash at stage 3 (hit 2)
+panic: crashhook: injected crash

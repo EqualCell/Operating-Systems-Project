@@ -1,0 +1,15 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl create 0xC1 /new.txt created-body
+EFFECT op=CREATE key=0x00000000000000C1 rc=12 outcome=EXECUTED
+$ effectctl create 0xC1 /new.txt created-body
+EFFECT op=CREATE key=0x00000000000000C1 rc=12 outcome=REPLAYED
+$ effectctl create 0xC2 /new.txt other
+EFFECT op=CREATE key=0x00000000000000C2 rc=-6 outcome=ERROR
+$ effectctl create 0xC3 /nodir/x.txt zzz
+EFFECT op=CREATE key=0x00000000000000C3 rc=-1 outcome=ERROR
+$ effstat
+EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=2 table_used=1 table_slots=64 logwrites=13 diskwrites=23 last_logged=6 last_logwrites=9 last_diskwrites=14
+$ 

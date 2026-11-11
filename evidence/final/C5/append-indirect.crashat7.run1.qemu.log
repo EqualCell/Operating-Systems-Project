@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -c 7 append 0xC0FFEE0000000001 /big.txt 0123456789012345678901234567890123456789
+crashat: injected crash at log_write #7
+panic: crashat: injected crash

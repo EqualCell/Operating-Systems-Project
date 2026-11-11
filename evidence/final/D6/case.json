@@ -1,0 +1,134 @@
+{
+ "id": "D6",
+ "title": "CRASH mid-effect: guest panics, agent sees UNKNOWN, reboots SAME disk, retries -> once",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 1.62,
+ "params": {},
+ "boots": [],
+ "steps": [
+  {
+   "vm": "pre-commit",
+   "cmd": "crashctl at 2",
+   "status": "ok",
+   "output": "CRASHCTL rc=0\n"
+  },
+  {
+   "vm": "post-commit",
+   "cmd": "crashctl stage 2",
+   "status": "ok",
+   "output": "CRASHCTL rc=0\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "[pre-commit] attempt 1 UNKNOWN (kernel panic, no reply), attempt 2 OK",
+   "expected": "['UNKNOWN', 'OK']",
+   "observed": "['UNKNOWN', 'OK']",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] guest was rebooted once on the same image",
+   "expected": "2",
+   "observed": "2",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] retry used the SAME key",
+   "expected": "'0xef05ec3329970b8a'",
+   "observed": "'0xef05ec3329970b8a'",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] retry outcome",
+   "expected": "'EXECUTED'",
+   "observed": "'EXECUTED'",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] agent outcome OK",
+   "expected": "'OK'",
+   "observed": "'OK'",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] file has the text exactly once",
+   "expected": "b'boot-entry-0\\ncrash-test'",
+   "observed": "b'boot-entry-0\\ncrash-test'",
+   "pass_": true
+  },
+  {
+   "name": "[pre-commit] one table entry",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] attempt 1 UNKNOWN (kernel panic, no reply), attempt 2 OK",
+   "expected": "['UNKNOWN', 'OK']",
+   "observed": "['UNKNOWN', 'OK']",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] guest was rebooted once on the same image",
+   "expected": "2",
+   "observed": "2",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] retry used the SAME key",
+   "expected": "'0xa22af2d3c4361aa3'",
+   "observed": "'0xa22af2d3c4361aa3'",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] retry outcome",
+   "expected": "'REPLAYED'",
+   "observed": "'REPLAYED'",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] agent outcome OK",
+   "expected": "'OK'",
+   "observed": "'OK'",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] file has the text exactly once",
+   "expected": "b'boot-entry-0\\ncrash-test'",
+   "observed": "b'boot-entry-0\\ncrash-test'",
+   "pass_": true
+  },
+  {
+   "name": "[post-commit] one table entry",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "agent crash/retry outcomes",
+   "rows": [
+    {
+     "case": "pre-commit",
+     "attempts": [
+      "UNKNOWN",
+      "OK"
+     ],
+     "retry": "EXECUTED"
+    },
+    {
+     "case": "post-commit",
+     "attempts": [
+      "UNKNOWN",
+      "OK"
+     ],
+     "retry": "REPLAYED"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

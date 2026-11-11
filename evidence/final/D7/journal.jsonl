@@ -1,0 +1,9 @@
+{"args": {"path": "/log.txt", "text": "restart-test"}, "ev": "begin", "key": "0xbc86ed8aca0e82bd", "op": "op-0001", "tool": "append_file", "ts": 1794417303.484}
+{"comm_id": 100, "ev": "attempt", "op": "op-0001", "ts": 1794417303.567}
+{"ev": "result", "op": "op-0001", "outcome": null, "rc": null, "reason": "reply lost (injected fault): outcome unknown", "state": "unknown", "ts": 1794417303.57}
+{"comm_id": 101, "ev": "attempt", "op": "op-0001", "ts": 1794417303.635}
+{"ev": "result", "op": "op-0001", "outcome": null, "rc": null, "reason": "reply lost (injected fault): outcome unknown", "state": "unknown", "ts": 1794417303.638}
+{"comm_id": 102, "ev": "attempt", "op": "op-0001", "ts": 1794417303.713}
+{"ev": "result", "op": "op-0001", "outcome": null, "rc": null, "reason": "reply lost (injected fault): outcome unknown", "state": "unknown", "ts": 1794417303.717}
+{"comm_id": 100, "ev": "attempt", "op": "op-0001", "ts": 1794417304.1}
+{"ev": "result", "op": "op-0001", "outcome": "REPLAYED", "rc": 12, "reason": null, "state": "done", "ts": 1794417304.104}

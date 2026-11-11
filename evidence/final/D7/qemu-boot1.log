@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ agentcall 100 append bc86ed8aca0e82bd /log.txt 726573746172742d74657374
+@@BEGIN 100
+| EFFECT op=APPEND key=0xBC86ED8ACA0E82BD rc=12 outcome=REPLAYED
+@@END 100 rc=12 status=REPLAYED
+$ 

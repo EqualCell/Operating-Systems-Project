@@ -1,0 +1,118 @@
+{
+ "id": "B8",
+ "title": "CREATE: new file + record in one transaction; replay; error cases",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 0.69,
+ "params": {
+  "last_logged_blocks_create": 6,
+  "last_diskwrites_create": 14
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B8/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0xC1 /new.txt created-body",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x00000000000000C1 rc=12 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0xC1 /new.txt created-body",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x00000000000000C1 rc=12 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0xC2 /new.txt other",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x00000000000000C2 rc=-6 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0xC3 /nodir/x.txt zzz",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x00000000000000C3 rc=-1 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=2 table_used=1 table_slots=64 logwrites=13 diskwrites=23 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "CREATE EXECUTED rc=bytes",
+   "expected": "('EXECUTED', 12)",
+   "observed": "('EXECUTED', 12)",
+   "pass_": true
+  },
+  {
+   "name": "CREATE replay REPLAYED same rc",
+   "expected": "('REPLAYED', 12)",
+   "observed": "('REPLAYED', 12)",
+   "pass_": true
+  },
+  {
+   "name": "CREATE of existing path -> EEXIST(-6)",
+   "expected": "-6",
+   "observed": "-6",
+   "pass_": true
+  },
+  {
+   "name": "CREATE with missing parent -> EINVAL(-1)",
+   "expected": "-1",
+   "observed": "-1",
+   "pass_": true
+  },
+  {
+   "name": "new.txt exists with exact body",
+   "expected": "b'created-body'",
+   "observed": "b'created-body'",
+   "pass_": true
+  },
+  {
+   "name": "only the successful CREATE recorded",
+   "expected": "{193}",
+   "observed": "{193}",
+   "pass_": true
+  },
+  {
+   "name": "failed CREATEs left no file",
+   "expected": "None",
+   "observed": "None",
+   "pass_": true
+  },
+  {
+   "name": "exactly one directory entry named new.txt",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  },
+  {
+   "name": "image consistent",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  },
+  {
+   "name": "kernel counters executed=1 replayed=1 errors=2",
+   "expected": "(1, 1, 2)",
+   "observed": "(1, 1, 2)",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

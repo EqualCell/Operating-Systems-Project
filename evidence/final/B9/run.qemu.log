@@ -1,0 +1,17 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effstress fill 70 0x1000 /log.txt z
+STRESS-SUMMARY mode=fill n=70 ok=64 EINVAL=0 ENOENT=0 EFULL=6 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstat
+EFFSTAT executed=64 replayed=0 mismatched=0 table_full=6 errors=0 table_used=64 table_slots=64 logwrites=196 diskwrites=521 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effstress fill 70 0x1000 /log.txt z
+STRESS-SUMMARY mode=fill n=70 ok=64 EINVAL=0 ENOENT=0 EFULL=6 EMISMATCH=0 EIO=0 EEXIST=0
+$ effstat
+EFFSTAT executed=64 replayed=64 mismatched=0 table_full=12 errors=0 table_used=64 table_slots=64 logwrites=196 diskwrites=521 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ effectctl append 0x1000 /log.txt DIFFERENT
+EFFECT op=APPEND key=0x0000000000001000 rc=-4 outcome=ERROR
+$ effectctl create 0x9999 /tfull.txt never
+EFFECT op=CREATE key=0x0000000000009999 rc=-3 outcome=ERROR
+$ 

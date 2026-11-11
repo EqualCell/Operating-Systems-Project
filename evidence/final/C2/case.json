@@ -1,0 +1,1057 @@
+{
+ "id": "C2",
+ "title": "Crash sweep: APPEND crossing a block boundary (allocates a new block + bitmap)",
+ "group": "crash",
+ "result": "PASS",
+ "seconds": 14.68,
+ "params": {
+  "scenario": "append-crossblock",
+  "op": "append",
+  "path": "/edge.txt",
+  "payload": "0123456789",
+  "key": "0xC0FFEE0000000001",
+  "cpus": 1,
+  "log_write_calls_K": 6,
+  "logged_blocks_L": 5,
+  "disk_writes_per_effect": 12
+ },
+ "boots": [
+  {
+   "label": "measure",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "measure.img",
+   "log": "measure.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/measure.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat1.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.crashat1.img",
+   "log": "append-crossblock.crashat1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat1.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.crashat1.img",
+   "log": "append-crossblock.crashat1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat2.run1",
+   "cpus": 1,
+   "boot_seconds": 0.284,
+   "image": "append-crossblock.crashat2.img",
+   "log": "append-crossblock.crashat2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat2.run2",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "append-crossblock.crashat2.img",
+   "log": "append-crossblock.crashat2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat3.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.crashat3.img",
+   "log": "append-crossblock.crashat3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat3.run2",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "append-crossblock.crashat3.img",
+   "log": "append-crossblock.crashat3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat4.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.crashat4.img",
+   "log": "append-crossblock.crashat4.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat4.run2",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "append-crossblock.crashat4.img",
+   "log": "append-crossblock.crashat4.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat5.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.crashat5.img",
+   "log": "append-crossblock.crashat5.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat5.run2",
+   "cpus": 1,
+   "boot_seconds": 0.254,
+   "image": "append-crossblock.crashat5.img",
+   "log": "append-crossblock.crashat5.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat6.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "append-crossblock.crashat6.img",
+   "log": "append-crossblock.crashat6.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat6.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.crashat6.img",
+   "log": "append-crossblock.crashat6.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat6.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat7-control.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "append-crossblock.crashat7-control.img",
+   "log": "append-crossblock.crashat7-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat7-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.crashat7-control.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.crashat7-control.img",
+   "log": "append-crossblock.crashat7-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.crashat7-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage1-before-header.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.stage1-before-header.img",
+   "log": "append-crossblock.stage1-before-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage1-before-header.run2",
+   "cpus": 1,
+   "boot_seconds": 0.246,
+   "image": "append-crossblock.stage1-before-header.img",
+   "log": "append-crossblock.stage1-before-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage2-after-header.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "append-crossblock.stage2-after-header.img",
+   "log": "append-crossblock.stage2-after-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage2-after-header.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.stage2-after-header.img",
+   "log": "append-crossblock.stage2-after-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-1.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "append-crossblock.stage3-install-1.img",
+   "log": "append-crossblock.stage3-install-1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-1.run2",
+   "cpus": 1,
+   "boot_seconds": 0.264,
+   "image": "append-crossblock.stage3-install-1.img",
+   "log": "append-crossblock.stage3-install-1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-2.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "append-crossblock.stage3-install-2.img",
+   "log": "append-crossblock.stage3-install-2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-2.run2",
+   "cpus": 1,
+   "boot_seconds": 0.257,
+   "image": "append-crossblock.stage3-install-2.img",
+   "log": "append-crossblock.stage3-install-2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-3.run1",
+   "cpus": 1,
+   "boot_seconds": 0.295,
+   "image": "append-crossblock.stage3-install-3.img",
+   "log": "append-crossblock.stage3-install-3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-3.run2",
+   "cpus": 1,
+   "boot_seconds": 0.264,
+   "image": "append-crossblock.stage3-install-3.img",
+   "log": "append-crossblock.stage3-install-3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-4.run1",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "append-crossblock.stage3-install-4.img",
+   "log": "append-crossblock.stage3-install-4.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-4.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "append-crossblock.stage3-install-4.img",
+   "log": "append-crossblock.stage3-install-4.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-4.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-5.run1",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "append-crossblock.stage3-install-5.img",
+   "log": "append-crossblock.stage3-install-5.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-5.run2",
+   "cpus": 1,
+   "boot_seconds": 0.265,
+   "image": "append-crossblock.stage3-install-5.img",
+   "log": "append-crossblock.stage3-install-5.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-5.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage4-after-install.run1",
+   "cpus": 1,
+   "boot_seconds": 0.297,
+   "image": "append-crossblock.stage4-after-install.img",
+   "log": "append-crossblock.stage4-after-install.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage4-after-install.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.stage4-after-install.img",
+   "log": "append-crossblock.stage4-after-install.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-6-control.run1",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "append-crossblock.stage3-install-6-control.img",
+   "log": "append-crossblock.stage3-install-6-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-6-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-crossblock.stage3-install-6-control.run2",
+   "cpus": 1,
+   "boot_seconds": 0.255,
+   "image": "append-crossblock.stage3-install-6-control.img",
+   "log": "append-crossblock.stage3-install-6-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C2/append-crossblock.stage3-install-6-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "measure.img",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "measure.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=10 diskwrites=21 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat1.run1",
+   "cmd": "effectctl -c 1 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #1\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat2.run1",
+   "cmd": "effectctl -c 2 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #2\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat3.run1",
+   "cmd": "effectctl -c 3 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #3\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat4.run1",
+   "cmd": "effectctl -c 4 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #4\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat4.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat4.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat4.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat5.run1",
+   "cmd": "effectctl -c 5 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #5\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat5.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat5.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat5.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat6.run1",
+   "cmd": "effectctl -c 6 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #6\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.crashat6.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat6.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat6.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.crashat7-control.run1",
+   "cmd": "effectctl -c 7 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat7-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat7-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.crashat7-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage1-before-header.run1",
+   "cmd": "effectctl -s 1:1 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 1 (hit 1)\npanic: crashhook: injected cra"
+  },
+  {
+   "vm": "append-crossblock.stage1-before-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.stage1-before-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage1-before-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=6 diskwrites=13 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "append-crossblock.stage2-after-header.run1",
+   "cmd": "effectctl -s 2:1 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injec"
+  },
+  {
+   "vm": "append-crossblock.stage2-after-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage2-after-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage2-after-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-1.run1",
+   "cmd": "effectctl -s 3:1 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-2.run1",
+   "cmd": "effectctl -s 3:2 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 2)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-3.run1",
+   "cmd": "effectctl -s 3:3 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 3)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-4.run1",
+   "cmd": "effectctl -s 3:4 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 4)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-4.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-4.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-4.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-5.run1",
+   "cmd": "effectctl -s 3:5 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 5)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-5.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-5.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-5.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage4-after-install.run1",
+   "cmd": "effectctl -s 4:1 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 4 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-crossblock.stage4-after-install.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage4-after-install.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage4-after-install.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=6 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-6-control.run1",
+   "cmd": "effectctl -s 3:6 append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-6-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-6-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-crossblock.stage3-install-6-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "crashat1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat4: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat5: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat6: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat7-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage1-before-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage2-after-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-4: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-5: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage4-after-install: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-6-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "at least K+L+3 real crashes were exercised",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "uncommitted crashes (replay EXECUTED) and committed crashes (replay REPLAYED) both occurred",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "crash points for append-crossblock (K=6 log_write calls, L=5 blocks, 12 disk writes)",
+   "rows": [
+    {
+     "trial": "append-crossblock.crashat1",
+     "arm": "-c 1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat2",
+     "arm": "-c 2",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat3",
+     "arm": "-c 3",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat4",
+     "arm": "-c 4",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat5",
+     "arm": "-c 5",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat6",
+     "arm": "-c 6",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.crashat7-control",
+     "arm": "-c 7",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage1-before-header",
+     "arm": "-s 1:1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage2-after-header",
+     "arm": "-s 2:1",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-1",
+     "arm": "-s 3:1",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-2",
+     "arm": "-s 3:2",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-3",
+     "arm": "-s 3:3",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-4",
+     "arm": "-s 3:4",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-5",
+     "arm": "-s 3:5",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage4-after-install",
+     "arm": "-s 4:1",
+     "crashed": true,
+     "log_n": 5,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 5,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-crossblock.stage3-install-6-control",
+     "arm": "-s 3:6",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

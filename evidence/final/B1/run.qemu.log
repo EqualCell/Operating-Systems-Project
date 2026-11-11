@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl append 0xDEADBEEF12345678 /log.txt HELLO-EXACTLY
+EFFECT op=APPEND key=0xDEADBEEF12345678 rc=13 outcome=EXECUTED
+$ 

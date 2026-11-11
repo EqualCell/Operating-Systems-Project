@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl append 0x1 /log.txt hello
+EFFECT op=APPEND key=0x0000000000000001 rc=5 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ 

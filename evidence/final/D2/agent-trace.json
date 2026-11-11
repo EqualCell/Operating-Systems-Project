@@ -1,0 +1,126 @@
+{
+ "trace": [
+  {
+   "kind": "request",
+   "goal": "read /report.txt"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/report.txt"
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/report.txt"
+    }
+   }
+  },
+  {
+   "kind": "guest",
+   "tool": "read_file",
+   "reply": {
+    "status": "OK",
+    "rc": 88,
+    "guest_status": "OK",
+    "body": [
+     "The server handled 100 requests.",
+     "Five requests failed.",
+     "Average response time was 20 ms."
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": "The server handled 100 requests.\nFive requests failed.\nAverage response time was 20 ms."
+  },
+  {
+   "kind": "request",
+   "goal": "read /nosuch.txt"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/nosuch.txt"
+    }
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "read_file",
+    "args": {
+     "path": "/nosuch.txt"
+    }
+   }
+  },
+  {
+   "kind": "guest",
+   "tool": "read_file",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:not-found",
+    "body": [],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": "ERR: ERR:not-found"
+  }
+ ],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 read /report.txt",
+   "raw": "@@BEGIN 100\n| The server handled 100 requests.\n| Five requests failed.\n| Average response time was 20 ms.\n@@END 100 rc=88 status=OK\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "OK",
+    "rc": 88,
+    "guest_status": "OK",
+    "body": [
+     "The server handled 100 requests.",
+     "Five requests failed.",
+     "Average response time was 20 ms."
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.063
+  },
+  {
+   "comm_id": 101,
+   "sent": "agentcall 101 read /nosuch.txt",
+   "raw": "@@BEGIN 101\n@@END 101 rc=-1 status=ERR:not-found\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:not-found",
+    "body": [],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": null
+   },
+   "seconds": 0.062
+  }
+ ]
+}

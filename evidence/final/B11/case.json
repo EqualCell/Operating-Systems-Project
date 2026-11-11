@@ -1,0 +1,77 @@
+{
+ "id": "B11",
+ "title": "Concurrency: same key, DIFFERENT payloads: one wins, rest EMISMATCH",
+ "group": "concurrency",
+ "result": "PASS",
+ "seconds": 0.73,
+ "params": {
+  "cpus": 3,
+  "procs": 6,
+  "trials": 4
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 3,
+   "boot_seconds": 0.284,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B11/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effstress diff 6 0x5000 /log.txt T0",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=diff n=6 ok=1 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=5 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress diff 6 0x5100 /log.txt T1",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=diff n=6 ok=1 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=5 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress diff 6 0x5200 /log.txt T2",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=diff n=6 ok=1 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=5 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress diff 6 0x5300 /log.txt T3",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=diff n=6 ok=1 EINVAL=0 ENOENT=0 EFULL=0 EMISMATCH=5 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=0 mismatched=20 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=16 diskwrites=41 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "per trial: exactly 1 success and 5 EMISMATCH",
+   "expected": "[('1', '5'), ('1', '5'), ('1', '5'), ('1', '5')]",
+   "observed": "[('1', '5'), ('1', '5'), ('1', '5'), ('1', '5')]",
+   "pass_": true
+  },
+  {
+   "name": "file grew by exactly one payload per trial (4 x 3 bytes)",
+   "expected": "12",
+   "observed": "12",
+   "pass_": true
+  },
+  {
+   "name": "kernel executed == 4, mismatched == 20",
+   "expected": "(4, 20)",
+   "observed": "(4, 20)",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

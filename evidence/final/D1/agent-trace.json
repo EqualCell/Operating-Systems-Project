@@ -1,0 +1,138 @@
+{
+ "trace": [
+  {
+   "kind": "request",
+   "goal": "list"
+  },
+  {
+   "kind": "proposed",
+   "action": {
+    "tool": "list_files",
+    "args": {}
+   }
+  },
+  {
+   "kind": "validated",
+   "action": {
+    "tool": "list_files",
+    "args": {}
+   }
+  },
+  {
+   "kind": "guest",
+   "tool": "list_files",
+   "reply": {
+    "status": "OK",
+    "rc": 0,
+    "guest_status": "OK",
+    "body": [
+     ". 1 1024",
+     ".. 1 1024",
+     "README 2 2441",
+     "log.txt 2 13",
+     "report.txt 2 88",
+     "inbox.txt 2 83",
+     "important.txt 2 29",
+     "edge.txt 2 1020",
+     "forge.txt 2 61",
+     "big.txt 2 12280",
+     "full.txt 2 1024",
+     "cat 2 36976",
+     "echo 2 35840",
+     "forktest 2 18392",
+     "grep 2 44432",
+     "init 2 36232",
+     "kill 2 35760",
+     "ln 2 35560",
+     "ls 2 43128",
+     "mkdir 2 35816",
+     "rm 2 35808",
+     "sh 2 58528",
+     "stressfs 2 36680",
+     "usertests 2 213768",
+     "grind 2 52072",
+     "wc 2 37984",
+     "zombie 2 35096",
+     "logstress 2 37816",
+     "forphan 2 36600",
+     "dorphan 2 36048",
+     "sync 2 35192",
+     "effectctl 2 44488",
+     "crashctl 2 36352",
+     "effstat 2 35696",
+     "effstress 2 43960",
+     "effraw 2 42904",
+     "diskfill 2 36424",
+     "agentcall 2 50720",
+     "console 3 0"
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   }
+  },
+  {
+   "kind": "done",
+   "outcome": "OK",
+   "final": ". 1 1024\n.. 1 1024\nREADME 2 2441\nlog.txt 2 13\nreport.txt 2 88\ninbox.txt 2 83\nimportant.txt 2 29\nedge.txt 2 1020\nforge.txt 2 61\nbig.txt 2 12280\nfull.txt 2 1024\ncat 2 36976\necho 2 35840\nforktest 2 18392\ngrep 2 44432\ninit 2 36232\nkill 2 35760\nln 2 35560\nls 2 43128\nmkdir 2 35816\nrm 2 35808\nsh 2 58528\nstressfs 2 36680\nusertests 2 213768\ngrind 2 52072\nwc 2 37984\nzombie 2 35096\nlogstress 2 37816\nforphan 2 36600\ndorphan 2 36048\nsync 2 35192\neffectctl 2 44488\ncrashctl 2 36352\neffstat 2 35696\neffstress 2 43960\neffraw 2 42904\ndiskfill 2 36424\nagentcall 2 50720\nconsole 3 0"
+  }
+ ],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 list",
+   "raw": "@@BEGIN 100\n| . 1 1024\n| .. 1 1024\n| README 2 2441\n| log.txt 2 13\n| report.txt 2 88\n| inbox.txt 2 83\n| important.txt 2 29\n| edge.txt 2 1020\n| forge.txt 2 61\n| big.txt 2 12280\n| full.txt 2 1024\n| cat 2 36976\n| echo 2 35840\n| forktest 2 18392\n| grep 2 44432\n| init 2 36232\n| kill 2 35760\n| ln 2 35560\n| ls 2 43128\n| mkdir 2 35816\n| rm 2 35808\n| sh 2 58528\n| stressfs 2 36680\n| usertests 2 213768\n| grind 2 52072\n| wc 2 37984\n| zombie 2 35096\n| logstress 2 37816\n| forphan 2 36600\n| dorphan 2 36048\n| sync 2 35192\n| effectctl 2 44488\n| crashctl 2 36352\n| effstat 2 35696\n| effstress 2 43960\n| effraw 2 42904\n| diskfill 2 36424\n| agentcall 2 50720\n| console 3 0\n@@END 100 rc=0 status=OK\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "OK",
+    "rc": 0,
+    "guest_status": "OK",
+    "body": [
+     ". 1 1024",
+     ".. 1 1024",
+     "README 2 2441",
+     "log.txt 2 13",
+     "report.txt 2 88",
+     "inbox.txt 2 83",
+     "important.txt 2 29",
+     "edge.txt 2 1020",
+     "forge.txt 2 61",
+     "big.txt 2 12280",
+     "full.txt 2 1024",
+     "cat 2 36976",
+     "echo 2 35840",
+     "forktest 2 18392",
+     "grep 2 44432",
+     "init 2 36232",
+     "kill 2 35760",
+     "ln 2 35560",
+     "ls 2 43128",
+     "mkdir 2 35816",
+     "rm 2 35808",
+     "sh 2 58528",
+     "stressfs 2 36680",
+     "usertests 2 213768",
+     "grind 2 52072",
+     "wc 2 37984",
+     "zombie 2 35096",
+     "logstress 2 37816",
+     "forphan 2 36600",
+     "dorphan 2 36048",
+     "sync 2 35192",
+     "effectctl 2 44488",
+     "crashctl 2 36352",
+     "effstat 2 35696",
+     "effstress 2 43960",
+     "effraw 2 42904",
+     "diskfill 2 36424",
+     "agentcall 2 50720",
+     "console 3 0"
+    ],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.133
+  }
+ ]
+}

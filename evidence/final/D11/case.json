@@ -1,0 +1,83 @@
+{
+ "id": "D11",
+ "title": "Honest failures: hang -> timeout -> UNKNOWN; panic -> UNKNOWN; garbage -> UNKNOWN",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 3.73,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "frozen guest -> UNKNOWN (never success)",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "reason says outcome unknown",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "bridge marks the guest for restart",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "kernel panic -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: empty -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: no begin -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: begin but no end -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: wrong attempt id -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: end with garbage rc -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: truncated end -> UNKNOWN",
+   "expected": "'UNKNOWN'",
+   "observed": "'UNKNOWN'",
+   "pass_": true
+  },
+  {
+   "name": "parser: well-formed frame -> OK with body",
+   "expected": "('OK', ['a', 'b'], 3)",
+   "observed": "('OK', ['a', 'b'], 3)",
+   "pass_": true
+  }
+ ],
+ "notes": [
+  "UNKNOWN is deliberately NOT 'failed': the effect may have committed. Only a retry with the same key can find out (see D5/D6)."
+ ],
+ "tables": [],
+ "error": null
+}

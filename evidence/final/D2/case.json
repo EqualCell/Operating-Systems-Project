@@ -1,0 +1,33 @@
+{
+ "id": "D2",
+ "title": "read_file: exact content of a guest file",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.46,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "content equals the fixture byte for byte",
+   "expected": "'The server handled 100 requests.\\nFive requests failed.\\nAverage response time was 20 ms.'",
+   "observed": "'The server handled 100 requests.\\nFive requests failed.\\nAverage response time was 20 ms.'",
+   "pass_": true
+  },
+  {
+   "name": "missing file -> agent observes an error, not invented content",
+   "expected": "False",
+   "observed": "False",
+   "pass_": true
+  },
+  {
+   "name": "missing file observation mentions ERR",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

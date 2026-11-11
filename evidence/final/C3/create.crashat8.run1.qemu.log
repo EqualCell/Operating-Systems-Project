@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -c 8 create 0xC0FFEE0000000001 /made.txt fresh-file
+crashat: injected crash at log_write #8
+panic: crashat: injected crash

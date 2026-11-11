@@ -1,0 +1,290 @@
+{
+ "id": "E1",
+ "title": "Cost per effect: log blocks and disk writes (append, cross-block, indirect, create, replay, refusals)",
+ "group": "measure",
+ "result": "PASS",
+ "seconds": 1.82,
+ "params": {
+  "MAXOPBLOCKS": 10,
+  "LOGBLOCKS": 30
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.286,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/E1/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=0 mismatched=0 table_full=0 errors=0 table_used=0 table_slots=64 logwrites=4 diskwrites=9 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE1 /log.txt hello",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E1 rc=5 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE1 /log.txt hello",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E1 rc=5 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE2 /edge.txt 0123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E2 rc=10 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=2 replayed=1 mismatched=0 table_full=0 errors=0 table_used=2 table_slots=64 logwrites=13 diskwrites=29 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=2 replayed=1 mismatched=0 table_full=0 errors=0 table_used=2 table_slots=64 logwrites=13 diskwrites=29 last_logged=5 last_logwrites=6 last_diskwrites=12\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE3 /big.txt 0123456789012345678901234567890123456789",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E3 rc=40 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=3 replayed=1 mismatched=0 table_full=0 errors=0 table_used=3 table_slots=64 logwrites=22 diskwrites=43 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=3 replayed=1 mismatched=0 table_full=0 errors=0 table_used=3 table_slots=64 logwrites=22 diskwrites=43 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0xE4 /m.txt body",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x00000000000000E4 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=1 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=1 mismatched=0 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE1 /log.txt other",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E1 rc=-4 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=0 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0xE5 /none.txt x",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x00000000000000E5 rc=-2 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=1 mismatched=1 table_full=0 errors=1 table_used=4 table_slots=64 logwrites=31 diskwrites=57 last_logged=6 last_logwrites=9 last_diskwrites=14\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "append-in-block executed",
+   "expected": "'EXECUTED'",
+   "observed": "'EXECUTED'",
+   "pass_": true
+  },
+  {
+   "name": "replay costs 0 disk writes and 0 log_writes",
+   "expected": "(0, 0)",
+   "observed": "(0, 0)",
+   "pass_": true
+  },
+  {
+   "name": "mismatch refusal costs 0 disk writes",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "ENOENT refusal costs 0 disk writes (nothing logged)",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "APPEND within a block: disk writes == 2*L+2 (L=3: log copy + header + install + header clear)",
+   "expected": "8",
+   "observed": "8",
+   "pass_": true
+  },
+  {
+   "name": "APPEND within a block: L <= MAXOPBLOCKS(10)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "APPEND crossing 1 KB boundary (edge.txt): disk writes == 2*L+2 (L=5: log copy + header + install + header clear)",
+   "expected": "12",
+   "observed": "12",
+   "pass_": true
+  },
+  {
+   "name": "APPEND crossing 1 KB boundary (edge.txt): L <= MAXOPBLOCKS(10)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "APPEND direct->indirect (big.txt): disk writes == 2*L+2 (L=6: log copy + header + install + header clear)",
+   "expected": "14",
+   "observed": "14",
+   "pass_": true
+  },
+  {
+   "name": "APPEND direct->indirect (big.txt): L <= MAXOPBLOCKS(10)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "CREATE new file: disk writes == 2*L+2 (L=6: log copy + header + install + header clear)",
+   "expected": "14",
+   "observed": "14",
+   "pass_": true
+  },
+  {
+   "name": "CREATE new file: L <= MAXOPBLOCKS(10)",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [
+  "The table block is exactly ONE of the L logged blocks, i.e. the exactly-once record costs +1 log block = +2 disk writes per executed effect; a replay costs nothing."
+ ],
+ "tables": [
+  {
+   "name": "per-effect cost (xv6 log: 2L+2 disk writes for L logged blocks)",
+   "rows": [
+    {
+     "case": "APPEND within a block",
+     "outcome": "EXECUTED",
+     "rc": 5,
+     "log_write_calls": 3,
+     "disk_writes": 8,
+     "logged_blocks": 3
+    },
+    {
+     "case": "REPLAY of that key",
+     "outcome": "REPLAYED",
+     "rc": 5,
+     "log_write_calls": 0,
+     "disk_writes": 0,
+     "logged_blocks": 0
+    },
+    {
+     "case": "APPEND crossing 1 KB boundary (edge.txt)",
+     "outcome": "EXECUTED",
+     "rc": 10,
+     "log_write_calls": 6,
+     "disk_writes": 12,
+     "logged_blocks": 5
+    },
+    {
+     "case": "APPEND direct->indirect (big.txt)",
+     "outcome": "EXECUTED",
+     "rc": 40,
+     "log_write_calls": 9,
+     "disk_writes": 14,
+     "logged_blocks": 6
+    },
+    {
+     "case": "CREATE new file",
+     "outcome": "EXECUTED",
+     "rc": 4,
+     "log_write_calls": 9,
+     "disk_writes": 14,
+     "logged_blocks": 6
+    },
+    {
+     "case": "MISMATCH refusal",
+     "outcome": "ERROR",
+     "rc": -4,
+     "log_write_calls": 0,
+     "disk_writes": 0,
+     "logged_blocks": 0
+    },
+    {
+     "case": "ENOENT refusal",
+     "outcome": "ERROR",
+     "rc": -2,
+     "log_write_calls": 0,
+     "disk_writes": 0,
+     "logged_blocks": 0
+    }
+   ]
+  }
+ ],
+ "error": null
+}

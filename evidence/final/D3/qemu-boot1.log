@@ -1,0 +1,11 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ agentcall 100 read /report.txt
+@@BEGIN 100
+| The server handled 100 requests.
+| Five requests failed.
+| Average response time was 20 ms.
+@@END 100 rc=88 status=OK
+$ 

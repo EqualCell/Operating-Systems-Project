@@ -1,0 +1,37 @@
+{
+ "trace": [],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 read /report.txt",
+   "raw": "",
+   "vm_status": "timeout",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "guest timeout (no prompt returned): outcome unknown",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 3.008
+  },
+  {
+   "comm_id": 101,
+   "sent": "agentcall 101 append 99 /log.txt 78",
+   "raw": "@@BEGIN 101\ncrashat: injected crash at log_write #1\npanic: crashat: injected crash\n",
+   "vm_status": "panic",
+   "reply": {
+    "status": "UNKNOWN",
+    "rc": null,
+    "guest_status": "",
+    "body": [],
+    "reason": "guest panic (no prompt returned): outcome unknown",
+    "comm_id": 101,
+    "outcome": null
+   },
+   "seconds": 0.02
+  }
+ ]
+}

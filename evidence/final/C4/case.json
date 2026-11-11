@@ -1,0 +1,747 @@
+{
+ "id": "C4",
+ "title": "Crash sweep on 3 CPUs: APPEND inside one block",
+ "group": "crash",
+ "result": "PASS",
+ "seconds": 10.54,
+ "params": {
+  "cpus": 3,
+  "scenario": "append-inblock",
+  "op": "append",
+  "path": "/log.txt",
+  "payload": "CRASH-PAYLOAD",
+  "key": "0xC0FFEE0000000001",
+  "log_write_calls_K": 3,
+  "logged_blocks_L": 3,
+  "disk_writes_per_effect": 8
+ },
+ "boots": [
+  {
+   "label": "measure",
+   "cpus": 3,
+   "boot_seconds": 0.307,
+   "image": "measure.img",
+   "log": "measure.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/measure.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat1.run1",
+   "cpus": 3,
+   "boot_seconds": 0.286,
+   "image": "append-inblock.crashat1.img",
+   "log": "append-inblock.crashat1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat1.run2",
+   "cpus": 3,
+   "boot_seconds": 0.266,
+   "image": "append-inblock.crashat1.img",
+   "log": "append-inblock.crashat1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat2.run1",
+   "cpus": 3,
+   "boot_seconds": 0.296,
+   "image": "append-inblock.crashat2.img",
+   "log": "append-inblock.crashat2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat2.run2",
+   "cpus": 3,
+   "boot_seconds": 0.266,
+   "image": "append-inblock.crashat2.img",
+   "log": "append-inblock.crashat2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat3.run1",
+   "cpus": 3,
+   "boot_seconds": 0.286,
+   "image": "append-inblock.crashat3.img",
+   "log": "append-inblock.crashat3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat3.run2",
+   "cpus": 3,
+   "boot_seconds": 0.265,
+   "image": "append-inblock.crashat3.img",
+   "log": "append-inblock.crashat3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat4-control.run1",
+   "cpus": 3,
+   "boot_seconds": 0.285,
+   "image": "append-inblock.crashat4-control.img",
+   "log": "append-inblock.crashat4-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat4-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.crashat4-control.run2",
+   "cpus": 3,
+   "boot_seconds": 0.265,
+   "image": "append-inblock.crashat4-control.img",
+   "log": "append-inblock.crashat4-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.crashat4-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage1-before-header.run1",
+   "cpus": 3,
+   "boot_seconds": 0.286,
+   "image": "append-inblock.stage1-before-header.img",
+   "log": "append-inblock.stage1-before-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage1-before-header.run2",
+   "cpus": 3,
+   "boot_seconds": 0.265,
+   "image": "append-inblock.stage1-before-header.img",
+   "log": "append-inblock.stage1-before-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage1-before-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage2-after-header.run1",
+   "cpus": 3,
+   "boot_seconds": 0.285,
+   "image": "append-inblock.stage2-after-header.img",
+   "log": "append-inblock.stage2-after-header.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage2-after-header.run2",
+   "cpus": 3,
+   "boot_seconds": 0.264,
+   "image": "append-inblock.stage2-after-header.img",
+   "log": "append-inblock.stage2-after-header.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage2-after-header.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-1.run1",
+   "cpus": 3,
+   "boot_seconds": 0.295,
+   "image": "append-inblock.stage3-install-1.img",
+   "log": "append-inblock.stage3-install-1.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-1.run2",
+   "cpus": 3,
+   "boot_seconds": 0.265,
+   "image": "append-inblock.stage3-install-1.img",
+   "log": "append-inblock.stage3-install-1.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-1.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-2.run1",
+   "cpus": 3,
+   "boot_seconds": 0.284,
+   "image": "append-inblock.stage3-install-2.img",
+   "log": "append-inblock.stage3-install-2.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-2.run2",
+   "cpus": 3,
+   "boot_seconds": 0.276,
+   "image": "append-inblock.stage3-install-2.img",
+   "log": "append-inblock.stage3-install-2.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-2.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-3.run1",
+   "cpus": 3,
+   "boot_seconds": 0.295,
+   "image": "append-inblock.stage3-install-3.img",
+   "log": "append-inblock.stage3-install-3.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-3.run2",
+   "cpus": 3,
+   "boot_seconds": 0.266,
+   "image": "append-inblock.stage3-install-3.img",
+   "log": "append-inblock.stage3-install-3.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-3.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage4-after-install.run1",
+   "cpus": 3,
+   "boot_seconds": 0.285,
+   "image": "append-inblock.stage4-after-install.img",
+   "log": "append-inblock.stage4-after-install.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage4-after-install.run2",
+   "cpus": 3,
+   "boot_seconds": 0.276,
+   "image": "append-inblock.stage4-after-install.img",
+   "log": "append-inblock.stage4-after-install.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage4-after-install.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-4-control.run1",
+   "cpus": 3,
+   "boot_seconds": 0.286,
+   "image": "append-inblock.stage3-install-4-control.img",
+   "log": "append-inblock.stage3-install-4-control.run1.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-4-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  },
+  {
+   "label": "append-inblock.stage3-install-4-control.run2",
+   "cpus": 3,
+   "boot_seconds": 0.265,
+   "image": "append-inblock.stage3-install-4-control.img",
+   "log": "append-inblock.stage3-install-4-control.run2.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/C4/append-inblock.stage3-install-4-control.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "measure.img",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "measure.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "append-inblock.crashat1.run1",
+   "cmd": "effectctl -c 1 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #1\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.crashat1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.crashat1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.crashat1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=3 diskwrites=9 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "append-inblock.crashat2.run1",
+   "cmd": "effectctl -c 2 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #2\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.crashat2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.crashat2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.crashat2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=3 diskwrites=9 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "append-inblock.crashat3.run1",
+   "cmd": "effectctl -c 3 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashat: injected crash at log_write #3\npanic: crashat: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.crashat3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.crashat3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.crashat3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=3 diskwrites=9 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "append-inblock.crashat4-control.run1",
+   "cmd": "effectctl -c 4 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.crashat4-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.crashat4-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.crashat4-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage1-before-header.run1",
+   "cmd": "effectctl -s 1:1 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 1 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage1-before-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.stage1-before-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage1-before-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=1 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=3 diskwrites=9 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "append-inblock.stage2-after-header.run1",
+   "cmd": "effectctl -s 2:1 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 2 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage2-after-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage2-after-header.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage2-after-header.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=4 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-1.run1",
+   "cmd": "effectctl -s 3:1 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-1.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-1.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=4 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-2.run1",
+   "cmd": "effectctl -s 3:2 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 2)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-2.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-2.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=4 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-3.run1",
+   "cmd": "effectctl -s 3:3 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 3 (hit 3)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-3.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-3.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=4 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage4-after-install.run1",
+   "cmd": "effectctl -s 4:1 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "panic",
+   "output": "crashhook: injected crash at stage 4 (hit 1)\npanic: crashhook: injected crash\n"
+  },
+  {
+   "vm": "append-inblock.stage4-after-install.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage4-after-install.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage4-after-install.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=4 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-4-control.run1",
+   "cmd": "effectctl -s 3:4 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-4-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-4-control.run2",
+   "cmd": "effectctl append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "append-inblock.stage3-install-4-control.run2",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=0 replayed=2 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "crashat1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "crashat4-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage1-before-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage2-after-header: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-1: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-2: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-3: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage4-after-install: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "stage3-install-4-control: crash->recover->replay = exactly once",
+   "expected": "'PASS'",
+   "observed": "'PASS'",
+   "pass_": true
+  },
+  {
+   "name": "at least K+L+3 real crashes were exercised",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  },
+  {
+   "name": "uncommitted crashes (replay EXECUTED) and committed crashes (replay REPLAYED) both occurred",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [
+  {
+   "name": "crash points for append-inblock (K=3 log_write calls, L=3 blocks, 8 disk writes)",
+   "rows": [
+    {
+     "trial": "append-inblock.crashat1",
+     "arm": "-c 1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.crashat2",
+     "arm": "-c 2",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.crashat3",
+     "arm": "-c 3",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.crashat4-control",
+     "arm": "-c 4",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage1-before-header",
+     "arm": "-s 1:1",
+     "crashed": true,
+     "log_n": 0,
+     "view_effect": false,
+     "view_key": false,
+     "recovered_blocks": 0,
+     "replay1": "EXECUTED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage2-after-header",
+     "arm": "-s 2:1",
+     "crashed": true,
+     "log_n": 3,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 3,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage3-install-1",
+     "arm": "-s 3:1",
+     "crashed": true,
+     "log_n": 3,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 3,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage3-install-2",
+     "arm": "-s 3:2",
+     "crashed": true,
+     "log_n": 3,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 3,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage3-install-3",
+     "arm": "-s 3:3",
+     "crashed": true,
+     "log_n": 3,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 3,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage4-after-install",
+     "arm": "-s 4:1",
+     "crashed": true,
+     "log_n": 3,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 3,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    },
+    {
+     "trial": "append-inblock.stage3-install-4-control",
+     "arm": "-s 3:4",
+     "crashed": false,
+     "log_n": 0,
+     "view_effect": true,
+     "view_key": true,
+     "recovered_blocks": 0,
+     "replay1": "REPLAYED",
+     "replay2": "REPLAYED",
+     "final_log_n": 0,
+     "final_file_ok_once": true,
+     "table_entries": 1,
+     "same_image_inode": true,
+     "verdict": "PASS"
+    }
+   ]
+  }
+ ],
+ "error": null
+}

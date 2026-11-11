@@ -1,0 +1,57 @@
+{
+ "id": "D5",
+ "title": "LOST REPLY: effect committed, answer lost, agent retries with the SAME key -> still once",
+ "group": "agent",
+ "result": "PASS",
+ "seconds": 0.49,
+ "params": {},
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "two send attempts were made",
+   "expected": "2",
+   "observed": "2",
+   "pass_": true
+  },
+  {
+   "name": "first attempt UNKNOWN (reply lost), second OK",
+   "expected": "('UNKNOWN', 'OK')",
+   "observed": "('UNKNOWN', 'OK')",
+   "pass_": true
+  },
+  {
+   "name": "both attempts carried the SAME key",
+   "expected": "'0x38a29a242ea833a4'",
+   "observed": "'0x38a29a242ea833a4'",
+   "pass_": true
+  },
+  {
+   "name": "second attempt was a REPLAY (effect had already committed)",
+   "expected": "'REPLAYED'",
+   "observed": "'REPLAYED'",
+   "pass_": true
+  },
+  {
+   "name": "journal has ONE logical op with 2 attempts",
+   "expected": "(1, 2)",
+   "observed": "(1, 2)",
+   "pass_": true
+  },
+  {
+   "name": "agent outcome OK",
+   "expected": "'OK'",
+   "observed": "'OK'",
+   "pass_": true
+  },
+  {
+   "name": "file has the text exactly once",
+   "expected": "b'boot-entry-0\\nlost-reply-test'",
+   "observed": "b'boot-entry-0\\nlost-reply-test'",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

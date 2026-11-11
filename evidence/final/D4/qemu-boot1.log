@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ agentcall 100 append 3bf986f9627abac5 /log.txt 6167656e742d77726f74652d74686973
+@@BEGIN 100
+| EFFECT op=APPEND key=0x3BF986F9627ABAC5 rc=16 outcome=EXECUTED
+@@END 100 rc=16 status=EXECUTED
+$ 

@@ -1,0 +1,118 @@
+{
+ "id": "B2",
+ "title": "Same key repeated: effect happens once, replays change nothing",
+ "group": "behaviour",
+ "result": "FAIL",
+ "seconds": 0.77,
+ "params": {
+  "key": "0x42",
+  "replays": 3
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.275,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /tmp/xv6-no-replay-lookup-28061/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/M-no-replay-lookup/inner/B2/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x42 /log.txt ONCE",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000042 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x42 /log.txt ONCE",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000042 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x42 /log.txt ONCE",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000042 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x42 /log.txt ONCE",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000042 rc=4 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=4 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=16 diskwrites=41 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "first call EXECUTED",
+   "expected": "'EXECUTED'",
+   "observed": "'EXECUTED'",
+   "pass_": true
+  },
+  {
+   "name": "replays all REPLAYED",
+   "expected": "['REPLAYED', 'REPLAYED', 'REPLAYED']",
+   "observed": "['EXECUTED', 'EXECUTED', 'EXECUTED']",
+   "pass_": false
+  },
+  {
+   "name": "replays return the stored result",
+   "expected": "[4, 4, 4]",
+   "observed": "[4, 4, 4]",
+   "pass_": true
+  },
+  {
+   "name": "kernel executed counter unchanged by replays",
+   "expected": "1",
+   "observed": "4",
+   "pass_": false
+  },
+  {
+   "name": "kernel replayed counter +3",
+   "expected": "3",
+   "observed": "0",
+   "pass_": false
+  },
+  {
+   "name": "replays caused 0 disk writes",
+   "expected": "0",
+   "observed": "24",
+   "pass_": false
+  },
+  {
+   "name": "replays caused 0 log_write calls",
+   "expected": "0",
+   "observed": "9",
+   "pass_": false
+  },
+  {
+   "name": "file contains payload exactly once",
+   "expected": "b'boot-entry-0\\nONCE'",
+   "observed": "b'boot-entry-0\\nONCEONCEONCEONCE'",
+   "pass_": false
+  },
+  {
+   "name": "one table entry",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

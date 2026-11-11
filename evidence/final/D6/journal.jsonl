@@ -1,0 +1,10 @@
+{"args": {"path": "/log.txt", "text": "crash-test"}, "ev": "begin", "key": "0xef05ec3329970b8a", "op": "op-0001", "tool": "append_file", "ts": 1794417301.911}
+{"comm_id": 100, "ev": "attempt", "op": "op-0001", "ts": 1794417301.936}
+{"ev": "result", "op": "op-0001", "outcome": null, "rc": null, "reason": "guest panic (no prompt returned): outcome unknown", "state": "unknown", "ts": 1794417301.938}
+{"comm_id": 101, "ev": "attempt", "op": "op-0001", "ts": 1794417302.328}
+{"ev": "result", "op": "op-0001", "outcome": "EXECUTED", "rc": 10, "reason": null, "state": "done", "ts": 1794417302.33}
+{"args": {"path": "/log.txt", "text": "crash-test"}, "ev": "begin", "key": "0xa22af2d3c4361aa3", "op": "op-0002", "tool": "append_file", "ts": 1794417302.727}
+{"comm_id": 100, "ev": "attempt", "op": "op-0002", "ts": 1794417302.753}
+{"ev": "result", "op": "op-0002", "outcome": null, "rc": null, "reason": "guest panic (no prompt returned): outcome unknown", "state": "unknown", "ts": 1794417302.754}
+{"comm_id": 101, "ev": "attempt", "op": "op-0002", "ts": 1794417303.136}
+{"ev": "result", "op": "op-0002", "outcome": "REPLAYED", "rc": 10, "reason": null, "state": "done", "ts": 1794417303.141}

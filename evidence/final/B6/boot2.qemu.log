@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effstat
+EFFSTAT executed=0 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=0 diskwrites=1 last_logged=0 last_logwrites=0 last_diskwrites=0
+$ effectctl append 0xBEEF /log.txt PERSIST
+EFFECT op=APPEND key=0x000000000000BEEF rc=7 outcome=REPLAYED
+$ 

@@ -1,0 +1,3 @@
+{"args": {"path": "/log.txt", "text": "agent-wrote-this"}, "ev": "begin", "key": "0x3bf986f9627abac5", "op": "op-0001", "tool": "append_file", "ts": 1794417300.959}
+{"comm_id": 100, "ev": "attempt", "op": "op-0001", "ts": 1794417301.033}
+{"ev": "result", "op": "op-0001", "outcome": "EXECUTED", "rc": 16, "reason": null, "state": "done", "ts": 1794417301.036}

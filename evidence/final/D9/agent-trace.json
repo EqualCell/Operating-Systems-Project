@@ -1,0 +1,149 @@
+{
+ "trace": [],
+ "bridge_history": [
+  {
+   "comm_id": 100,
+   "sent": "agentcall 100 rm /important.txt",
+   "raw": "@@BEGIN 100\n@@END 100 rc=-1 status=ERR:unknown-command\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:unknown-command",
+    "body": [],
+    "reason": "",
+    "comm_id": 100,
+    "outcome": null
+   },
+   "seconds": 0.062
+  },
+  {
+   "comm_id": 101,
+   "sent": "agentcall 101 delete /important.txt",
+   "raw": "@@BEGIN 101\n@@END 101 rc=-1 status=ERR:unknown-command\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:unknown-command",
+    "body": [],
+    "reason": "",
+    "comm_id": 101,
+    "outcome": null
+   },
+   "seconds": 0.062
+  },
+  {
+   "comm_id": 102,
+   "sent": "agentcall 102 read /../etc",
+   "raw": "@@BEGIN 102\n@@END 102 rc=-1 status=ERR:bad-path\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-path",
+    "body": [],
+    "reason": "",
+    "comm_id": 102,
+    "outcome": null
+   },
+   "seconds": 0.064
+  },
+  {
+   "comm_id": 103,
+   "sent": "agentcall 103 read /a/b",
+   "raw": "@@BEGIN 103\n@@END 103 rc=-1 status=ERR:bad-path\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-path",
+    "body": [],
+    "reason": "",
+    "comm_id": 103,
+    "outcome": null
+   },
+   "seconds": 0.062
+  },
+  {
+   "comm_id": 104,
+   "sent": "agentcall 104 append zz /log.txt 41",
+   "raw": "@@BEGIN 104\n@@END 104 rc=-1 status=ERR:bad-key\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-key",
+    "body": [],
+    "reason": "",
+    "comm_id": 104,
+    "outcome": null
+   },
+   "seconds": 0.063
+  },
+  {
+   "comm_id": 105,
+   "sent": "agentcall 105 append 0 /log.txt 41",
+   "raw": "@@BEGIN 105\n@@END 105 rc=-1 status=ERR:bad-key\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-key",
+    "body": [],
+    "reason": "",
+    "comm_id": 105,
+    "outcome": null
+   },
+   "seconds": 0.062
+  },
+  {
+   "comm_id": 106,
+   "sent": "agentcall 106 append 5 /log.txt 4",
+   "raw": "@@BEGIN 106\n@@END 106 rc=-1 status=ERR:bad-payload\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-payload",
+    "body": [],
+    "reason": "",
+    "comm_id": 106,
+    "outcome": null
+   },
+   "seconds": 0.072
+  },
+  {
+   "comm_id": 107,
+   "sent": "agentcall 107 append 5 /log.txt 0a0b",
+   "raw": "@@BEGIN 107\n@@END 107 rc=-1 status=ERR:bad-payload\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-payload",
+    "body": [],
+    "reason": "",
+    "comm_id": 107,
+    "outcome": null
+   },
+   "seconds": 0.072
+  },
+  {
+   "comm_id": 108,
+   "sent": "agentcall 108 append 5 /log.txt 414141414141414141414141414141414141414141414141414141414141414141",
+   "raw": "@@BEGIN 108\n@@END 108 rc=-1 status=ERR:bad-payload\n",
+   "vm_status": "ok",
+   "reply": {
+    "status": "ERR",
+    "rc": -1,
+    "guest_status": "ERR:bad-payload",
+    "body": [],
+    "reason": "",
+    "comm_id": 108,
+    "outcome": null
+   },
+   "seconds": 0.062
+  }
+ ]
+}

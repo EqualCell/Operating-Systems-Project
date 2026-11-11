@@ -1,0 +1,103 @@
+{
+ "id": "B5",
+ "title": "Same key, DIFFERENT request is refused (EMISMATCH), file untouched",
+ "group": "behaviour",
+ "result": "FAIL",
+ "seconds": 0.67,
+ "params": {},
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.276,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /tmp/xv6-ignore-mismatch-28061/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/M-ignore-mismatch/inner/B5/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x77 /log.txt AAA",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000077 rc=3 outcome=EXECUTED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x77 /log.txt BBB",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000077 rc=3 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x77 /report.txt AAA",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000000077 rc=3 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0x77 /log.txt AAA",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x0000000000000077 rc=3 outcome=REPLAYED\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=1 replayed=3 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "original EXECUTED",
+   "expected": "'EXECUTED'",
+   "observed": "'EXECUTED'",
+   "pass_": true
+  },
+  {
+   "name": "different payload -> -4",
+   "expected": "-4",
+   "observed": "3",
+   "pass_": false
+  },
+  {
+   "name": "different path -> -4",
+   "expected": "-4",
+   "observed": "3",
+   "pass_": false
+  },
+  {
+   "name": "different op -> -4",
+   "expected": "-4",
+   "observed": "3",
+   "pass_": false
+  },
+  {
+   "name": "mismatched counter == 3",
+   "expected": "3",
+   "observed": "0",
+   "pass_": false
+  },
+  {
+   "name": "log.txt has only the original AAA",
+   "expected": "b'boot-entry-0\\nAAA'",
+   "observed": "b'boot-entry-0\\nAAA'",
+   "pass_": true
+  },
+  {
+   "name": "report.txt untouched",
+   "expected": "b'The server handled 100 requests.\\nFive requests failed.\\nAverage response time was 20 ms.\\n'",
+   "observed": "b'The server handled 100 requests.\\nFive requests failed.\\nAverage response time was 20 ms.\\n'",
+   "pass_": true
+  },
+  {
+   "name": "still one table entry",
+   "expected": "1",
+   "observed": "1",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

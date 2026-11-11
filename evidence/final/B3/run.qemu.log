@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl append 0x10 /log.txt AAA
+EFFECT op=APPEND key=0x0000000000000010 rc=3 outcome=EXECUTED
+$ effectctl append 0x11 /log.txt AAA
+EFFECT op=APPEND key=0x0000000000000011 rc=3 outcome=EXECUTED
+$ 

@@ -1,0 +1,7 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl -c 3 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD
+crashat: injected crash at log_write #3
+panic: crashat: injected crash

@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl append 0xC0FFEE0000000001 /edge.txt 0123456789
+EFFECT op=APPEND key=0xC0FFEE0000000001 rc=10 outcome=EXECUTED
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=0 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=10 diskwrites=21 last_logged=5 last_logwrites=6 last_diskwrites=12
+$ 

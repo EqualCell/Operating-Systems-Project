@@ -1,0 +1,29 @@
+{
+ "id": "U1",
+ "title": "Host-only unit tests (validator, parser, journal, planners)",
+ "group": "unit",
+ "result": "PASS",
+ "seconds": 0.04,
+ "params": {
+  "unittest_summary": "Ran 23 tests in 0.002s"
+ },
+ "boots": [],
+ "steps": [],
+ "checks": [
+  {
+   "name": "unittest exit status",
+   "expected": "0",
+   "observed": "0",
+   "pass_": true
+  },
+  {
+   "name": "at least 20 unit tests ran",
+   "expected": "True",
+   "observed": "True",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

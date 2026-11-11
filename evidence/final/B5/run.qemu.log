@@ -1,0 +1,15 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ effectctl append 0x77 /log.txt AAA
+EFFECT op=APPEND key=0x0000000000000077 rc=3 outcome=EXECUTED
+$ effectctl append 0x77 /log.txt BBB
+EFFECT op=APPEND key=0x0000000000000077 rc=-4 outcome=ERROR
+$ effectctl append 0x77 /report.txt AAA
+EFFECT op=APPEND key=0x0000000000000077 rc=-4 outcome=ERROR
+$ effectctl create 0x77 /log.txt AAA
+EFFECT op=CREATE key=0x0000000000000077 rc=-4 outcome=ERROR
+$ effstat
+EFFSTAT executed=1 replayed=0 mismatched=3 table_full=0 errors=0 table_used=1 table_slots=64 logwrites=7 diskwrites=17 last_logged=3 last_logwrites=3 last_diskwrites=8
+$ 

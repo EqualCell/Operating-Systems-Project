@@ -1,0 +1,124 @@
+{
+ "id": "B9",
+ "title": "Table full: refused BEFORE touching the file; replays still work",
+ "group": "behaviour",
+ "result": "PASS",
+ "seconds": 1.16,
+ "params": {
+  "slots": 64,
+  "calls": 70
+ },
+ "boots": [
+  {
+   "label": "run",
+   "cpus": 1,
+   "boot_seconds": 0.274,
+   "image": "disk.img",
+   "log": "run.qemu.log",
+   "qemu_cmdline": "/home/paaras/toolchain/root/usr/bin/qemu-system-riscv64 -machine virt -bios none -kernel /home/paaras/OS_Project/xv6-riscv/kernel/kernel -m 128M -smp 1 -nographic -global virtio-mmio.force-legacy=false -drive file=/home/paaras/OS_Project/xv6-riscv/evidence/final/B9/disk.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0"
+  }
+ ],
+ "steps": [
+  {
+   "vm": "disk.img",
+   "cmd": "effstress fill 70 0x1000 /log.txt z",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=fill n=70 ok=64 EINVAL=0 ENOENT=0 EFULL=6 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=64 replayed=0 mismatched=0 table_full=6 errors=0 table_used=64 table_slots=64 logwrites=196 diskwrites=521 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstress fill 70 0x1000 /log.txt z",
+   "status": "ok",
+   "output": "STRESS-SUMMARY mode=fill n=70 ok=64 EINVAL=0 ENOENT=0 EFULL=6 EMISMATCH=0 EIO=0 EEXIST=0\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effstat",
+   "status": "ok",
+   "output": "EFFSTAT executed=64 replayed=64 mismatched=0 table_full=12 errors=0 table_used=64 table_slots=64 logwrites=196 diskwrites=521 last_logged=3 last_logwrites=3 last_diskwrites=8\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl append 0x1000 /log.txt DIFFERENT",
+   "status": "ok",
+   "output": "EFFECT op=APPEND key=0x0000000000001000 rc=-4 outcome=ERROR\n"
+  },
+  {
+   "vm": "disk.img",
+   "cmd": "effectctl create 0x9999 /tfull.txt never",
+   "status": "ok",
+   "output": "EFFECT op=CREATE key=0x0000000000009999 rc=-3 outcome=ERROR\n"
+  }
+ ],
+ "checks": [
+  {
+   "name": "64 effects fit, 6 refused with EFULL",
+   "expected": "('64', '6')",
+   "observed": "('64', '6')",
+   "pass_": true
+  },
+  {
+   "name": "table_used == table_slots == 64",
+   "expected": "(64, 64)",
+   "observed": "(64, 64)",
+   "pass_": true
+  },
+  {
+   "name": "full table: all 64 stored keys still replay (linear probing finds every one)",
+   "expected": "('64', '6')",
+   "observed": "('64', '6')",
+   "pass_": true
+  },
+  {
+   "name": "replays did not execute anything",
+   "expected": "64",
+   "observed": "64",
+   "pass_": true
+  },
+  {
+   "name": "mismatch detected even when full",
+   "expected": "-4",
+   "observed": "-4",
+   "pass_": true
+  },
+  {
+   "name": "CREATE with full table -> EFULL(-3)",
+   "expected": "-3",
+   "observed": "-3",
+   "pass_": true
+  },
+  {
+   "name": "file grew by exactly 64 bytes (none for refused calls)",
+   "expected": "b'boot-entry-0\\nzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'",
+   "observed": "b'boot-entry-0\\nzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz'",
+   "pass_": true
+  },
+  {
+   "name": "refused CREATE left no file",
+   "expected": "None",
+   "observed": "None",
+   "pass_": true
+  },
+  {
+   "name": "64 distinct keys on disk",
+   "expected": "64",
+   "observed": "64",
+   "pass_": true
+  },
+  {
+   "name": "image consistent",
+   "expected": "[]",
+   "observed": "[]",
+   "pass_": true
+  }
+ ],
+ "notes": [],
+ "tables": [],
+ "error": null
+}

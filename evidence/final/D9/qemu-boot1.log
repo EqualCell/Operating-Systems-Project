@@ -1,0 +1,32 @@
+
+xv6 kernel is booting
+
+init: starting sh
+$ agentcall 100 rm /important.txt
+@@BEGIN 100
+@@END 100 rc=-1 status=ERR:unknown-command
+$ agentcall 101 delete /important.txt
+@@BEGIN 101
+@@END 101 rc=-1 status=ERR:unknown-command
+$ agentcall 102 read /../etc
+@@BEGIN 102
+@@END 102 rc=-1 status=ERR:bad-path
+$ agentcall 103 read /a/b
+@@BEGIN 103
+@@END 103 rc=-1 status=ERR:bad-path
+$ agentcall 104 append zz /log.txt 41
+@@BEGIN 104
+@@END 104 rc=-1 status=ERR:bad-key
+$ agentcall 105 append 0 /log.txt 41
+@@BEGIN 105
+@@END 105 rc=-1 status=ERR:bad-key
+$ agentcall 106 append 5 /log.txt 4
+@@BEGIN 106
+@@END 106 rc=-1 status=ERR:bad-payload
+$ agentcall 107 append 5 /log.txt 0a0b
+@@BEGIN 107
+@@END 107 rc=-1 status=ERR:bad-payload
+$ agentcall 108 append 5 /log.txt 414141414141414141414141414141414141414141414141414141414141414141
+@@BEGIN 108
+@@END 108 rc=-1 status=ERR:bad-payload
+$ 

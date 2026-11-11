@@ -1,0 +1,9 @@
+
+xv6 kernel is booting
+
+hart 2 starting
+hart 1 starting
+init: starting sh
+$ effectctl -c 4 append 0xC0FFEE0000000001 /log.txt CRASH-PAYLOAD
+EFFECT op=APPEND key=0xC0FFEE0000000001 rc=13 outcome=EXECUTED
+$ 
