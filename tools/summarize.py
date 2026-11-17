@@ -5,6 +5,7 @@ Usage: python3 tools/summarize.py evidence/run-ID [evidence/summary.md]
 import json
 import sys
 from pathlib import Path
+from pathlib import Path
 if len(sys.argv) < 2:
     raise SystemExit(__doc__)
 src=Path(sys.argv[1]); dst=Path(sys.argv[2] if len(sys.argv)>2 else 'evidence/summary.md')

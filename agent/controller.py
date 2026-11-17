@@ -48,6 +48,7 @@ class Controller:
         out, status = self.bridge.vm.run(line)
         match = re.search(r'^GRANT .* rc=(-?\d+) outcome=(\w+)$', out, re.M)
         if status != 'ok' or not match:
+            self.bridge.needs_restart = status != 'ok'
             self.journal.result(op['op'], 'unknown', reason=f'controller {status}: missing reply')
             return None
         rc = int(match[1])

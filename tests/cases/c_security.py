@@ -230,12 +230,10 @@ def controller_recovery(ctx):
             ctx.sh(bridge.vm,f'crashctl stage {stage} 1')
             g,rc=ctl.issue('append_file',{'path':'/log.txt','text':'APPROVED'})
             ctx.check('issuance missing reply is unknown',None,rc)
-            bridge.needs_restart=True
             restarted=Controller(bridge,Journal(journal))
             ctx.check('resume stable grant',[(g,0)],restarted.resume())
             ctx.sh(bridge.vm,'crashctl stage 2 1')
             ctx.check('revoke missing reply unknown',None,restarted.revoke(g))
-            bridge.needs_restart=True
             ctx.check('resume durable revoke',[(g,0)],Controller(bridge,Journal(journal)).resume())
             r=bridge.call('append_file',{'path':'/log.txt','text':'APPROVED'},key=7,grant_id=g)
             ctx.check('revoked effect reported',('ERR',-21,'REVOKED'),(r.status,r.rc,r.guest_status))
