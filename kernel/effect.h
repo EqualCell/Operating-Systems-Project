@@ -1,9 +1,9 @@
-// effect.h -- the ONE shared contract for the exactly-once "effect" feature.
+// effect.h -- legacy controller-only deduplication contract.
 //
 // Included by the kernel (effect*.c, log.c, mkfs) AND by user programs
 // (user/effectctl.c ...), so it may only use types from kernel/types.h.
 //
-// Read docs/contract.md for the prose version of this file.
+// Read docs/design.md for the prose version of this file.
 
 #ifndef EFFECT_H
 #define EFFECT_H

@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 import tempfile
 import unittest
 from agent.journal import Journal
@@ -29,10 +30,10 @@ class RecoveryTests(unittest.TestCase):
     def test_bad_reference_cannot_be_appended(self):
         j = Journal(self.path)
         j.begin('append_file', {})
-        before = open(self.path, 'rb').read()
+        before = Path(self.path).read_bytes()
         with self.assertRaises(KeyError):
             j.result('missing', 'done')
-        self.assertEqual(open(self.path, 'rb').read(), before)
+        self.assertEqual(Path(self.path).read_bytes(), before)
 
     def test_interleaved_instances_do_not_reuse_operation_ids(self):
         a, b = Journal(self.path), Journal(self.path)
@@ -45,3 +46,21 @@ class RecoveryTests(unittest.TestCase):
         op = j.begin('append_file', {})
         j.result(op['op'], 'failed', reason='revoked')
         self.assertEqual(Journal(self.path).ops[op['op']]['reason'], 'revoked')
+
+    def test_middle_corruption_is_not_silently_discarded(self):
+        j = Journal(self.path)
+        j.begin('append_file', {})
+        with open(self.path, 'ab') as f:
+            f.write(b'broken\n{"ev":"attempt","op":"missing","comm_id":9}\n')
+        before = Path(self.path).read_bytes()
+        with self.assertRaises(ValueError):
+            Journal(self.path)
+        self.assertEqual(Path(self.path).read_bytes(), before)
+
+    def test_final_result_cannot_be_overwritten(self):
+        j = Journal(self.path)
+        op = j.begin('append_file', {})
+        j.result(op['op'], 'failed', rc=-21, reason='revoked')
+        with self.assertRaises(ValueError):
+            j.result(op['op'], 'done', rc=1)
+        self.assertEqual(Journal(self.path).ops[op['op']]['state'], 'failed')

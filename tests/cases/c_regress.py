@@ -14,7 +14,7 @@ IGNORE = shutil.ignore_patterns(".git", "evidence", "*.o", "*.d", "*.asm", "*.sy
                                 "__pycache__", "mkfs/mkfs", "user/usys.S", "*.pyc", "runs", "_*")
 
 
-def build_tree(ctx, name, extra_make="", edit=None):
+def build_tree(ctx, name, extra_make="TESTHOOKS=1", edit=None):
     """Copy the source tree to a scratch dir, optionally edit it, build it."""
     dst = os.path.join("/tmp", f"xv6-{name}-{os.getpid()}")
     shutil.rmtree(dst, ignore_errors=True)
@@ -32,7 +32,7 @@ def build_tree(ctx, name, extra_make="", edit=None):
 
 @case("U1", "Host-only unit tests (validator, parser, journal, planners)", "unit")
 def u1(ctx):
-    p = subprocess.run([sys.executable, "-m", "unittest", "tests.unit.test_agent_units", "-v"], cwd=REPO,
+    p = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests/unit", "-v"], cwd=REPO,
                        capture_output=True, text=True)
     out = p.stdout + p.stderr
     with open(os.path.join(ctx.dir, "unittest.log"), "w") as f:
@@ -75,6 +75,13 @@ def r2(ctx):
     ctx.check("effect() works in the production kernel (EXECUTED then REPLAYED)", ("EXECUTED", "REPLAYED"), (r["outcome"], r2_["outcome"]))
     vm.kill()
     ctx.check("file has the text once", b"boot-entry-0\nprod", Image.load(img).with_log_replayed().read_file("/log.txt"))
+    # Secure path also works in production and unsafe comparison code is absent.
+    vm = ctx.boot(img, "prod-secure", kernel=kern)
+    out, _ = ctx.sh(vm, "grtest auth")
+    ctx.check("production authorization", True, "GRTEST failures=0" in out and "FAIL " not in out)
+    out, _ = ctx.sh(vm, "compare")
+    ctx.check("unsafe comparisons disabled", True, "disabled" in out)
+    vm.kill()
     shutil.rmtree(tree, ignore_errors=True)
 
 
@@ -91,7 +98,7 @@ def _make_mutant_case(mname):
                 assert old in s, f"mutant edit target not found: {old[:50]!r}"
                 s = s.replace(old, new, 1)
             open(p, "w").write(s)
-        tree, rc = build_tree(ctx, mname, "", edit)
+        tree, rc = build_tree(ctx, mname, "TESTHOOKS=1", edit)
         ctx.check("mutant kernel builds", 0, rc)
         sub = framework.Run(os.path.join(ctx.dir, "inner"), os.path.join(tree, "fs.img"), os.path.join(tree, "kernel/kernel"))
         rows = []

@@ -96,6 +96,15 @@ static void stale(void) {
   setup(6,0,1,"/log.txt","TWO"); ck("grant6",grant_issue(&q)==0);
   q.request_id=6; ck("effect6",grant_effect(&q)==3);
   setup(5,5,1,"/log.txt","ONE"); ck("stale after effect",grant_effect(&q)==GR_STALE);
+  setup(8,0,1,"/log.txt","COPY"); ck("grant8",grant_issue(&q)==0);
+  char *top=sbrk(4096);
+  if(top!=(char *)-1) {
+    char *end=sbrk(0);
+    memmove(end-6,"PREFIX",6);
+    fd=open("/log.txt",O_WRONLY);
+    ck("failed user copy",write(fd,end-6,12)<0); close(fd);
+    q.request_id=8; ck("partial copy invalidates approval",grant_effect(&q)==GR_STALE);
+  } else ck("copy test allocation",0);
   setup(7,0,1,"/log.txt","STOP"); ck("grant7",grant_issue(&q)==0);
   ck("revoke",grant_revoke(7)==0); ck("revoke retry",grant_revoke(7)==0);
   q.request_id=7; ck("revoked",grant_effect(&q)==GR_REVOKED_ERR);

@@ -49,14 +49,15 @@ def _sh(cmd, **kw):
 
 
 def environment(pristine_img, kernel):
-    files = ["kernel/effect.c", "kernel/effect_store.c", "kernel/effect_ops.c", "kernel/effect.h",
+    files = ["kernel/grant.c", "kernel/grant.h", "kernel/file.c", "kernel/proc.c",
+             "agent/journal.py", "agent/bridge.py", "agent/agent.py", "agent/controller.py", "user/grtest.c", "kernel/effect.c", "kernel/effect_store.c", "kernel/effect_ops.c", "kernel/effect.h",
              "kernel/log.c", "kernel/fs.h", "mkfs/mkfs.c", "kernel/sysfile.c", "kernel/fs.c", "kernel/bio.c"]
     return dict(
-        date=time.strftime("%Y-%m-%d %H:%M:%S"),
+        date=__import__("datetime").datetime.now(__import__("zoneinfo").ZoneInfo("Asia/Kolkata")).isoformat(),
         host=platform.platform(), python=sys.version.split()[0],
         qemu=_sh([qemu_path(), "--version"]).splitlines()[0],
         riscv_gcc=_sh(["riscv64-linux-gnu-gcc", "--version"]).splitlines()[0],
-        xv6_base_commit=_sh(["git", "-C", REPO, "rev-parse", "HEAD"]),
+        source_revision=_sh(["git", "-C", REPO, "rev-parse", "HEAD"]),
         git_dirty_files=len(_sh(["git", "-C", REPO, "status", "--porcelain"]).splitlines()),
         kernel_sha256=sha256(kernel), pristine_fs_img_sha256=sha256(pristine_img),
         source_sha256={f: sha256(os.path.join(REPO, f)) for f in files},

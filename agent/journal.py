@@ -92,6 +92,11 @@ class Journal:
             key = int(rec["key"], 16)
             if not 0 < key < 2**64:
                 raise ValueError("invalid request key")
+            grant = rec.get("grant_id")
+            if grant is not None and (type(grant) is not int or not 0 < grant < 2**64):
+                raise ValueError("invalid grant identity")
+            if any(o["key"] == rec["key"] for o in self.ops.values()):
+                raise ValueError("duplicate logical request key")
             self.ops[op] = dict(op=op, key=rec["key"], tool=rec["tool"],
                                 args=copy.deepcopy(rec["args"]), state="pending", attempts=0,
                                 outcome=None, rc=None, reason=None,

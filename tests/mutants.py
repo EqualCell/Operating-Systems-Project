@@ -42,3 +42,23 @@ MUTANTS = {
         ["C1"],
     ),
 }
+
+MUTANTS.update({
+    "grant-no-authority": (
+        "untrusted grant issuance accepted", "kernel/grant.c",
+        [('  if (!myproc()->controller) return EFF_EPERM;', '  /* MUTANT: omit controller check */')],
+        ["S-auth"],
+    ),
+    "grant-no-version": (
+        "stale approval version check omitted", "kernel/grant.c",
+        [('ip->inum != r.inum || grant_version(ip) != r.version || r.version == ~0ULL',
+          'ip->inum != r.inum || r.version == ~0ULL /* MUTANT */')],
+        ["S-stale"],
+    ),
+    "grant-no-completion": (
+        "file effect commits without grant consumption/completion", "kernel/grant.c",
+        [('          putrecord(slot, &r);\n          p->effect_outcome = 1;',
+          '          /* MUTANT: no durable completion */\n          p->effect_outcome = 1;')],
+        ["S-crash-effect-2"],
+    ),
+})

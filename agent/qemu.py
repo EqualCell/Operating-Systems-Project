@@ -108,8 +108,12 @@ class VM:
         if self.proc and self.proc.poll() is None:
             self.proc.kill()
             self.proc.wait()
+        if getattr(self, "_reader", None):
+            self._reader.join(timeout=2)
+        for pipe in (getattr(self.proc, "stdin", None), getattr(self.proc, "stdout", None)):
+            if pipe and not pipe.closed:
+                pipe.close()
         if getattr(self, "_logf", None) and not self._logf.closed:
-            time.sleep(0.05)
             self._logf.close()
 
     # ---- interaction -----------------------------------------------------

@@ -8,6 +8,7 @@ import os
 import signal
 import time
 
+from agent.controller import Controller
 from agent.agent import Agent
 from agent.bridge import GuestBridge, build_command, parse_reply
 from agent.journal import Journal
@@ -36,6 +37,14 @@ class Env:
         self.bridge.start()
         ctx.vms.append(self)               # framework calls .kill() at the end
         self.agent = Agent(self.bridge, Journal(self.journal_path), planner or RulePlanner())
+
+    def approve(self, text, tool="append_file", path="/log.txt"):
+        # Explicit trusted test setup, never part of a planner/Agent.
+        ctl = Controller(self.bridge, Journal(os.path.join(self.ctx.dir, "controller-" + self.bridge.instance + ".jsonl")))
+        g, rc = ctl.issue(tool, {"path": path, "text": text})
+        assert rc == 0, rc
+        self.agent.grants.append(g)
+        return g
 
     def kill(self):
         self.bridge.stop()
@@ -84,25 +93,27 @@ def d3(ctx):
 @case("D4", "append_file through the agent reaches the real syscall; journal records key", "agent")
 def d4(ctx):
     e = Env(ctx)
+    e.approve("agent-wrote-this")
     rep = e.agent.handle("append agent-wrote-this to /log.txt")
     e.save_trace()
-    op = e.agent.journal.ops["op-0001"]
+    op = next(iter(e.agent.journal.ops.values()))
     ctx.param(key=op["key"], text="agent-wrote-this")
     ctx.check("outcome OK", "OK", rep.outcome)
     ctx.check("journal state done / outcome EXECUTED", ("done", "EXECUTED"), (op["state"], op["outcome"]))
     e.kill()
     f = final(e.img)
     ctx.check("file on disk has the text once", INIT_LOG + b"agent-wrote-this", f.read_file("/log.txt"))
-    ctx.check("table on disk holds the journaled 64-bit key", True, int(op["key"], 16) in entries_by_key(f))
+    ctx.check("table on disk holds the journaled 64-bit key", True, int(op["key"], 16) in {r["request_id"] for r in f.completions()})
 
 
 @case("D5", "LOST REPLY: effect committed, answer lost, agent retries with the SAME key -> still once", "agent")
 def d5(ctx):
     e = Env(ctx)
     e.bridge.drop_replies = 1                      # test-only fault: lose the first reply
+    e.approve("lost-reply-test")
     rep = e.agent.handle("append lost-reply-test to /log.txt")
     e.save_trace()
-    op = e.agent.journal.ops["op-0001"]
+    op = next(iter(e.agent.journal.ops.values()))
     g = [t for t in e.agent.trace if t["kind"] == "guest"]
     ctx.check("two send attempts were made", 2, len(g))
     ctx.check("first attempt UNKNOWN (reply lost), second OK", ("UNKNOWN", "OK"), (g[0]["reply"]["status"], g[1]["reply"]["status"]))
@@ -120,6 +131,7 @@ def d6(ctx):
     for name, arm_cmd, committed in (("pre-commit", "crashctl at 2", False),
                                      ("post-commit", "crashctl stage 2", True)):
         e = Env(ctx, name=name)
+        e.approve("crash-test")
         out, st = e.bridge.vm.run(arm_cmd)           # TEST-ONLY: arm the kernel crash hook from the console
         ctx.steps.append(dict(vm=name, cmd=arm_cmd, status=st, output=out))
         rep = e.agent.handle("append crash-test to /log.txt")
@@ -134,7 +146,7 @@ def d6(ctx):
         e.kill()
         f = final(e.img)
         ctx.check(f"[{name}] file has the text exactly once", INIT_LOG + b"crash-test", f.read_file("/log.txt"))
-        ctx.check(f"[{name}] one table entry", 1, len(f.table()))
+        ctx.check(f"[{name}] one secured completion", 1, len(f.completions()))
         results.append(dict(case=name, attempts=statuses, retry=g[1]["reply"]["outcome"]))
     ctx.table("agent crash/retry outcomes", results)
 
@@ -143,9 +155,10 @@ def d6(ctx):
 def d7(ctx):
     e = Env(ctx)
     e.bridge.drop_replies = 99                      # every reply lost: agent gives up as PENDING
+    e.approve("restart-test")
     rep = e.agent.handle("append restart-test to /log.txt")
     ctx.check("agent reports PENDING (not failure, not success)", "PENDING", rep.outcome)
-    op1 = dict(e.agent.journal.ops["op-0001"])
+    op1 = dict(next(iter(e.agent.journal.ops.values())))
     ctx.check("journal says pending after 3 unknown attempts", ("pending", 3), (op1["state"], op1["attempts"]))
     e.kill()
     # --- "host process restarts": brand-new Journal object + brand-new bridge on the SAME disk ---
@@ -156,14 +169,14 @@ def d7(ctx):
     ctx.vms.append(type("K", (), {"kill": lambda self: b2.stop()})())
     a2 = Agent(b2, j2)
     res = a2.resume()
-    ctx.check("resume retried exactly that op", ["op-0001"], [r[0] for r in res])
+    ctx.check("resume retried exactly that op", [op1["op"]], [r[0] for r in res])
     ctx.check("resume result OK", True, res[0][1].ok)
     ctx.check("no new logical op was created (no fresh key)", 1, len(j2.ops))
-    ctx.check("journal final state", "done", j2.ops["op-0001"]["state"])
+    ctx.check("journal final state", "done", j2.ops[op1["op"]]["state"])
     b2.stop()
     f = final(e.img)
     ctx.check("effect happened exactly once", INIT_LOG + b"restart-test", f.read_file("/log.txt"))
-    ctx.check("key on disk equals the journaled key", True, int(op1["key"], 16) in entries_by_key(f))
+    ctx.check("key on disk equals the journaled key", True, int(op1["key"], 16) in {r["request_id"] for r in f.completions()})
     ctx.note("First 3 attempts: the effect DID commit in the guest but every reply was dropped, so the agent could not know. The resume attempt was a replay.")
 
 
@@ -188,8 +201,7 @@ def d8(ctx):
     f = final(e.img)
     ctx.check("/important.txt unchanged on disk", IMPORTANT, f.read_file("/important.txt"))
     ctx.check("/inbox.txt unchanged on disk", INBOX, f.read_file("/inbox.txt"))
-    ctx.note("LABEL: this is TOOL-LAYER refusal (allowlist), NOT kernel enforcement. A program calling unlink() directly would not be stopped; "
-             "kernel taint tracking (Project 3) is out of scope for this milestone.")
+    ctx.note("LABEL: this is TOOL-LAYER refusal (allowlist), NOT kernel enforcement. Direct syscall bypasses are tested separately by S-auth; this case tests the allowlist.")
 
 
 @case("D9", "Second defence: the GUEST wrapper also refuses commands outside its allowlist", "agent")
@@ -244,8 +256,9 @@ def d11(ctx):
     ctx.check("bridge marks the guest for restart", True, e.bridge.needs_restart)
     # (b) kernel panic
     e.bridge.recover()
+    g = e.approve("x")
     e.bridge.vm.run("crashctl at 1")
-    r2 = e.bridge.call("append_file", {"path": "/log.txt", "text": "x"}, key=0x99)
+    r2 = e.bridge.call("append_file", {"path": "/log.txt", "text": "x"}, key=0x99, grant_id=g)
     ctx.check("kernel panic -> UNKNOWN", "UNKNOWN", r2.status)
     # (c) parser robustness on malformed console text (pure function)
     cases = {

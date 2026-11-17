@@ -1,17 +1,17 @@
 """All tunable policy in one place (so it is easy to explain and to change)."""
 
 # Files the agent may APPEND to / the only place it may CREATE files.
-# Everything else is read-only for the agent (least privilege).
+# This host allowlist supplements the kernel grant checks.
 WRITABLE_PATHS = ("/log.txt", "/notes.txt")
 
 # Largest text the agent may send in one append/create. The kernel allows 256
-# bytes; the console line buffer of xv6 is 128 bytes, and the payload travels
-# hex-encoded (2 chars/byte), so 32 bytes is what safely fits on one line.
+# bytes; the host intentionally limits planner payloads to 32 bytes. The console and
+# shell buffers are 1024 bytes; hexadecimal transport avoids shell parsing.
 MAX_TEXT = 32
 
-# Guest paths: one leading '/', then 1..30 characters of [A-Za-z0-9._-].
+# Guest paths: one leading '/', then 1..14 characters of [A-Za-z0-9._-].
 # (xv6 root directory only; no sub-directories, no "..", no spaces.)
-PATH_REGEX = r"^/[A-Za-z0-9._-]{1,30}$"
+PATH_REGEX = r"^/[A-Za-z0-9._-]{1,14}$"
 
 # Cap on text handed to the host-side summarize tool.
 MAX_SUMMARY_INPUT = 2048

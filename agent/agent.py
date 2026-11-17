@@ -34,11 +34,12 @@ class Report:
 
 
 class Agent:
-    def __init__(self, bridge: GuestBridge, journal: Journal, planner=None):
+    def __init__(self, bridge: GuestBridge, journal: Journal, planner=None, grants=None):
         self.bridge = bridge
         self.journal = journal
         self.planner = planner or RulePlanner()
         self.trace = []
+        self.grants = list(grants or [])
 
     def _log(self, kind, **kw):
         self.trace.append(dict(kind=kind, **kw))
@@ -95,7 +96,12 @@ class Agent:
 
     def _execute_effect(self, tool, args, rep):
         # 1. key + arguments are made DURABLE before the first send
-        op = self.journal.begin(tool, args)
+        # Approvals are supplied by the trusted caller, never by the planner.
+        if not self.grants:
+            rep.outcome = "ERROR"
+            return Obs(False, "FAILED: trusted controller grant required")
+        grant_id = self.grants.pop(0)
+        op = self.journal.begin(tool, args, grant_id=grant_id)
         rep.effects.append(op["op"])
         self._log("journal-begin", op=op["op"], key=op["key"], tool=tool, args=args)
         return self._drive(op, rep)
@@ -104,8 +110,10 @@ class Agent:
         key = int(op["key"], 16)
         for attempt in range(1, config.MAX_ATTEMPTS + 1):
             self.bridge.recover()                     # reboot guest (same disk) if it died
-            reply = self.bridge.call(op["tool"], op["args"], key=key)
-            self.journal.attempt(op["op"], reply.comm_id)
+            comm_id = self.bridge.reserve_id()
+            self.journal.attempt(op["op"], comm_id)
+            reply = self.bridge.call(op["tool"], op["args"], key=key,
+                                     grant_id=op.get("grant_id"), comm_id=comm_id)
             self._log("guest", op=op["op"], attempt=attempt, key=op["key"], reply=reply.as_dict())
             if reply.status == "OK":
                 self.journal.result(op["op"], "done", outcome=reply.outcome, rc=reply.rc)
