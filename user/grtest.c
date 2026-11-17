@@ -183,6 +183,27 @@ static void distinct(void) {
 
 int main(int argc,char **argv) {
   if(argc<2) exit(2);
+  if(!strcmp(argv[1],"overlap")) {
+    setup(1,0,1,"/log.txt","DURABLE"); ck("issue",grant_issue(&q)==0);
+    int p[2]; pipe(p);
+    if(fork()==0) {
+      close(p[0]);
+      static char bytes[8192]; memset(bytes,'W',sizeof(bytes));
+      for(int i=0;i<3000;i++) {
+        int fd=open("/traffic",O_CREATE|O_RDWR);
+        if(write(fd,bytes,sizeof(bytes))!=sizeof(bytes)) exit(2);
+        close(fd);
+        if(i==0) { write(p[1],"1",1); close(p[1]); }
+      }
+      exit(0);
+    }
+    close(p[1]); char ready; read(p[0],&ready,1); close(p[0]);
+    controller_drop(); q.request_id=9;
+    ck("durable effect",grant_effect(&q)==7);
+    printf("DURABLE-ACK\n"); // harness cuts power immediately at this marker
+    pause(100000);
+    finish();
+  }
   if(!strcmp(argv[1],"create-race")) create_races(0);
   if(!strcmp(argv[1],"legacy-create-race")) create_races(1);
   if(!strcmp(argv[1],"distinct")) distinct();

@@ -27,6 +27,9 @@ stale versions, pinned identities, hard links, CREATE races, capacity,
 disk-full/short-write paths, four crash stages for issue/effect/revoke,
 controller/agent host restart, lost replies, journal corruption/torn-tail repair,
 unsupported formats, production builds and upstream regression behavior.
+S-overlap power-cuts QEMU at the acknowledgment marker while another process
+repeatedly writes ordinary files; it checks raw home blocks before recovery
+and saved-result replay after reboot, over eight independent CPUS=3 trials.
 The manual cat investigation runs BASE/pre/post crashes on CPUS=3 followed by
 30 cat invocations and compares executable bytes and allocation metadata.
 

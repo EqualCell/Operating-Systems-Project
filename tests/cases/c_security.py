@@ -260,3 +260,22 @@ for _stage in (1,3,4):
             ctx.check('retry',(3,'EXECUTED' if stage==1 else 'REPLAYED'),grant(ctx,vm,'drop effect 1 1 create /created NEW')[:2])
             vm.kill(); ctx.check('consistent',[],Image.load(img).check_consistency())
     register_create_crash(_stage)
+
+@case('S-overlap', 'Acknowledged effect survives immediate power cut during ordinary filesystem traffic', 'security')
+def overlap(ctx):
+    for trial in range(8):
+        img=ctx.new_image('overlap'+str(trial)); vm=ctx.boot(img,'overlap'+str(trial),cpus=3)
+        start=len(vm.snapshot())
+        vm.proc.stdin.write(b'grtest overlap\n'); vm.proc.stdin.flush()
+        ack=vm.wait_for('DURABLE-ACK\n',start,30)
+        vm.kill() # do not wait for a shell prompt or a clean shutdown
+        ctx.check('effect acknowledged',True,ack)
+        ctx.check('no guest assertion failed',False,'FAIL ' in vm.snapshot()[start:])
+        raw=Image.load(img)
+        ctx.check('saved result already in home blocks',1,len(raw.completions()))
+        ctx.check('file already durable without log recovery',BASE+b'DURABLE',raw.read_file('/log.txt'))
+        view=raw.with_log_replayed()
+        ctx.check('replay preserves acknowledged effect',BASE+b'DURABLE',view.read_file('/log.txt'))
+        vm=ctx.boot(img,'overlap-recover'+str(trial),cpus=3)
+        ctx.check('recovery returns saved result',(7,'REPLAYED'),grant(ctx,vm,'drop effect 1 9 append /log.txt DURABLE')[:2])
+        vm.kill(); ctx.check('consistent',[],Image.load(img).check_consistency())
