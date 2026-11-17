@@ -23,7 +23,6 @@ def main(argv=None):
                     help="'injection' = deliberately gullible test planner")
     ap.add_argument("--trace-out", default=None, help="write the full audit trace (JSON)")
     ap.add_argument("--log-dir", default=None, help="keep raw QEMU console logs here")
-    ap.add_argument("--grant", action="append", type=lambda x: int(x, 0), default=[], help="already-issued controller grant ID")
     ap.add_argument("--grant", action="append", type=lambda s: int(s, 0), default=[],
                     help="preissued controller grant ID for each new effect")
     ap.add_argument("--resume", action="store_true", help="retry pending journaled requests")
@@ -37,7 +36,6 @@ def main(argv=None):
         if a.resume:
             for op, obs in agent.resume():
                 print(f"resume {op}: {obs.text}")
-                if not obs.ok: code = 1
                 if not obs.ok: code = 1
         if a.goal:
             rep = agent.handle(" ".join(a.goal))
