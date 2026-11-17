@@ -83,7 +83,7 @@ effect_do_create(char *path, char *kbuf, int n)
     iput(ip);
     return EFF_EEXIST;
   }
-  if ((ip = create(path, T_FILE, 0, 0)) == 0) // returns ip LOCKED
+  if ((ip = createx(path, T_FILE, 0, 0, 1)) == 0) // returns ip LOCKED
     return EFF_EINVAL; // missing parent directory, out of inodes, ...
   if (n > 0) {
     r = writei(ip, 0, (uint64)kbuf, 0, n);

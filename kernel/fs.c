@@ -422,6 +422,7 @@ static uint
 bmap(struct inode *ip, uint bn)
 {
   uint addr, *a;
+  int fresh = 0;
   struct buf *bp;
 
   if (bn < NDIRECT) {
@@ -438,6 +439,7 @@ bmap(struct inode *ip, uint bn)
   if (bn < NINDIRECT) {
     // Load indirect block, allocating if necessary.
     if ((addr = ip->addrs[NDIRECT]) == 0) {
+      fresh = 1;
       addr = balloc(ip->dev);
       if (addr == 0)
         return 0;
@@ -453,6 +455,12 @@ bmap(struct inode *ip, uint bn)
       }
     }
     brelse(bp);
+    if (!addr && fresh) {
+      // Allocation is not rolled back by end_op: undo an unused indirect
+      // block explicitly when its first data-block allocation failed.
+      bfree(ip->dev, ip->addrs[NDIRECT]);
+      ip->addrs[NDIRECT] = 0;
+    }
     return addr;
   }
 

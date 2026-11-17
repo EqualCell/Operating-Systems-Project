@@ -47,3 +47,5 @@ entry("effect");
 entry("crashat");
 entry("crashhook");
 entry("effstat");
+
+entry("effect_result");

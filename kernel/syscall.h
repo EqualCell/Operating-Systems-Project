@@ -25,3 +25,5 @@
 #define SYS_crashat   24 // [effect] test hook: crash at n-th log_write
 #define SYS_crashhook 25 // [effect] test hook: crash inside commit()
 #define SYS_effstat   26 // [effect] read effect statistics
+
+#define SYS_effect_result 27

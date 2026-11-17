@@ -24,6 +24,7 @@ Safety properties
 """
 import re
 import time
+import uuid
 
 from . import config
 from .qemu import VM
@@ -110,6 +111,7 @@ class GuestBridge:
         self.call_timeout = call_timeout
         self.vm = None
         self.boots = 0
+        self.instance = uuid.uuid4().hex
         self._next_id = 100
         self.drop_replies = 0          # TEST-ONLY fault injection: lose the next N replies
         self.needs_restart = False
@@ -122,7 +124,7 @@ class GuestBridge:
         if self.log_dir:
             import os
             os.makedirs(self.log_dir, exist_ok=True)
-            log = os.path.join(self.log_dir, f"qemu-boot{self.boots}.log")
+            log = os.path.join(self.log_dir, f"qemu-{self.instance}-boot{self.boots}.log")
         self.vm = VM(self.img, kernel=self.kernel, cpus=self.cpus, log_path=log)
         self.vm.boot(timeout=config.BOOT_TIMEOUT)
         self.needs_restart = False

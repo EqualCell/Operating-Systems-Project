@@ -104,14 +104,11 @@ main(int argc, char *argv[])
     exit(2);
   }
 
-  struct effstats before, after;
-  effstat(&before);
   int rc = effect(key, op, path, text, strlen(text));
-  effstat(&after);
 
   char *outcome = "ERROR";
   if (rc >= 0)
-    outcome = (after.executed > before.executed) ? "EXECUTED" : "REPLAYED";
+    outcome = (effect_result() == 1) ? "EXECUTED" : "REPLAYED";
   printf("EFFECT op=%s key=%p rc=%d outcome=%s\n", opname, (void *)key, rc, outcome);
   exit(rc >= 0 ? 0 : 1);
 }

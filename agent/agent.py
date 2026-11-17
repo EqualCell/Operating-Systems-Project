@@ -66,6 +66,8 @@ class Agent:
             else:
                 self._log("validated", action=action)
                 obs = self._execute(action, rep)
+                if not obs.ok and not obs.meta.get("refused"):
+                    rep.outcome = "ERROR"
                 if obs.meta.get("pending"):
                     rep.outcome = "PENDING"
             rep.final = obs.text

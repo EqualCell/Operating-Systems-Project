@@ -110,6 +110,8 @@ extern uint64 sys_effstat(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
+extern uint64 sys_effect_result(void);
+
 static uint64 (*syscalls[])(void) = {
   // clang-format off
   [SYS_fork]    = sys_fork,
@@ -134,6 +136,7 @@ static uint64 (*syscalls[])(void) = {
   [SYS_mkdir]   = sys_mkdir,
   [SYS_close]   = sys_close,
   [SYS_sync]    = sys_sync,
+  [SYS_effect_result] = sys_effect_result,
   [SYS_effect]    = sys_effect,
   [SYS_crashat]   = sys_crashat,
   [SYS_crashhook] = sys_crashhook,

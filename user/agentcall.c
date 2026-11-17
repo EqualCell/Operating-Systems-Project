@@ -171,11 +171,8 @@ do_effect(int op, char *keyhex, char *path, char *hex)
   if ((n = decode(hex, payload)) < 0)
     finish(-1, "ERR:bad-payload");
 
-  struct effstats b, a;
-  effstat(&b);
   int rc = effect(key, op, path, payload, n);
-  effstat(&a);
-  char *outcome = rc < 0 ? "ERROR" : (a.executed > b.executed ? "EXECUTED" : "REPLAYED");
+  char *outcome = rc < 0 ? "ERROR" : (effect_result() == 1 ? "EXECUTED" : "REPLAYED");
   printf("| EFFECT op=%s key=%p rc=%d outcome=%s\n", op == EFF_APPEND ? "APPEND" : "CREATE",
          (void *)key, rc, outcome);
   finish(rc, rc < 0 ? "ERR:kernel" : outcome);

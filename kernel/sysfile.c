@@ -256,7 +256,7 @@ bad:
 }
 
 struct inode * // [effect] was static: effect_ops.c reuses it
-create(char *path, short type, short major, short minor)
+createx(char *path, short type, short major, short minor, int exclusive)
 {
   struct inode *ip, *dp;
   char name[DIRSIZ];
@@ -280,7 +280,7 @@ create(char *path, short type, short major, short minor)
   if ((ip = dirlookup(dp, name, 0)) != 0) {
     iunlockput(dp);
     ilock(ip);
-    if (type == T_FILE && (ip->type == T_FILE || ip->type == T_DEVICE))
+    if (!exclusive && type == T_FILE && (ip->type == T_FILE || ip->type == T_DEVICE))
       return ip;
     iunlockput(ip);
     return 0;
@@ -323,6 +323,12 @@ fail:
   iunlockput(ip);
   iunlockput(dp);
   return 0;
+}
+
+struct inode *
+create(char *path, short type, short major, short minor)
+{
+  return createx(path, type, major, minor, 0);
 }
 
 uint64
