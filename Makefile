@@ -26,6 +26,7 @@ OBJS = \
   $K/pipe.o \
   $K/exec.o \
   $K/sysfile.o \
+  $K/grant.o \
   $K/effect.o \
   $K/effect_store.o \
   $K/effect_ops.o \
@@ -86,7 +87,11 @@ CFLAGS += -I.
 # [effect] Crash-injection hooks (crashat / crashhook). Default ON for our test
 # builds. A production build must use:  make clean && make TESTHOOKS=0 qemu
 # (then crashat/crashhook return EFF_EPERM and no hook code is compiled in).
-TESTHOOKS ?= 1
+TESTHOOKS ?= 0
+UNSAFE_COMPARISONS ?= 0
+ifeq ($(UNSAFE_COMPARISONS),1)
+CFLAGS += -DUNSAFE_COMPARISONS
+endif
 ifeq ($(TESTHOOKS),1)
 CFLAGS += -DEFFECT_TESTHOOKS
 endif
@@ -132,7 +137,7 @@ $U/_forktest: $U/forktest.o $(ULIB)
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0 -o $U/_forktest $U/forktest.o $U/ulib.o $U/usys.o
 	$(OBJDUMP) -S $U/_forktest > $U/forktest.asm
 
-mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
+mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h $K/grant.h $K/effect.h
 	gcc -Wno-unknown-attributes -I. -o mkfs/mkfs mkfs/mkfs.c
 
 # Prevent deletion of intermediate files, e.g. cat.o, after first build, so
@@ -168,6 +173,9 @@ UPROGS=\
 	$U/_effstress\
 	$U/_effraw\
 	$U/_diskfill\
+	$U/_compare\
+	$U/_grtest\
+	$U/_grantctl\
 	$U/_agentcall\
 
 # [effect] demo data files that live inside the guest (see fixtures/)
@@ -179,7 +187,7 @@ fs.img: mkfs/mkfs README $(UPROGS) $(FIXTURES)
 -include kernel/*.d user/*.d
 
 clean: 
-	rm -f *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
+	rm -f .build-config .build-config.tmp *.tex *.dvi *.idx *.aux *.log *.ind *.ilg \
 	*/*.o */*.d */*.asm */*.sym \
 	$K/kernel fs.img \
 	mkfs/mkfs .gdbinit \
@@ -224,3 +232,15 @@ check-qemu-version:
 .PHONY: fmt
 fmt:
 	clang-format -i $(wildcard kernel/*.[ch] user/*.[ch] mkfs/*.c)
+
+# Changing hook configuration must rebuild objects; never reuse test objects in production.
+.PHONY: FORCE production test-build
+.build-config: FORCE
+	@printf 'TESTHOOKS=%s UNSAFE_COMPARISONS=%s\n' '$(TESTHOOKS)' '$(UNSAFE_COMPARISONS)' > .build-config.tmp
+	@cmp -s .build-config.tmp $@ || cp .build-config.tmp $@
+	@rm -f .build-config.tmp
+$(OBJS) $(patsubst $U/_%,$U/%.o,$(UPROGS)) $(ULIB): .build-config
+production:
+	$(MAKE) TESTHOOKS=0 kernel/kernel fs.img
+test-build:
+	$(MAKE) TESTHOOKS=1 kernel/kernel fs.img

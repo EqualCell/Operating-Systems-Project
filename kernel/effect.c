@@ -76,6 +76,8 @@ sys_effect(void)
   struct proc *p = myproc();
   p->effect_outcome = 0;
 
+  if (!p->controller) return EFF_EPERM;
+
   // The key is a 64-bit value: read it with argaddr(), NEVER argint(), which
   // would truncate it to 32 bits and make keys differing only in the high
   // half collide silently.
@@ -190,6 +192,7 @@ uint64
 sys_crashat(void)
 {
 #ifdef EFFECT_TESTHOOKS
+  if (!myproc()->controller) return EFF_EPERM;
   int n;
   argint(0, &n);
   if (n < 0)
@@ -208,6 +211,7 @@ uint64
 sys_crashhook(void)
 {
 #ifdef EFFECT_TESTHOOKS
+  if (!myproc()->controller) return EFF_EPERM;
   int stage, n;
   argint(0, &stage);
   argint(1, &n);

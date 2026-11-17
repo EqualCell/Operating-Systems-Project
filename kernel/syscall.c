@@ -112,6 +112,11 @@ extern uint64 sys_effstat(void);
 // to the function that handles the system call.
 extern uint64 sys_effect_result(void);
 
+extern uint64 sys_controller_drop(void);
+extern uint64 sys_grant_issue(void);
+extern uint64 sys_grant_effect(void);
+extern uint64 sys_grant_revoke(void);
+extern uint64 sys_grant_status(void);
 static uint64 (*syscalls[])(void) = {
   // clang-format off
   [SYS_fork]    = sys_fork,
@@ -136,6 +141,11 @@ static uint64 (*syscalls[])(void) = {
   [SYS_mkdir]   = sys_mkdir,
   [SYS_close]   = sys_close,
   [SYS_sync]    = sys_sync,
+  [SYS_controller_drop] = sys_controller_drop,
+  [SYS_grant_issue] = sys_grant_issue,
+  [SYS_grant_effect] = sys_grant_effect,
+  [SYS_grant_revoke] = sys_grant_revoke,
+  [SYS_grant_status] = sys_grant_status,
   [SYS_effect_result] = sys_effect_result,
   [SYS_effect]    = sys_effect,
   [SYS_crashat]   = sys_crashat,

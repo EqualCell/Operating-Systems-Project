@@ -49,3 +49,8 @@ entry("crashhook");
 entry("effstat");
 
 entry("effect_result");
+entry("controller_drop");
+entry("grant_issue");
+entry("grant_effect");
+entry("grant_revoke");
+entry("grant_status");

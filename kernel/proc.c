@@ -122,6 +122,8 @@ allocproc(void)
   return 0;
 
 found:
+  p->controller = 0;
+  p->effect_outcome = 0;
   p->pid = allocpid();
   p->state = USED;
 
@@ -222,6 +224,7 @@ userinit(void)
 
   p = allocproc();
   initproc = p;
+  p->controller = 1;
 
   p->cwd = namei("/");
 
@@ -274,6 +277,7 @@ kfork(void)
     return -1;
   }
   np->sz = p->sz;
+  np->controller = p->controller;
 
   // copy saved user registers.
   *(np->trapframe) = *(p->trapframe);
@@ -608,6 +612,10 @@ kkill(int pid)
   for (p = proc; p < &proc[NPROC]; p++) {
     acquire(&p->lock);
     if (p->pid == pid) {
+      if (!myproc()->controller && p->controller) {
+        release(&p->lock);
+        return -1;
+      }
       p->killed = 1;
       if (p->state == SLEEPING) {
         // Wake process from sleep().

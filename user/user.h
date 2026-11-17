@@ -55,3 +55,11 @@ void *malloc(uint);
 void free(void *);
 
 int effect_result(void);
+
+struct grant_request;
+struct grant_status;
+int controller_drop(void);
+int grant_issue(struct grant_request *);
+int grant_effect(struct grant_request *);
+int grant_revoke(uint64);
+int grant_status(uint64, uint64, struct grant_status *);
