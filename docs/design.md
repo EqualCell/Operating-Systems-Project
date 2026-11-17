@@ -71,7 +71,9 @@ transactions before any durable success is returned.
 
 Format v1 extends the superblock with security-region start/count. A header
 block holds magic/version/capacities, followed by 32 one-block grant records
-and two blocks of uint64 object versions (256 inode slots). Zero version means
+and two blocks of uint64 object versions (256 inode slots).
+The on-disk grant record is 320 bytes in its dedicated 1024-byte block;
+request ABI is 296 bytes. Superblock remains little endian, inode size 64 bytes. Zero version means
 unprotected; first protection sets one. Empty grants are all-zero. No eviction.
 Invalid geometry/header/record/state fails closed (kernel panic at recovery or
 read); unsupported images must be rebuilt explicitly. This is a format change,
@@ -93,6 +95,16 @@ power loss, write-cache reordering, torn sectors and malicious disk corruption
 are outside these assumptions. Same-image reboot is required. Crash hooks
 exist only in explicit test builds and require controller authority.
 
+Worst-case reservation for the fixed FSSIZE=2000 image: APPEND touches at most
+2 data + indirect + bitmap + inode + object-version + grant = 7 distinct blocks.
+CREATE touches file data + file inode + directory data + directory inode +
+indirect + bitmap + up to 2 version-table blocks + grant = at most 9. The
+10-block per-operation reservation covers these; the 30-block log/cache admits
+three reservations. Ordinary controller mutations add at most one version
+block to stock write budgets. Capacity is checked before file mutation.
+Geometry is deliberately fixed/bounded; increasing FSSIZE or inode capacity
+requires revisiting bitmap and reservation bounds.
+
 ## Host recovery and scope
 
 The host fsyncs complete logical request/grant/arguments before dispatch.
@@ -111,3 +123,35 @@ excludes unrestricted exactly-once execution, distributed consensus, arbitrary
 file sizes/paths, unbounded retention and safe garbage collection. Eventual
 completion needs retained identities, intact storage, available capacity,
 a valid unconsumed grant, and retries after recovery.
+
+
+## ABI and results
+
+Syscalls 28..32 are controller_drop(), grant_issue(&request),
+grant_effect(&request), grant_revoke(uint64) and grant_status(grant, request,
+&status). The caller supplies a fixed 296-byte request with no user pointers;
+copyin validates the complete structure before use. The per-process
+`effect_result()` syscall returns 1 for execution, 2 for replay, 0 for error.
+Status is read-only and reports retained request, state, saved result, expected
+and current versions; request zero queries the grant alone. An ACTIVE grant
+with no completion is pending, not a promise of cancellation or success.
+
+| Result | Meaning |
+|---|---|
+| >=0 | Saved byte count (effect); 0 success for issue/revoke/status |
+| -1 | Invalid argument/pointer/operation/path |
+| -2 | APPEND target absent |
+| -3 | Retention capacity exhausted |
+| -4 | Changed binding or completed request ID used with another grant |
+| -5 | Zero-progress APPEND or unavailable allocation |
+| -6 | CREATE destination exists |
+| -7 | Caller lacks controller authority, or production crash hook |
+| -20 | Grant not found |
+| -21 | Grant revoked |
+| -22 | Object/version stale |
+| -23 | Grant consumed; new request cannot execute, revoke cannot undo |
+| -24 | Status result placeholder: no completion yet |
+
+Unsupported geometry/format or invalid recovered records cause a diagnostic
+boot panic rather than enabling an empty authorization table. No arbitrary
+malicious bit-flip detection is claimed; storage tampering is outside scope.

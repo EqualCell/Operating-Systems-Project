@@ -26,3 +26,11 @@ Obsolete documentation: the upstream README is retained as upstream README;
 older project docs describe deduplication alone as exactly-once and describe
 kernel enforcement as future work. Current README.md/design.md/demo.md are the
 normative entry points; legacy reports remain labeled historical.
+
+Current implementation adds the authority bit, 32 retained single-use grants,
+exact request binding, inode pinning, persistent object versions, revoke/status,
+controller and agent recovery, and adversarial security/crash/mutation tests.
+See design.md for the normative implemented contract and evidence/summary.md
+at repository root for final fresh results. Duplicate project summaries and
+legacy contract/overview/result documents were consolidated into README.md,
+design.md, demo.md and testing.md; historical debug notes remain under history/.

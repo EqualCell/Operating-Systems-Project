@@ -15,3 +15,8 @@ build.log
 __pycache__/
 *.pyc
 agent-journal.jsonl
+
+.build-config*
+evidence/run-*/
+evidence/final-*/
+*.zip

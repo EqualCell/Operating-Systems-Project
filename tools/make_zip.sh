@@ -1,14 +1,11 @@
 #!/bin/sh
-# Build the submission ZIP: ONLY files added or modified relative to the xv6
-# base commit (as the course handout requires), plus the evidence summary.
-#   tools/make_zip.sh Team_Name_4        ->  ../Team_Name_4.zip
-set -e
+# Package the complete tracked source, licenses, fixtures and compact evidence.
+# The archive is created inside runs/; never include build products or .git.
+set -eu
 cd "$(dirname "$0")/.."
-NAME="${1:-Team_Name_4}"
-LIST=$(mktemp)
-{ git diff --name-only; git ls-files --others --exclude-standard; } | grep -v -E '^(runs/|build.log|fs.img)' | sort -u > "$LIST"
-rm -f "../$NAME.zip"
-zip -q "../$NAME.zip" -@ < "$LIST"
-echo "$(wc -l < "$LIST") files -> ../$NAME.zip"
-cat "$LIST"
-rm -f "$LIST"
+name="${1:-Operating-Systems-Project}"
+case "$name" in *[!A-Za-z0-9_-]*|'') echo 'Use a simple archive name' >&2; exit 2;; esac
+mkdir -p runs
+# git archive includes committed source (including executable modes), reproducibly.
+git archive --format=zip --prefix="$name/" -o "runs/$name.zip" HEAD
+printf '%s\n' "runs/$name.zip (committed source at $(git rev-parse --short HEAD))"
