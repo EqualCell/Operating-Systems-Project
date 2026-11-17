@@ -31,7 +31,9 @@ def main():
         print('Controller issued grant:',hex(g))
         if args.crash in ('pre','post'):
             stage=1 if args.crash=='pre' else 2
-            print(bridge.vm.run(f'crashctl stage {stage} 1')[0].strip())
+            armed, status = bridge.vm.run(f'crashctl stage {stage} 1')
+            assert status == 'ok' and 'CRASHCTL rc=0' in armed, 'Run make test-build before crash demos'
+            print(armed.strip())
         elif args.crash=='lost': bridge.drop_replies=1
         ag=Agent(bridge,Journal(os.path.join(work,'agent.jsonl')),grants=[g])
         report=ag.handle('append authorized to /log.txt')
