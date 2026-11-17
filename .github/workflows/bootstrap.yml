@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Check agent CLI argument parser
+        run: python3 -m agent --help
       - name: Install toolchain
         run: |
           sudo apt-get update
