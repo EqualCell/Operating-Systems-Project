@@ -123,6 +123,7 @@ sys_fstat(void)
 uint64
 sys_link(void)
 {
+  if (!myproc()->controller) return -1;
   char name[DIRSIZ], new[MAXPATH], old[MAXPATH];
   struct inode *dp, *ip;
 
@@ -136,7 +137,7 @@ sys_link(void)
   }
 
   ilock(ip);
-  if (ip->type == T_DIR) {
+  if (ip->type == T_DIR || grant_version(ip)) {
     iunlockput(ip);
     end_op();
     return -1;
@@ -201,6 +202,7 @@ isdirempty(struct inode *dp)
 uint64
 sys_unlink(void)
 {
+  if (!myproc()->controller) return -1;
   struct inode *ip, *dp;
   struct dirent de;
   char name[DIRSIZ], path[MAXPATH];
@@ -224,6 +226,11 @@ sys_unlink(void)
   if ((ip = dirlookup(dp, name, &off)) == 0)
     goto bad;
   ilock(ip);
+
+  if (grant_version(ip)) {
+    iunlockput(ip);
+    goto bad;
+  }
 
   if (ip->nlink < 1)
     panic("unlink: nlink < 1");
@@ -256,7 +263,7 @@ bad:
 }
 
 struct inode * // [effect] was static: effect_ops.c reuses it
-create(char *path, short type, short major, short minor)
+createx(char *path, short type, short major, short minor, int exclusive)
 {
   struct inode *ip, *dp;
   char name[DIRSIZ];
@@ -280,7 +287,7 @@ create(char *path, short type, short major, short minor)
   if ((ip = dirlookup(dp, name, 0)) != 0) {
     iunlockput(dp);
     ilock(ip);
-    if (type == T_FILE && (ip->type == T_FILE || ip->type == T_DEVICE))
+    if (!exclusive && type == T_FILE && (ip->type == T_FILE || ip->type == T_DEVICE))
       return ip;
     iunlockput(ip);
     return 0;
@@ -325,6 +332,12 @@ fail:
   return 0;
 }
 
+struct inode *
+create(char *path, short type, short major, short minor)
+{
+  return createx(path, type, major, minor, 0);
+}
+
 uint64
 sys_open(void)
 {
@@ -336,6 +349,9 @@ sys_open(void)
 
   argint(1, &omode);
   if ((n = argstr(0, path, MAXPATH)) < 0)
+    return -1;
+
+  if (!myproc()->controller && (omode & (O_CREATE | O_TRUNC | O_WRONLY | O_RDWR)))
     return -1;
 
   begin_op();
@@ -360,6 +376,12 @@ sys_open(void)
   }
 
   if (ip->type == T_DEVICE && (ip->major < 0 || ip->major >= NDEV)) {
+    iunlockput(ip);
+    end_op();
+    return -1;
+  }
+
+  if ((omode & O_TRUNC) && grant_version(ip) == ~0ULL) {
     iunlockput(ip);
     end_op();
     return -1;
@@ -397,6 +419,7 @@ sys_open(void)
 uint64
 sys_mkdir(void)
 {
+  if (!myproc()->controller) return -1;
   char path[MAXPATH];
   struct inode *ip;
 
@@ -413,6 +436,7 @@ sys_mkdir(void)
 uint64
 sys_mknod(void)
 {
+  if (!myproc()->controller) return -1;
   struct inode *ip;
   char path[MAXPATH];
   int major, minor;

@@ -6,5 +6,5 @@
 set -e
 cd "$(dirname "$0")"
 . ./env.sh
-make -j8 kernel/kernel fs.img > build.log 2>&1 || { echo "BUILD FAILED, see build.log"; tail -20 build.log; exit 1; }
+make -j8 TESTHOOKS=1 kernel/kernel fs.img > build.log 2>&1 || { echo "BUILD FAILED, see build.log"; tail -20 build.log; exit 1; }
 exec python3 tests/run_all.py "$@"

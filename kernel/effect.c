@@ -74,6 +74,9 @@ sys_effect(void)
   char path[MAXPATH];
   char kbuf[EFF_MAXPAYLOAD];
   struct proc *p = myproc();
+  p->effect_outcome = 0;
+
+  if (!p->controller) return EFF_EPERM;
 
   // The key is a 64-bit value: read it with argaddr(), NEVER argint(), which
   // would truncate it to 32 bits and make keys differing only in the high
@@ -118,6 +121,7 @@ sys_effect(void)
     } else {
       res = e.result; // already done: return the saved result, change nothing
       st.replayed++;
+      p->effect_outcome = 2;
     }
   } else if (found < 0) {
     res = EFF_EFULL; // checked BEFORE the file is modified
@@ -133,6 +137,7 @@ sys_effect(void)
       store_put(slot, key, res, sig);
       logged = log_nblocks(); // distinct blocks this transaction logged
       executed = 1;
+      p->effect_outcome = 1;
     } else {
       st.errors++; // nothing was modified, nothing is recorded
     }
@@ -187,6 +192,7 @@ uint64
 sys_crashat(void)
 {
 #ifdef EFFECT_TESTHOOKS
+  if (!myproc()->controller) return EFF_EPERM;
   int n;
   argint(0, &n);
   if (n < 0)
@@ -205,6 +211,7 @@ uint64
 sys_crashhook(void)
 {
 #ifdef EFFECT_TESTHOOKS
+  if (!myproc()->controller) return EFF_EPERM;
   int stage, n;
   argint(0, &stage);
   argint(1, &n);
@@ -221,4 +228,10 @@ sys_crashhook(void)
 #else
   return EFF_EPERM;
 #endif
+}
+
+uint64
+sys_effect_result(void)
+{
+  return myproc()->effect_outcome;
 }

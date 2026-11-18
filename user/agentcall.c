@@ -25,6 +25,7 @@
 #include "kernel/fcntl.h"
 #include "kernel/fs.h"
 #include "kernel/effect.h"
+#include "kernel/grant.h"
 #include "user/user.h"
 
 #define MAXHEX 64 // 32 payload bytes: keeps the console line (128 B) short
@@ -159,7 +160,7 @@ do_read(char *path)
 }
 
 static void
-do_effect(int op, char *keyhex, char *path, char *hex)
+do_effect(int op, char *keyhex, char *path, char *hex, char *granthex)
 {
   uint64 key;
   char payload[MAXHEX / 2 + 1];
@@ -171,19 +172,29 @@ do_effect(int op, char *keyhex, char *path, char *hex)
   if ((n = decode(hex, payload)) < 0)
     finish(-1, "ERR:bad-payload");
 
-  struct effstats b, a;
-  effstat(&b);
-  int rc = effect(key, op, path, payload, n);
-  effstat(&a);
-  char *outcome = rc < 0 ? "ERROR" : (a.executed > b.executed ? "EXECUTED" : "REPLAYED");
+  int rc;
+  if (granthex) {
+    struct grant_request q;
+    memset(&q, 0, sizeof(q));
+    if (parsekey(granthex, &q.grant_id) < 0 || strlen(path) >= sizeof(q.path))
+      finish(-1, "ERR:bad-grant");
+    q.request_id = key; q.op = op; q.n = n;
+    strcpy(q.path, path);
+    memmove(q.payload, payload, n);
+    rc = grant_effect(&q);
+  } else rc = effect(key, op, path, payload, n);
+  char *outcome = rc == GR_REVOKED_ERR ? "REVOKED" : rc == GR_STALE ? "STALE" :
+    rc == GR_CONSUMED_ERR ? "CONSUMED" : rc == EFF_EMISMATCH ? "MISMATCHED" :
+    rc < 0 ? "FAILED" : (effect_result() == 1 ? "EXECUTED" : "REPLAYED");
   printf("| EFFECT op=%s key=%p rc=%d outcome=%s\n", op == EFF_APPEND ? "APPEND" : "CREATE",
          (void *)key, rc, outcome);
-  finish(rc, rc < 0 ? "ERR:kernel" : outcome);
+  finish(rc, outcome);
 }
 
 int
 main(int argc, char *argv[])
 {
+  controller_drop(); // irreversible before processing any untrusted input
   if (argc < 3 || strlen(argv[1]) > 9) {
     printf("@@BEGIN 0\n");
     id = "0";
@@ -199,11 +210,19 @@ main(int argc, char *argv[])
     if (!okpath(argv[3]))
       finish(-1, "ERR:bad-path");
     do_read(argv[3]);
-  } else if (strcmp(cmd, "append") == 0 && argc == 6)
-    do_effect(EFF_APPEND, argv[3], argv[4], argv[5]);
-  else if (strcmp(cmd, "create") == 0 && argc == 6)
-    do_effect(EFF_CREATE, argv[3], argv[4], argv[5]);
-  else
+  } else if (strcmp(cmd, "append") == 0 && (argc == 6 || argc == 7))
+    do_effect(EFF_APPEND, argv[3], argv[4], argv[5], argc == 7 ? argv[6] : 0);
+  else if (strcmp(cmd, "create") == 0 && (argc == 6 || argc == 7))
+    do_effect(EFF_CREATE, argv[3], argv[4], argv[5], argc == 7 ? argv[6] : 0);
+  else if (!strcmp(cmd, "status") && argc == 5) {
+    uint64 g, r;
+    struct grant_status st;
+    if (parsekey(argv[3], &g) < 0 || parsekey(argv[4], &r) < 0)
+      finish(-1, "ERR:bad-key");
+    int rc = grant_status(g, r, &st);
+    if (rc == 0) printf("| STATE state=%d result=%d request=%p\n", st.state, st.result, (void *)st.request_id);
+    finish(rc, rc < 0 ? "ERR:kernel" : "OK");
+  } else
     finish(-1, "ERR:unknown-command");
   return 0;
 }

@@ -35,12 +35,14 @@ kexec(char *path, char **argv)
   struct proghdr ph;
   pagetable_t pagetable = 0, oldpagetable;
   struct proc *p = myproc();
+  char *why = "ELF-header";
 
   begin_op();
 
   // Open the executable file.
   if ((ip = namei(path)) == 0) {
     end_op();
+    printk("execfail pid=%d path=%s stage=lookup\n", p->pid, path);
     return -1;
   }
   ilock(ip);
@@ -53,9 +55,11 @@ kexec(char *path, char **argv)
   if (elf.magic != ELF_MAGIC)
     goto bad;
 
+  why = "page-table";
   if ((pagetable = proc_pagetable(p)) == 0)
     goto bad;
 
+  why = "segment-layout-or-memory";
   // Load program into memory.
   for (i = 0, off = elf.phoff; i < elf.phnum; i++, off += sizeof(ph)) {
     if (readi(ip, 0, (uint64)&ph, off, sizeof(ph)) != sizeof(ph))
@@ -83,6 +87,7 @@ kexec(char *path, char **argv)
   p = myproc();
   uint64 oldsz = p->sz;
 
+  why = "stack-memory";
   // Allocate some pages at the next page boundary.
   // Make the first inaccessible as a stack guard.
   // Use the rest as the user stack.
@@ -96,6 +101,7 @@ kexec(char *path, char **argv)
   sp = sz;
   stackbase = sp - USERSTACK * PGSIZE;
 
+  why = "argument-copy-or-stack-limit";
   // Copy argument strings into new stack, remember their
   // addresses in ustack[].
   for (argc = 0; argv[argc]; argc++) {
@@ -140,6 +146,7 @@ kexec(char *path, char **argv)
   return argc; // this ends up in a0, the first argument to main(argc, argv)
 
 bad:
+  printk("execfail pid=%d path=%s stage=%s size=%p\n", p->pid, path, why, (void *)sz);
   if (pagetable)
     proc_freepagetable(pagetable, sz);
   if (ip) {

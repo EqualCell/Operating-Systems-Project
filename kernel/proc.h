@@ -87,6 +87,8 @@ struct proc {
   void *chan;           // If non-zero, sleeping on chan
   int killed;           // If non-zero, have been killed
   int xstate;           // Exit status to be returned to parent's wait
+  int controller; // inherited authority; can only be dropped
+  int effect_outcome; // request-local: 1 executed, 2 replayed, 0 error
   int pid;              // Process ID
 
   // wait_lock must be held when using this:

@@ -48,7 +48,7 @@ struct {
   struct spinlock lock;
 
   // input circular buffer
-#define INPUT_BUF_SIZE 128
+#define INPUT_BUF_SIZE 1024
   char buf[INPUT_BUF_SIZE];
   uint r; // Read index
   uint w; // Write index

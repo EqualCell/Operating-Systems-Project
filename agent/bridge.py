@@ -1,4 +1,4 @@
-"""The host -> guest BRIDGE (documented in docs/bridge.md).
+"""The host -> guest BRIDGE (documented in docs/design.md).
 
 Method chosen: serial-console interaction with ONE fixed guest program,
 `agentcall`, instead of free-form shell text.
@@ -24,6 +24,7 @@ Safety properties
 """
 import re
 import time
+import uuid
 
 from . import config
 from .qemu import VM
@@ -61,10 +62,10 @@ class GuestReply:
                     outcome=self.outcome)
 
 
-MAX_LINE = 120  # xv6 console line buffer is 128 bytes
+MAX_LINE = 768  # shell and console buffers are 1024 bytes
 
 
-def build_command(comm_id, tool, args, key=None):
+def build_command(comm_id, tool, args, key=None, grant_id=None):
     """Fixed templates. `args` must already be validated."""
     if tool == "list_files":
         line = f"agentcall {comm_id} list"
@@ -75,6 +76,10 @@ def build_command(comm_id, tool, args, key=None):
             raise ValueError("side-effecting tools need an idempotency key")
         verb = "append" if tool == "append_file" else "create"
         line = f"agentcall {comm_id} {verb} {key:x} {args['path']} {args['text'].encode().hex()}"
+        if grant_id is not None:
+            line += f" {grant_id:x}"
+    elif tool == "effect_status":
+        line = f"agentcall {comm_id} status {grant_id:x} {key:x}"
     else:
         raise ValueError(f"tool {tool!r} has no guest command")
     if len(line) >= MAX_LINE:
@@ -110,6 +115,7 @@ class GuestBridge:
         self.call_timeout = call_timeout
         self.vm = None
         self.boots = 0
+        self.instance = uuid.uuid4().hex
         self._next_id = 100
         self.drop_replies = 0          # TEST-ONLY fault injection: lose the next N replies
         self.needs_restart = False
@@ -122,7 +128,7 @@ class GuestBridge:
         if self.log_dir:
             import os
             os.makedirs(self.log_dir, exist_ok=True)
-            log = os.path.join(self.log_dir, f"qemu-boot{self.boots}.log")
+            log = os.path.join(self.log_dir, f"qemu-{self.instance}-boot{self.boots}.log")
         self.vm = VM(self.img, kernel=self.kernel, cpus=self.cpus, log_path=log)
         self.vm.boot(timeout=config.BOOT_TIMEOUT)
         self.needs_restart = False
@@ -148,10 +154,15 @@ class GuestBridge:
         self.stop()
 
     # ---- the one entry point ----
-    def call(self, tool, args, key=None):
+    def reserve_id(self):
         comm_id = self._next_id
         self._next_id += 1
-        line = build_command(comm_id, tool, args, key)
+        return comm_id
+
+    def call(self, tool, args, key=None, grant_id=None, comm_id=None):
+        if comm_id is None:
+            comm_id = self.reserve_id()
+        line = build_command(comm_id, tool, args, key, grant_id)
         return self._send(comm_id, line)
 
     def _send_raw_for_tests(self, line):

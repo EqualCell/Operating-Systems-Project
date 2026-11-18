@@ -187,3 +187,13 @@ void            virtio_disk_intr(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
+
+struct inode *createx(char *, short, short, short, int);
+
+// Durable grants (all inode helpers require its sleep lock).
+void grantinit(void);
+uint64 grant_version(struct inode *);
+void grant_bump(struct inode *);
+void grant_protect(struct inode *);
+int grant_create(struct inode *, char *, char *, int);
+struct inode *iget_public(uint, uint);

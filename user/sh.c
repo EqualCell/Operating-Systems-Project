@@ -145,7 +145,7 @@ getcmd(char *buf, int nbuf)
 int
 main(void)
 {
-  static char buf[100];
+  static char buf[1024];
   int fd;
 
   // Ensure that three file descriptors are open.

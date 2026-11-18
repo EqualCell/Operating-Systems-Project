@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Rebuild a full disk image from the evidence folder.
-   python3 tools/restore_image.py evidence/final/pristine-fs.img.gz evidence/final/C1/append-inblock.stage2-after-header.postcrash.blockdiff.gz out.img
+   python3 tools/restore_image.py evidence/run-ID/pristine-fs.img.gz evidence/run-ID/C1/append-inblock.stage2-after-header.postcrash.blockdiff.gz out.img
 The result can be booted (`agent.qemu.VM`) or parsed (`tests.lib.fsimage.Image.load`)."""
 import gzip
 import os

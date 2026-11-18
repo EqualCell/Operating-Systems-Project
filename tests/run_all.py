@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from agent.qemu import REPO  # noqa: E402
 from tests import framework  # noqa: E402
 
-MODULES = ["tests.cases.c_core", "tests.cases.c_crash", "tests.cases.c_agent", "tests.cases.c_measure", "tests.cases.c_regress"]
+MODULES = ["tests.cases.c_security", "tests.cases.c_core", "tests.cases.c_crash", "tests.cases.c_agent", "tests.cases.c_measure", "tests.cases.c_regress"]
 
 
 def main():

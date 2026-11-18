@@ -1,32 +1,41 @@
-# Setup
+# Ubuntu setup
 
-## Normal machine
+Run these in an **Ubuntu host terminal**, not the xv6 shell.
+
 ```sh
-sudo apt install gcc-riscv64-linux-gnu qemu-system-misc qemu-system-riscv python3 make   # or the riscv64-unknown-elf toolchain
-git clone <this repo> && cd xv6-riscv
-./run_tests.sh            # builds, runs the whole suite, writes evidence/<time>/
-python3 demo.py           # narrated end-to-end demo
-make qemu                 # interactive xv6 (try: effectctl append 1 /log.txt hi)
+sudo apt-get update
+sudo apt-get install -y build-essential gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu python3 bc
 ```
-## Without root (how the evidence in this repo was produced)
-`apt` needs root, so the `.deb` packages were downloaded and unpacked into `~/toolchain/root` (no install):
-`gcc-riscv64-linux-gnu`, `binutils-riscv64-linux-gnu`, `libc6-dev-riscv64-cross`, `qemu-system-riscv`,
-`qemu-system-misc` and their dependencies, plus `gdb-multiarch` for the GDB script. `env.sh` puts that
-directory on `PATH`/`LD_LIBRARY_PATH` and sets `TOOLPREFIX=riscv64-linux-gnu-`; `agent/qemu.py` does the
-same for QEMU automatically. Set `XV6_TOOLCHAIN=/other/prefix` to move it.
 
-## Versions used for the recorded run
-Recorded automatically in `evidence/final/results.json → environment` (QEMU 10.2.1, riscv64 GCC 15.2.0,
-Python 3.14, xv6-riscv base commit, sha256 of kernel/fs.img/sources).
+On Ubuntu 24.04, install `qemu-system-misc`; on Ubuntu 26.04, install
+`qemu-system-riscv`. Package contents differ by release:
+[Ubuntu 24.04 package](https://packages.ubuntu.com/noble/qemu-system-misc),
+[Ubuntu 26.04 package](https://packages.ubuntu.com/resolute/qemu-system-riscv).
 
-## Useful commands
-| | |
-|---|---|
-| full suite | `./run_tests.sh` (add `--slow` for `usertests -q`) |
-| selected cases | `./run_tests.sh --only B2 C1` / `--group crash` / `--list` |
-| one-case crash walkthrough | `docs/crash-points.md` |
-| production kernel | `make clean && make TESTHOOKS=0 qemu` |
-| 3 CPUs / 1 CPU | `make CPUS=3 qemu` / `make CPUS=1 qemu` |
-| GDB (inspection transcript) | `python3 tests/gdb/inspect_commit.py` |
-| interactive GDB | `make qemu-gdb`, then `gdb-multiarch kernel/kernel` → `target remote :26000` (port printed by make) |
-| submission zip | `tools/make_zip.sh Team_Name_4` |
+```sh
+# Ubuntu 26.04:
+sudo apt-get install -y qemu-system-riscv
+# Ubuntu 24.04: use sudo apt-get install -y qemu-system-misc instead.
+command -v qemu-system-riscv64
+qemu-system-riscv64 --version
+command -v riscv64-linux-gnu-gcc
+riscv64-linux-gnu-gcc --version
+make test-build
+./run_tests.sh --slow
+```
+
+Fresh local validation used Ubuntu 26.04.1, `/usr/bin/qemu-system-riscv64`
+owned by `qemu-system-riscv` (verified with dpkg-query), QEMU 10.2.1, RISC-V GCC
+15.2.0 and Python 3.14.4. QEMU must be at least 7.2. The Ubuntu 24.04 package
+selection is checked against Ubuntu's catalogue; installation on a new 24.04
+machine was not performed here. CI is configured for that release.
+
+`env.sh` and the Python QEMU launcher also recognize an existing unpacked
+`$XV6_TOOLCHAIN/usr/bin` (default `~/toolchain/root`). No network, LLM API,
+third-party Python packages or root privilege is needed to run the tests once
+the toolchain is installed.
+
+`make production` builds without hooks; `make test-build` enables them.
+`make clean` removes the source `fs.img`; never clean/rebuild an experiment
+image between crash and retry. Format v1 is new: old images are refused;
+rebuild a pristine image explicitly and preserve old experiment artifacts.

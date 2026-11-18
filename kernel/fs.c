@@ -45,6 +45,7 @@ fsinit(int dev)
   if (sb.magic != FSMAGIC)
     panic("invalid file system");
   initlog(dev, &sb);
+  grantinit();
   ireclaim(dev);
   effectinit(); // [effect] init the effect-request lock
 }
@@ -422,6 +423,7 @@ static uint
 bmap(struct inode *ip, uint bn)
 {
   uint addr, *a;
+  int fresh = 0;
   struct buf *bp;
 
   if (bn < NDIRECT) {
@@ -438,6 +440,7 @@ bmap(struct inode *ip, uint bn)
   if (bn < NINDIRECT) {
     // Load indirect block, allocating if necessary.
     if ((addr = ip->addrs[NDIRECT]) == 0) {
+      fresh = 1;
       addr = balloc(ip->dev);
       if (addr == 0)
         return 0;
@@ -453,6 +456,12 @@ bmap(struct inode *ip, uint bn)
       }
     }
     brelse(bp);
+    if (!addr && fresh) {
+      // Allocation is not rolled back by end_op: undo an unused indirect
+      // block explicitly when its first data-block allocation failed.
+      bfree(ip->dev, ip->addrs[NDIRECT]);
+      ip->addrs[NDIRECT] = 0;
+    }
     return addr;
   }
 
@@ -489,6 +498,7 @@ itrunc(struct inode *ip)
 
   ip->size = 0;
   iupdate(ip);
+  grant_bump(ip);
 }
 
 // Copy stat information from inode.
@@ -545,8 +555,11 @@ int
 writei(struct inode *ip, int user_src, uint64 src, uint off, uint n)
 {
   uint tot, m;
+  int touched = 0;
   struct buf *bp;
 
+  if (grant_version(ip) == ~0ULL)
+    return -1;
   if (off > ip->size || off + n < off)
     return -1;
   if (off + n > MAXFILE * BSIZE)
@@ -558,6 +571,7 @@ writei(struct inode *ip, int user_src, uint64 src, uint off, uint n)
       break;
     bp = bread(ip->dev, addr);
     m = min(n - tot, BSIZE - off % BSIZE);
+    touched = 1; // even a failing copy may have changed a prefix
     if (either_copyin(bp->data + (off % BSIZE), user_src, src, m) == -1) {
       // Might have partially updated the block, so we need to log it.
       log_write(bp);
@@ -575,6 +589,7 @@ writei(struct inode *ip, int user_src, uint64 src, uint off, uint n)
   // because the loop above might have called bmap() and added a new
   // block to ip->addrs[].
   iupdate(ip);
+  if (touched) grant_bump(ip);
 
   return tot;
 }
@@ -739,4 +754,34 @@ struct inode *
 nameiparent(char *path, char *name)
 {
   return namex(path, 1, name);
+}
+
+// Export reference lookup for status; protected inode numbers are never reused.
+struct inode *
+iget_public(uint dev, uint inum)
+{
+  return iget(dev, inum);
+}
+
+// Root parent locked by caller throughout nonexistence test and insertion.
+int
+grant_create(struct inode *dp, char *name, char *payload, int n)
+{
+  struct inode *ip = dirlookup(dp, name, 0);
+  if (ip) { iput(ip); return -6; }
+  if (!(ip = ialloc(dp->dev, T_FILE))) return -5;
+  ilock(ip);
+  ip->nlink = 1;
+  iupdate(ip);
+  int r = n ? writei(ip, 0, (uint64)payload, 0, n) : 0;
+  if (r < 0) r = 0;
+  if (dirlink(dp, name, ip->inum) < 0) {
+    ip->nlink = 0;
+    iupdate(ip);
+    iunlockput(ip); // explicit cleanup: no transaction rollback
+    return -5;
+  }
+  grant_protect(ip);
+  iunlockput(ip);
+  return r;
 }

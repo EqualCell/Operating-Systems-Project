@@ -25,6 +25,8 @@ struct superblock {
   uint bmapstart;  // Block number of first free map block
   uint effstart;   // [effect] Block number of first effect-table block
   uint effblocks;  // [effect] Number of effect-table blocks (reserved by mkfs)
+  uint grstart;    // versioned authorization region
+  uint grblocks;
 };
 
 #define FSMAGIC 0x10203040

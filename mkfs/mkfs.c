@@ -10,6 +10,7 @@
 #include "kernel/fs.h"
 #include "kernel/stat.h"
 #include "kernel/param.h"
+#include "kernel/grant.h"
 #include "kernel/effect.h" // [effect] EFF_TABLE_BLOCKS
 
 #ifndef static_assert
@@ -95,7 +96,7 @@ main(int argc, char *argv[])
     die(argv[1]);
 
   // 1 fs block = 1 disk sector
-  nmeta = 2 + nlog + ninodeblocks + nbitmap + neffect;
+  nmeta = 2 + nlog + ninodeblocks + nbitmap + neffect + GR_BLOCKS;
   nblocks = FSSIZE - nmeta;
 
   sb.magic = FSMAGIC;
@@ -107,7 +108,9 @@ main(int argc, char *argv[])
   sb.inodestart = xint(2 + nlog);
   sb.bmapstart = xint(2 + nlog + ninodeblocks);
   sb.effstart = xint(2 + nlog + ninodeblocks + nbitmap); // [effect]
-  sb.effblocks = xint(neffect);                          // [effect]
+  sb.effblocks = xint(neffect);
+  sb.grstart = xint(2 + nlog + ninodeblocks + nbitmap + neffect);
+  sb.grblocks = xint(GR_BLOCKS);                          // [effect]
 
   printf(
     "nmeta %d (boot, super, log blocks %u, inode blocks %u, bitmap blocks %u, effect blocks %u) blocks %d total %d\n",
@@ -121,6 +124,11 @@ main(int argc, char *argv[])
   memset(buf, 0, sizeof(buf));
   memmove(buf, &sb, sizeof(sb));
   wsect(1, buf);
+
+  struct grant_header gh = {xint(GR_MAGIC), xint(GR_FORMAT), xint(GR_SLOTS), xint(GR_OBJECTS)};
+  memset(buf, 0, sizeof(buf));
+  memmove(buf, &gh, sizeof(gh));
+  wsect(xint(sb.grstart), buf);
 
   rootino = ialloc(T_DIR);
   assert(rootino == ROOTINO);

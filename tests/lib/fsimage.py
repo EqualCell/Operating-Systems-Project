@@ -19,6 +19,7 @@ class Image:
         (self.magic, self.size, self.nblocks, self.ninodes, self.nlog,
          self.logstart, self.inodestart, self.bmapstart,
          self.effstart, self.effblocks) = f
+        self.grstart, self.grblocks = struct.unpack("<II", self.d[BSIZE+40:BSIZE+48])
 
     @classmethod
     def load(cls, path):
@@ -102,10 +103,35 @@ class Image:
                     ents.append(dict(key=key, result=res, sig=sig, slot=b * 64 + i))
         return ents
 
+    def grants(self):
+        h = struct.unpack('<4I', self.block(self.grstart)[:16])
+        if h != (0x47524e54, 1, 32, 256) or self.grblocks != 35:
+            raise ValueError('unsupported grant format')
+        out = []
+        for slot in range(32):
+            raw = self.block(self.grstart + 1 + slot)
+            g, req, op, n, path, payload, version, inum, state, result, reserved = struct.unpack('<QQii16s256sQIiiI', raw[:320])
+            if not g:
+                if any(raw[:320]): raise ValueError('invalid empty grant')
+                continue
+            if state not in (1, 2, 3) or not version or op not in (1, 2) or not 0 <= n <= 256:
+                raise ValueError('invalid grant record')
+            out.append(dict(grant_id=g, request_id=req, op=op, n=n,
+                            path=path.split(b'\0')[0].decode(), payload=payload[:n],
+                            version=version, inum=inum, state=state, result=result, slot=slot))
+        return out
+
+    def versions(self):
+        raw = self.block(self.grstart + 33) + self.block(self.grstart + 34)
+        return {i: v for i, v in enumerate(struct.unpack('<256Q', raw)) if v}
+
+    def completions(self):
+        return [r for r in self.grants() if r['state'] == 3]
+
     def free_blocks(self):
         """Number of free data blocks according to the bitmap."""
         bm = self.block(self.bmapstart)
-        first_data = self.effstart + self.effblocks
+        first_data = self.grstart + self.grblocks if self.grblocks else self.effstart + self.effblocks
         return sum(1 for b in range(first_data, self.size) if not bm[b // 8] & (1 << (b % 8)))
 
     # ---- consistency ------------------------------------------------------
@@ -116,7 +142,7 @@ class Image:
         problems = []
         if self.magic != 0x10203040:
             problems.append("bad magic")
-        first_data = self.effstart + self.effblocks
+        first_data = self.grstart + self.grblocks if self.grblocks else self.effstart + self.effblocks
         bm = self.block(self.bmapstart)
 
         def used(b):
@@ -143,6 +169,28 @@ class Image:
                 owners[b] = inum
                 if not used(b):
                     problems.append(f"inode {inum} block {b} not marked in bitmap")
+        if self.grblocks:
+            try:
+                grants = self.grants()
+                ids, requests = set(), set()
+                for r in grants:
+                    if r['grant_id'] in ids: problems.append('duplicate grant ID')
+                    ids.add(r['grant_id'])
+                    if r['request_id']:
+                        if r['request_id'] in requests: problems.append('duplicate request ID')
+                        requests.add(r['request_id'])
+                    ino = self.inode(r['inum'])
+                    if not self.versions().get(r['inum']) or not ino['type']:
+                        problems.append('grant references unprotected/deallocated inode')
+                    if r['state'] == 3 and not 0 <= r['result'] <= r['n']:
+                        problems.append('invalid saved result')
+                for inum, v in self.versions().items():
+                    ino = self.inode(inum)
+                    if ino['type'] == T_FILE and ino['nlink'] != 1:
+                        problems.append('protected file has aliases or is unlinked')
+                    if not ino['type']: problems.append('protected inode reused/freed')
+            except (ValueError, struct.error) as e:
+                problems.append(str(e))
         return problems
 
 
